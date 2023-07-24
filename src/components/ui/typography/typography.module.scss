@@ -1,0 +1,84 @@
+
+.large{
+  font-size: 1.625rem;
+  font-weight: 700;
+  line-height: 2.25rem;
+}
+
+.h1 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 2.25rem;
+}
+
+.h2{
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.5rem;
+}
+
+.h3{
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.5rem;
+}
+
+.body1{
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5rem;
+}
+
+.subtitle1 {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.5rem;
+}
+
+.body2{
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.5rem;
+}
+
+.subtitle2 {
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1.5rem;
+}
+
+.caption{
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 1rem;
+}
+
+.overline{
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1rem;
+}
+
+.link1{
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.5rem;
+  color: #397DF6;
+  text-decoration-line: underline;
+
+  &:visited {
+    color: #397DF6;
+  }
+}
+
+.link2{
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 1rem;
+  color: #397DF6;
+  text-decoration-line: underline;
+
+  &:visited {
+    color: #397DF6;
+  }
+}
