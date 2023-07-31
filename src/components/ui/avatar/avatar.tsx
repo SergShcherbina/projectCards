@@ -17,9 +17,7 @@ export const Avatar: FC<AvatarType> = ({ src, size }) => {
         style={{ height: `${size}px `, width: `${size}px` }}
       >
         <AvatarRadix.Image className={s.avatarImage} src={src} alt="User photo" />
-        <AvatarRadix.Fallback className={s.avatarFallback} delayMs={600}>
-          AVA
-        </AvatarRadix.Fallback>
+        <AvatarRadix.Fallback className={s.avatarFallback}>AVA</AvatarRadix.Fallback>
       </AvatarRadix.Root>
     </div>
   )

@@ -1,0 +1,49 @@
+.dropdownMenuContent {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 0 0.75rem;
+
+  background-color: var(--color-dark-500);
+  border: 1px solid var(--color-dark-300);
+  border-radius: 4px;
+
+  animation: 0.3s slide-up-and-fade;
+
+  &::before {
+    content: '';
+
+    position: absolute;
+    top: -6px;
+    right: 14px;
+    transform: rotate(45deg);
+
+    width: 10px;
+    height: 10px;
+
+    background-color: var(--color-dark-500);
+    border-top: 1px solid var(--color-dark-300);
+    border-left: 1px solid var(--color-dark-300);
+  }
+}
+
+@keyframes slide-up-and-fade {
+  from {
+    transform: translateY(2px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+//only for storybook
+[id='storybook-root'],
+[data-name='Drop Down Menu'] {
+  display: flex;
+  justify-content: center;
+}
