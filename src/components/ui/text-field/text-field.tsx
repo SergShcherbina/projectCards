@@ -1,5 +1,7 @@
 import { ComponentPropsWithoutRef, useState } from 'react'
 
+import { clsx } from 'clsx'
+
 import { Typography } from '../typography'
 
 import { CloseEye } from './icons/CloseEye.tsx'
@@ -25,19 +27,27 @@ export const TextField = ({
 }: TextFieldProps) => {
   const [passwordIsShown, setPasswordIsShown] = useState(false)
   const [value, setValue] = useState('')
+  const classNames = {
+    root: s.root,
+    container: s.container,
+    label: clsx(s.label, !!errorMessage && s.error),
+    input: clsx(s.input, !!errorMessage && s.error, type === 'search' && s.p10),
+    disabled: clsx(disabled && s.isDisable),
+    search: s.search,
+    rightIcon: s.rightIcon,
+    button: clsx(s.rightIcon, disabled && s.isDisable),
+    focusVisible: s.focusVisible,
+    error: clsx(s.error),
+  }
 
   return (
-    <div className={s.main}>
-      <Typography
-        variant="body2"
-        as="label"
-        className={`${s.label} ${errorMessage ? s.error : ''}`}
-      >
+    <div className={classNames.root}>
+      <Typography variant="body2" as="label" className={classNames.label}>
         {label}
       </Typography>
-      <div className={s.container}>
+      <div className={classNames.container}>
         <input
-          className={`${s.input} ${errorMessage ? s.error : ''} ${type === 'search' ? s.p10 : ''} `}
+          className={classNames.input}
           type={passwordIsShown ? 'text' : type}
           value={value}
           placeholder={placeholder}
@@ -46,13 +56,15 @@ export const TextField = ({
           {...rest}
         />
         {type === 'search' && (
-          <span className={`${disabled && s.isDisable}`}>
-            <div className={s.search}>
+          <span className={classNames.disabled}>
+            <div className={classNames.search}>
               <Search />
             </div>
-            <button className={s.rightIcon} onClick={() => setValue('')}>
-              <CloseIcon />
-            </button>
+            {value && (
+              <button className={classNames.rightIcon} onClick={() => setValue('')}>
+                <CloseIcon />
+              </button>
+            )}
           </span>
         )}
         {type === 'password' && (
@@ -61,16 +73,15 @@ export const TextField = ({
             onClick={() => {
               setPasswordIsShown(value => !value)
             }}
-            className={`${s.rightIcon} ${disabled && s.isDisable}`}
+            className={classNames.button}
             disabled={disabled}
           >
             {!passwordIsShown ? <Eye /> : <CloseEye />}
           </button>
         )}
-        <div className={s.focusVisible}></div>
       </div>
 
-      <Typography as={'div'} className={s.error}>
+      <Typography as={'div'} className={classNames.error}>
         {errorMessage}
       </Typography>
     </div>
