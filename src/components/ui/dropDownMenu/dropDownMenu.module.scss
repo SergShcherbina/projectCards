@@ -41,9 +41,8 @@
   }
 }
 
-//only for storybook
-[id='storybook-root'],
-[data-name='Drop Down Menu'] {
-  display: flex;
-  justify-content: center;
+/** only for storybook */
+[aria-haspopup='menu'] {
+  position: relative;
+  left: 200px;
 }
