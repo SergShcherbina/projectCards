@@ -1,23 +1,48 @@
-.wrapper {
+.dropdownMenuContent {
   position: relative;
+
   display: flex;
-  gap: 12px;
-  justify-content: flex-end;
+  flex-direction: column;
 
-  .wrapperTitle {
-    display: flex;
-    align-items: center;
+  padding: 0 0.75rem;
 
-    .title {
-      font-weight: 700;
-      border-bottom: dashed 2px #fff;
-    }
+  background-color: var(--color-dark-500);
+  border: 1px solid var(--color-dark-300);
+  border-radius: 4px;
+
+  animation: 0.3s slide-up-and-fade;
+
+  &::before {
+    content: '';
+
+    position: absolute;
+    top: -6px;
+    right: 14px;
+    transform: rotate(45deg);
+
+    width: 10px;
+    height: 10px;
+
+    background-color: var(--color-dark-500);
+    border-top: 1px solid var(--color-dark-300);
+    border-left: 1px solid var(--color-dark-300);
+  }
+}
+
+@keyframes slide-up-and-fade {
+  from {
+    transform: translateY(2px);
+    opacity: 0;
   }
 
-  .image {
-    width: 36px;
-    height: 36px;
-    object-fit: cover;
-    border-radius: 50%;
+  to {
+    transform: translateY(0);
+    opacity: 1;
   }
+}
+
+/** only for storybook */
+[aria-haspopup='menu'] {
+  position: relative;
+  left: 200px;
 }
