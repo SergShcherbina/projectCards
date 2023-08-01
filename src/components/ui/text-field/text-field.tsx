@@ -14,6 +14,8 @@ export type TextFieldProps = {
   errorMessage?: string
   label?: string
   isSearch?: boolean
+  onChangeValue: (value: string) => void
+  value: string
 } & ComponentPropsWithoutRef<'input'>
 
 export const TextField = ({
@@ -23,10 +25,11 @@ export const TextField = ({
   errorMessage,
   placeholder,
   disabled,
+  onChangeValue,
+  value,
   ...rest
 }: TextFieldProps) => {
   const [passwordIsShown, setPasswordIsShown] = useState(false)
-  const [value, setValue] = useState('')
   const classNames = {
     root: s.root,
     container: s.container,
@@ -52,7 +55,7 @@ export const TextField = ({
           value={value}
           placeholder={placeholder}
           disabled={disabled}
-          onChange={e => setValue(e.currentTarget.value)}
+          onChange={e => onChangeValue(e.currentTarget.value)}
           {...rest}
         />
         {type === 'search' && (
@@ -61,7 +64,7 @@ export const TextField = ({
               <Search />
             </div>
             {value && (
-              <button className={classNames.rightIcon} onClick={() => setValue('')}>
+              <button className={classNames.rightIcon} onClick={() => onChangeValue('')}>
                 <CloseIcon />
               </button>
             )}
