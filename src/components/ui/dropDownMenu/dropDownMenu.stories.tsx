@@ -17,7 +17,7 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const dropDownMenu: Story = {
+export const DropDown: Story = {
   args: {
     children: (
       <>
@@ -29,7 +29,7 @@ export const dropDownMenu: Story = {
     trigger: <Avatar />,
   },
 }
-export const dropDownMenuOnlyItem: Story = {
+export const DropDownMenuOnlyItem: Story = {
   args: {
     children: (
       <>
