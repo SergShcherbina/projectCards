@@ -1,7 +1,5 @@
 import { ComponentPropsWithoutRef, ElementType } from 'react'
 
-// eslint-disable-next-line import/no-unresolved
-
 import s from './button.module.scss'
 
 export type ButtonProps<T extends ElementType = 'button'> = {
@@ -25,13 +23,13 @@ export const Button = <T extends ElementType = 'button'>(
   } = props
 
   return (
-    <>
-      <Component
-        className={`${s[variant]} ${fullWidth ? s.fullWidth : ''} ${
-          disabled ? s.disabled : ''
-        } ${className} `}
-        {...rest}
-      />
-    </>
+    <Component
+      className={`${s[variant]} ${s.commonStyle} ${fullWidth ? s.fullWidth : ''} ${
+        disabled ? s.disabled : ''
+      } ${className} `}
+      {...rest}
+    >
+      <span className={s.byCenter}>{rest.children}</span>
+    </Component>
   )
 }
