@@ -9,11 +9,21 @@
 
   background-color: var(--color-dark-500);
 
-  .image {
+  .logo {
     max-height: 36px;
 
     @media (width <= 575px) {
       width: 120px;
+    }
+  }
+
+  .info {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+
+    .name {
+      border-bottom: 2px dashed;
     }
   }
 
