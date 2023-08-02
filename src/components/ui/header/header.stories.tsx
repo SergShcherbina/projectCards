@@ -1,15 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
+import userImg from './img/Ellipse 1.png'
 import imageLogo from './img/Logo.png'
 
 import { Header } from './'
 
 const meta = {
-  title: 'Components/header',
+  title: 'Components/Header',
   component: Header,
   tags: ['autodocs'],
   argTypes: {
-    imagePath: {
+    logo: {
       options: [imageLogo, 'https://imgcorp.com/dominate/home/img/img-logo-white.png'],
       control: { type: 'radio' },
     },
@@ -22,13 +23,15 @@ type Story = StoryObj<typeof meta>
 export const HeaderSingIn: Story = {
   args: {
     isAuth: false,
-    imagePath: imageLogo,
+    logo: imageLogo,
+    userName: 'user',
   },
 }
 
-export const HeaderWithDropDownMenu: Story = {
+export const HeaderWithUser: Story = {
   args: {
     isAuth: true,
-    imagePath: 'https://imgcorp.com/dominate/home/img/img-logo-white.png',
+    userName: 'Ivan',
+    userImage: userImg,
   },
 }
