@@ -1,7 +1,5 @@
-<<<<<<< HEAD
-export * from './forgot-password'
-export * from './new-password'
-=======
-export * from './sing-up'
 export * from './validation'
->>>>>>> main
+export * from './sing-up'
+export * from './check-email'
+export * from './new-password'
+export * from './forgot-password'
