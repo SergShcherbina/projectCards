@@ -1,2 +1,5 @@
-export * from './sing-up'
 export * from './validation'
+export * from './sing-up'
+export * from './check-email'
+export * from './new-password'
+export * from './forgot-password'
