@@ -1,6 +1,19 @@
+.commonStyle {
+  user-select: none;
+  box-sizing: border-box;
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-bold);
+
+  .byCenter {
+    display: inline-flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
 .primary {
   display: flex;
-  gap: 5px;
   align-items: center;
   justify-content: center;
 
@@ -10,6 +23,7 @@
 
   background-color: var(--color-accent-500);
   border-radius: 4px;
+  box-shadow: 0 4px 18px 0 var(--color-success-shadow);
 
   &:active {
     background-color: var(--color-accent-700);
@@ -20,8 +34,7 @@
   }
 
   &:focus {
-    gap: 12px;
-    border: 2px solid var(--color-info-500);
+    outline: 2px solid var(--color-info-500);
   }
 
   &.disabled {
@@ -32,7 +45,6 @@
 
 .secondary {
   display: flex;
-  gap: 5px;
   align-items: center;
   justify-content: center;
 
@@ -53,7 +65,7 @@
 
   &:focus {
     gap: 12px;
-    border: 2px solid var(--color-info-700);
+    outline: 2px solid var(--color-info-700);
   }
 
   &.disabled {
@@ -63,10 +75,9 @@
 }
 
 .tertiary {
-  gap: 10px;
-
   padding: 0.4rem 1.75rem;
 
+  font-size: var(--font-size-m);
   color: var(--color-accent-500);
 
   background-color: transparent;
@@ -84,8 +95,7 @@
   }
 
   &:focus {
-    gap: 10px;
-    border: 1px solid var(--color-info-700);
+    outline: 2px solid var(--color-info-700);
   }
 
   &.disabled {
@@ -95,10 +105,9 @@
 }
 
 .link {
-  gap: 10px;
-
   padding: 0.375rem;
 
+  font-size: var(--font-size-m);
   color: var(--color-accent-500);
   text-decoration: none;
 
@@ -113,14 +122,17 @@
   }
 
   &:focus {
-    gap: 10px;
     color: var(--color-accent-500);
-    border: 3px solid var(--color-info-700);
     border-radius: 20px;
+    outline: 2px solid var(--color-info-700);
   }
 
   &.disabled {
     color: var(--color-accent-900);
+  }
+
+  &:visited {
+    color: var(--color-accent-100);
   }
 }
 
