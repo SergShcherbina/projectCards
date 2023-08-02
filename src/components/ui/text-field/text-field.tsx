@@ -44,7 +44,7 @@ export const TextField = ({
   }
 
   return (
-    <div className={classNames.root}>
+    <div className={`${classNames.root}  ${className}`}>
       <Typography variant="body2" as="label" className={classNames.label}>
         {label}
       </Typography>
