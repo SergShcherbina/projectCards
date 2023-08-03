@@ -76,7 +76,7 @@ export const SecondaryIcon: Story = {
     variant: 'secondary',
     children: (
       <>
-        <img src={SampleIcon} alt="sample" /> Secondary button
+        <img src={SampleIcon} alt="sample" /> <img src={SampleIcon} alt="sample" /> Secondary button
       </>
     ),
     disabled: false,

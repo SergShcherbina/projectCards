@@ -4,19 +4,19 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import { Button, Card, ControlledTextField, Typography } from '../../ui'
-import { singUpScheme } from '../validation'
+import { signUpScheme } from '../validation'
 
-import s from './singUp.module.scss'
+import s from './signUp.module.scss'
 
-type SingUpType = z.infer<typeof singUpScheme>
+type SingUpType = z.infer<typeof signUpScheme>
 
-export const SingUp = () => {
+export const SignUp = () => {
   const {
     handleSubmit,
     control,
     formState: { errors },
   } = useForm<SingUpType>({
-    resolver: zodResolver(singUpScheme),
+    resolver: zodResolver(signUpScheme),
   })
 
   const onSubmit = (data: SingUpType) => {

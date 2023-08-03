@@ -1,5 +1,6 @@
 export * from './validation'
-export * from './sing-up'
+export * from './sign-up'
 export * from './check-email'
 export * from './new-password'
 export * from './forgot-password'
+export * from './sing-in'

@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
 import { Avatar } from './avatar.tsx'
-import userPhoto from './images/Ellipse 1.png'
 
 const meta = {
   title: 'Components/Avatar',
@@ -10,8 +9,6 @@ const meta = {
   argTypes: {
     src: {
       description: 'Path to picture ',
-      options: ['', userPhoto],
-      control: { type: 'radio' },
     },
     size: {
       description: 'Type number',
@@ -27,7 +24,7 @@ type Story = StoryObj<typeof meta>
 
 export const AvatarWithPhoto: Story = {
   args: {
-    src: userPhoto,
+    src: 'https://foni.club/uploads/posts/2023-03/1677685763_foni-club-p-art-fioletovii-paren-2.jpg',
   },
 }
 export const AvatarNoPhoto: Story = {
