@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import { Button, Card, ControlledCheckbox, ControlledTextField, Typography } from '../../ui'
-import { signInScheme } from '../validation/singInScheme'
+import { signInScheme } from '../validation/sing-in-scheme.ts'
 
 import s from './sign-in.module.scss'
 
