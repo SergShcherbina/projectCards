@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { ForgotPassword } from './forgot-password.tsx'
 
 const meta = {
-  title: 'Auth/ForgotPassword',
+  title: 'Auth/Forgot password',
   component: ForgotPassword,
   tags: ['autodocs'],
 } satisfies Meta<typeof ForgotPassword>
@@ -11,4 +11,4 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Primary: Story = {}
+export const Default: Story = {}

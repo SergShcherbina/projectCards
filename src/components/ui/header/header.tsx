@@ -5,7 +5,7 @@ import { Button } from '../button'
 import { Typography } from '../typography'
 
 import s from './header.module.scss'
-import image from './img/Logo.png'
+import image from './img/logo.png'
 
 type HeaderType = {
   logo?: string

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
 import { Avatar } from './avatar.tsx'
-import userPhoto from './images/Ellipse 1.png'
+import userPhoto from './img/elipse.png'
 
 const meta = {
   title: 'Components/Avatar',

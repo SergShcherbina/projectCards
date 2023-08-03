@@ -4,7 +4,7 @@ import * as DropdownMenuRadix from '@radix-ui/react-dropdown-menu'
 
 import { Typography } from '../../typography'
 
-import s from './dropDownMenuItem.module.scss'
+import s from './drop-down-menu-item.module.scss'
 
 type DropDownMenuItemType = {
   text: string
