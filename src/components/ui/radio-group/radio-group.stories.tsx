@@ -24,6 +24,6 @@ export const Default = {}
 export const Disabled: Story = {
   args: {
     disabled: true,
-    name: 'Title group disable',
+    name: 'Title disabled group',
   },
 }
