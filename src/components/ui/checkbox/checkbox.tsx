@@ -15,16 +15,24 @@ export type CheckboxProps = {
   disabled?: boolean
   label?: string
   id: string
+  className?: string
 }
 
-export const Checkbox: FC<CheckboxProps> = ({ checked, onChange, disabled, label, id }) => {
+export const Checkbox: FC<CheckboxProps> = ({
+  checked,
+  onChange,
+  disabled,
+  label,
+  id,
+  className,
+}) => {
   const classLabel = disabled ? s.label + ' ' + s.disabled : s.label
   const classButtonWrapper = disabled ? s.buttonWrapper + ' ' + s.disabled : s.buttonWrapper
 
   // const classLabel = clsx(s.label, disabled && s.disabled)
   // const classButtonWrapper = clsx(s.buttonWrapper, disabled && s.disabled)
   return (
-    <LabelRadix.Root className={classLabel}>
+    <LabelRadix.Root className={`${classLabel} ${className}`}>
       <div className={classButtonWrapper}>
         <CheckboxRadix.Root
           className={s.root}
