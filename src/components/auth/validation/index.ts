@@ -1,1 +1,1 @@
-export * from './singUpScheme.ts'
+export * from './sign-up-scheme.ts'

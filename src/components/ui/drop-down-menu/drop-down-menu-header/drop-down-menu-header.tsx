@@ -5,7 +5,7 @@ import * as DropdownMenuRadix from '@radix-ui/react-dropdown-menu'
 import { Avatar } from '../../avatar'
 import { Typography } from '../../typography'
 
-import s from './dropDownMenuHeader.module.scss'
+import s from './drop-down-menu-header.module.scss'
 
 type DropDownMenuItemType = {
   userName: string

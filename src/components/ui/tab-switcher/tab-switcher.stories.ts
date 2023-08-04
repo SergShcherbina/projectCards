@@ -3,7 +3,7 @@ import { Meta } from '@storybook/react'
 import { TabSwitcher } from './tab-switcher.tsx'
 
 export default {
-  title: 'Components/Tab-switcher',
+  title: 'Components/Tab switcher',
   component: TabSwitcher,
   tags: ['autodocs'],
   args: {
