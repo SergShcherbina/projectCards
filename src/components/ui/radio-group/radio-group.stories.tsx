@@ -3,7 +3,7 @@ import { Meta, StoryObj } from '@storybook/react'
 import { RadioGroup } from './radio-group'
 
 export default {
-  title: 'Components/RadioGroup',
+  title: 'Components/Radio group',
   component: RadioGroup,
   tags: ['autodocs'],
   args: {
@@ -22,8 +22,8 @@ type Story = StoryObj<typeof RadioGroup>
 export const Default = {}
 
 export const Disabled: Story = {
-  name: 'Title group disable',
   args: {
     disabled: true,
+    name: 'Title group disable',
   },
 }
