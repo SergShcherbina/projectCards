@@ -1,50 +1,54 @@
-.title {
-  user-select: none;
-}
+.offset {
+  padding-bottom: 2.5rem;
 
-.email {
-  user-select: none;
-  color: var(--color-dark-100);
-}
-
-.offsetBtn {
-  margin-top: 13px;
-}
-
-.avatarEdit {
-  cursor: pointer;
-  position: relative;
-
-  &::after {
-    content: '';
-
-    position: absolute;
-    top: 66px;
-    right: 3px;
-
-    width: 24px;
-    height: 28px;
-
-    background: url('./img/dark.svg') center center no-repeat;
+  .title {
+    user-select: none;
   }
-}
 
-.nickname {
-  cursor: pointer;
-  user-select: none;
-  position: relative;
-  margin-top: 10px;
+  .email {
+    user-select: none;
+    color: var(--color-dark-100);
+  }
 
-  &::after {
-    content: '';
+  .offsetBtn {
+    margin-top: 13px;
+  }
 
-    position: absolute;
-    top: 1px;
-    right: -25px;
+  .avatarEdit {
+    cursor: pointer;
+    position: relative;
 
-    width: 20px;
-    height: 20px;
+    &::after {
+      content: '';
 
-    background: url('./img/pencel.svg') center center no-repeat;
+      position: absolute;
+      top: 66px;
+      right: 3px;
+
+      width: 24px;
+      height: 28px;
+
+      background: url('./img/dark.svg') center center no-repeat;
+    }
+  }
+
+  .nickname {
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    margin-top: 10px;
+
+    &::after {
+      content: '';
+
+      position: absolute;
+      top: 1px;
+      right: -25px;
+
+      width: 20px;
+      height: 20px;
+
+      background: url('./img/pencel.svg') center center no-repeat;
+    }
   }
 }

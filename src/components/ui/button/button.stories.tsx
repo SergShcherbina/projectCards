@@ -1,7 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import SampleIcon from './img/sampleIcon.svg'
-
 import { Button } from './'
 const meta = {
   title: 'Components/Button',
@@ -9,7 +7,7 @@ const meta = {
   tags: ['autodocs'],
   argTypes: {
     variant: {
-      options: ['primary', 'secondary', 'tertiary', 'link'],
+      options: ['primary', 'secondary', 'tertiary', 'link', 'primaryWithIcon', 'secondaryWithIcon'],
       control: { type: 'radio' },
     },
   },
@@ -61,24 +59,16 @@ export const FullWidth: Story = {
 
 export const PrimaryIcon: Story = {
   args: {
-    variant: 'primary',
+    variant: 'primaryWithIcon',
     disabled: false,
-    children: (
-      <>
-        <img src={SampleIcon} alt="sample" /> Button primary
-      </>
-    ),
+    children: 'Button primary',
   },
 }
 
 export const SecondaryIcon: Story = {
   args: {
-    variant: 'secondary',
-    children: (
-      <>
-        <img src={SampleIcon} alt="sample" /> <img src={SampleIcon} alt="sample" /> Secondary button
-      </>
-    ),
+    variant: 'secondaryWithIcon',
+    children: 'Secondary button',
     disabled: false,
   },
 }

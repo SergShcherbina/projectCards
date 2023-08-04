@@ -20,7 +20,7 @@ export const EditProfile: FC<Props> = ({ name, src, email, logoutHandler }) => {
   }
 
   return (
-    <Card>
+    <Card className={s.offset}>
       <Typography variant={'large'} className={s.title}>
         Personal Information
       </Typography>
@@ -40,7 +40,7 @@ export const EditProfile: FC<Props> = ({ name, src, email, logoutHandler }) => {
           <Typography variant={'body2'} as={'span'} className={s.email}>
             {email}
           </Typography>
-          <Button variant={'secondary'} className={s.offsetBtn} onClick={logoutHandler}>
+          <Button variant={'secondaryWithIcon'} className={s.offsetBtn} onClick={logoutHandler}>
             {'Logout'}
           </Button>
         </>

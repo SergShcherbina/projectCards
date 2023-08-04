@@ -7,7 +7,7 @@ import { z } from 'zod'
 import { Button, ControlledTextField } from '../../../ui'
 
 import s from './nickname-field.module.scss'
-import { nicknameScheme } from './validation/nickname-scheme.ts'
+import { nicknameScheme } from './validation'
 
 type PropsType = {
   callBack: () => void
