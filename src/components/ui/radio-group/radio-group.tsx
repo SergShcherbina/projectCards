@@ -32,7 +32,7 @@ export const RadioGroup: FC<RadioGroupProps> = ({ value, name, options, disabled
       <Typography variant="subtitle1">{name}</Typography>
       <RadioGroupUI.Root disabled={disabled} {...rest} className={classNames.root}>
         {options.map(option => (
-          <div style={{ display: 'flex', alignItems: 'center' }}>
+          <div style={{ display: 'flex', alignItems: 'center' }} key={option.value}>
             <div className={classNames.wrapper}>
               <RadioGroupUI.Item
                 key={option.value}
