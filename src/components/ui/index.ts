@@ -1,5 +1,5 @@
 export * from './avatar'
-export * from './dropDownMenu'
+export * from './drop-down-menu'
 export * from './button'
 export * from './card'
 export * from './header'

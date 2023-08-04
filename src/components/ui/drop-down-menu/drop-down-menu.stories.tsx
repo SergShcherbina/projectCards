@@ -2,11 +2,11 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 import { Avatar } from '../avatar'
 
-import { DropDownMenu } from './dropDownMenu.tsx'
-import { DropDownMenuHeader } from './dropDownMenuHeader/dropDownMenuHeader.tsx'
-import { DropDownMenuItem } from './dropDownMenuItem/dropDownMenuItem.tsx'
-import logOutIcon from './images/log-out.svg'
-import personIcon from './images/person-outline.svg'
+import { DropDownMenuHeader } from './drop-down-menu-header/drop-down-menu-header.tsx'
+import { DropDownMenuItem } from './drop-down-menu-item/drop-down-menu-item.tsx'
+import { DropDownMenu } from './drop-down-menu.tsx'
+import logOutIcon from './img/logOut.svg'
+import personIcon from './img/personOutline.svg'
 
 const meta = {
   title: 'Components/DropDownMenu',
