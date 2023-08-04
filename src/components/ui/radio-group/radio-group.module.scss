@@ -1,13 +1,24 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+  color: var(--color-light-100);
+
+  &.disabled {
+    color: var(--color-light-900);
+  }
+}
+
 .item {
   cursor: pointer;
 
   display: flex;
-  gap: 2px;
   align-items: center;
 
-  width: fit-content;
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
+
+  color: var(--color-accent-500);
 
   border: 2px solid;
   border-radius: 100%;
@@ -15,8 +26,6 @@
 }
 
 .indicator {
-  position: relative;
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -29,57 +38,47 @@
 
     display: block;
 
-    width: 11px;
-    height: 11px;
+    width: 12px;
+    height: 12px;
 
-    background-color: red;
+    background-color: var(--color-accent-500);
     border-radius: 50%;
+
+    &.disabled {
+      background-color: var(--color-accent-900);
+    }
   }
 }
 
-//.indicator {
-//  position: relative;
-//
-//  display: flex;
-//  align-items: center;
-//  justify-content: center;
-//
-//  box-sizing: border-box;
-//  width: 36px;
-//  height: 36px;
-//  padding: 9px;
-//
-//  border-radius: 50%;
-//
-//  transition: var(--transtition-duration-basic) background-color;
-//
-//  &::before {
-//    content: '';
-//
-//    display: block;
-//
-//    width: 18px;
-//    height: 18px;
-//
-//    border: 2px solid var(--color-accent-500);
-//    border-radius: 50%;
-//
-//    .option[data-headlessui-state='disabled'] & {
-//      border-color: var(--color-button-disabled);
-//    }
-//  }
-//
-//  &::after {
-//    content: '';
-//    position: absolute;
-//    border-radius: 50%;
-//    transition: 100ms background-color;
-//
-//    [data-headlessui-state='checked active'] &,
-//    [data-headlessui-state='checked'] & {
-//      width: 8px;
-//      height: 8px;
-//      background-color: var(--color-accent-500);
-//    }
-//  }
-//}
+.wrapper {
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 36px;
+  height: 36px;
+
+  border-radius: 50%;
+
+  &:hover:not(.disabled) {
+    background-color: var(--color-dark-500);
+  }
+
+  &:focus:not(.disabled) {
+    background-color: var(--color-dark-700);
+  }
+
+  &:active:not(.disabled) {
+    background-color: var(--color-accent-900);
+  }
+
+  &.disabled {
+    cursor: initial;
+  }
+}
+
+.disabled {
+  cursor: initial;
+}

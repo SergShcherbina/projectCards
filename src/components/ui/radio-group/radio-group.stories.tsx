@@ -1,4 +1,4 @@
-import { Meta } from '@storybook/react'
+import { Meta, StoryObj } from '@storybook/react'
 
 import { RadioGroup } from './radio-group'
 
@@ -17,4 +17,13 @@ export default {
   },
 } as Meta<typeof RadioGroup>
 
+type Story = StoryObj<typeof RadioGroup>
+
 export const Default = {}
+
+export const Disabled: Story = {
+  name: 'Title group disable',
+  args: {
+    disabled: true,
+  },
+}
