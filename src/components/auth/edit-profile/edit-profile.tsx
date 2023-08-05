@@ -1,9 +1,10 @@
 import { FC, useState } from 'react'
 
-import { Avatar, Button, Card, Typography } from '../../ui'
+import { Button, Card, Typography } from '../../ui'
 
 import s from './edit-profile.module.scss'
 import { EditName } from './nickname-field'
+import { ReplaceAvatar } from './replace-avatar/replace-avatar.tsx'
 
 type Props = {
   src?: string
@@ -24,7 +25,9 @@ export const EditProfile: FC<Props> = ({ name, src, email, logoutHandler }) => {
       <Typography variant={'large'} className={s.title}>
         Personal Information
       </Typography>
-      <Avatar src={src} size={96} className={s.avatarEdit} />
+
+      <ReplaceAvatar src={src} />
+
       {switcher ? (
         <EditName callBack={toggleHandler} nickname={name} />
       ) : (

@@ -14,24 +14,6 @@
     margin-top: 13px;
   }
 
-  .avatarEdit {
-    cursor: pointer;
-    position: relative;
-
-    &::after {
-      content: '';
-
-      position: absolute;
-      top: 66px;
-      right: 3px;
-
-      width: 24px;
-      height: 28px;
-
-      background: url('./img/dark.svg') center center no-repeat;
-    }
-  }
-
   .nickname {
     cursor: pointer;
     user-select: none;
