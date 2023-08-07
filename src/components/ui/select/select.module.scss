@@ -1,0 +1,115 @@
+/* reset */
+
+.root {
+  //position: relative;
+  display: flex;
+  flex-direction: column;
+
+  //max-width: 13.125rem;
+}
+
+button {
+  all: unset;
+  cursor: pointer;
+  height: 2.25rem;
+}
+
+.selectTrigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  max-width: 13.125rem;
+  padding-left: 10px;
+
+  font-size: 16px;
+  line-height: 1;
+
+  background-color: transparent;
+  border: 1px solid var(--color-dark-300);
+  border-radius: 2px;
+}
+
+.selectTrigger:hover {
+  //background-color: var(--color-accent-900);
+}
+
+.selectTrigger:focus {
+  //box-shadow: 0 0 0 2px black;
+}
+
+.selectIcon {
+}
+
+.selectContent {
+  position: marker;
+  width: 100%;
+  border: 1px solid var(--color-dark-300);
+  outline: none;
+
+  //background-color: white;
+}
+
+.selectViewport {
+}
+
+.selectItem {
+  cursor: pointer;
+
+  align-items: center;
+
+  height: 25px;
+
+  //user-select: none;
+
+  font-size: 13px;
+
+  //line-height: 1;
+
+  border-radius: 3px;
+}
+
+.selectItem[data-disabled] {
+  //pointer-events: none;
+
+  //color: var(--mauve-8);
+}
+
+.selectItem[data-highlighted] {
+  background-color: var(--color-accent-900);
+  outline: none;
+}
+
+.selectLabel {
+  font-size: 12px;
+  line-height: 25px;
+
+  //color: var(--mauve-11);
+}
+
+.selectSeparator {
+}
+
+.selectItemIndicator {
+  position: absolute;
+  left: 0;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.selectScrollButton {
+  cursor: default;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 25px;
+
+  //color: var(--violet-11);
+
+  //background-color: white;
+}
