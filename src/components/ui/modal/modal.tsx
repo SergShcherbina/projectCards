@@ -10,6 +10,7 @@ import {
 } from '@radix-ui/react-dialog'
 import { clsx } from 'clsx'
 
+import { Button } from '../button'
 import { Typography } from '../typography'
 
 import { default as Close } from './img/close.tsx'
@@ -29,6 +30,10 @@ export type ModalProps = {
    * lg - 764px.
    * For other values use className */
   size?: ModalSize
+  confirmButtonText?: string
+  onConfirmButtonClick?: () => void
+  cancelButtonText?: string
+  onCancelButtonClick?: () => void
 } & ComponentProps<'div'>
 
 export const Modal: FC<ModalProps> = ({
@@ -37,9 +42,26 @@ export const Modal: FC<ModalProps> = ({
   title,
   showCloseIcon = true,
   className,
-  onClose,
   children,
+  confirmButtonText,
+  cancelButtonText,
+  onConfirmButtonClick,
+  onCancelButtonClick,
+
+  ...rest
 }) => {
+  const showConfirmButton = !!confirmButtonText
+  const showCancelButton = !!cancelButtonText
+  const { onClose } = rest
+
+  function handleConfirmButtonClicked() {
+    onConfirmButtonClick ? onConfirmButtonClick() : {}
+  }
+
+  function handleCancelButtonClicked() {
+    onCancelButtonClick ? onCancelButtonClick() : onClose?.()
+  }
+
   function handleModalClosed() {
     onClose?.()
   }
@@ -57,7 +79,7 @@ export const Modal: FC<ModalProps> = ({
     <Dialog open={isOpen} onOpenChange={handleModalClosed}>
       {isOpen && (
         <DialogPortal forceMount>
-          <DialogOverlay asChild></DialogOverlay>
+          <DialogOverlay className={classNames.overlay}></DialogOverlay>
           <DialogContent className={classNames.content} asChild forceMount>
             <div>
               <header className={classNames.header}>
@@ -77,6 +99,20 @@ export const Modal: FC<ModalProps> = ({
               </header>
 
               <main className={classNames.main}>{children}</main>
+
+              <footer className={classNames.footer}>
+                {showCancelButton && (
+                  <Button type="submit" variant={'secondary'} onClick={handleCancelButtonClicked}>
+                    {cancelButtonText}
+                  </Button>
+                )}
+
+                {showConfirmButton && (
+                  <Button type="submit" variant={'primary'} onClick={handleConfirmButtonClicked}>
+                    {confirmButtonText}
+                  </Button>
+                )}
+              </footer>
             </div>
           </DialogContent>
         </DialogPortal>
