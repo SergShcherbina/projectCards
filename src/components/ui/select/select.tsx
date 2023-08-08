@@ -1,14 +1,20 @@
 import { FC, ReactNode } from 'react'
 
-import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons'
+import { ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons'
 import * as SelectRadix from '@radix-ui/react-select'
 
 import s from './select.module.scss'
 
-export const Select = () => {
+type selectPropsType = {
+  options?: number[]
+  value?: number
+  onChange?: (value: number) => void
+}
+
+export const Select: FC<selectPropsType> = ({ options, onChange, value }) => {
   return (
     <div className={s.root}>
-      <SelectRadix.Root open>
+      <SelectRadix.Root value={value ? value.toString() : ''}>
         <SelectRadix.Trigger className={s.selectTrigger}>
           <SelectRadix.Value placeholder="Select value" />
           <SelectRadix.Icon className={s.selectIcon}>
@@ -18,7 +24,7 @@ export const Select = () => {
         <SelectRadix.Portal>
           <SelectRadix.Content
             className={s.selectContent}
-            defaultValue={'apple'}
+            defaultValue={'0'}
             align={'start'}
             position={'popper'}
           >
@@ -26,11 +32,11 @@ export const Select = () => {
               <ChevronUpIcon />
             </SelectRadix.ScrollUpButton>
             <SelectRadix.Viewport className={s.selectViewport}>
-              <SelectItem value="apple">Apple</SelectItem>
-              <SelectItem value="banana">Banana</SelectItem>
-              <SelectItem value="blueberry">Blueberry</SelectItem>
-              <SelectItem value="grapes">Grapes</SelectItem>
-              <SelectItem value="pineapple">Pineapple</SelectItem>
+              {options?.map(el => (
+                <SelectItem onChange={onChange} key={el} value={el.toString()}>
+                  {el}
+                </SelectItem>
+              ))}
             </SelectRadix.Viewport>
             <SelectRadix.ScrollDownButton className={s.selectScrollButton}>
               <ChevronDownIcon />
@@ -43,17 +49,19 @@ export const Select = () => {
 }
 
 type selectItemPropsType = {
-  value: string
   children: ReactNode
+  value: string
+  onChange?: (value: number) => void
 }
 
-const SelectItem: FC<selectItemPropsType> = ({ children, ...props }) => {
+const SelectItem: FC<selectItemPropsType> = ({ children, onChange, ...props }) => {
+  const onChangeHandler = (e: any) => {
+    onChange?.(e.currentTarget.value)
+  }
+
   return (
-    <SelectRadix.Item className={s.selectItem} {...props}>
+    <SelectRadix.Item onChange={onChangeHandler} className={s.selectItem} {...props}>
       <SelectRadix.ItemText>{children}</SelectRadix.ItemText>
-      <SelectRadix.ItemIndicator className={s.selectItemIndicator}>
-        <CheckIcon />
-      </SelectRadix.ItemIndicator>
     </SelectRadix.Item>
   )
 }
