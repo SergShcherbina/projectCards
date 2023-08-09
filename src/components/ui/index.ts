@@ -2,6 +2,7 @@ export * from './avatar'
 export * from './drop-down-menu'
 export * from './button'
 export * from './card'
+// eslint-disable-next-line import/export
 export * from './header'
 export * from './checkbox'
 export * from './slider'
