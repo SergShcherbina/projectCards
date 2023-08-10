@@ -1,11 +1,14 @@
+import { useState } from 'react'
+
 import { Button, TextField } from '../../components'
 import { Column, SortTable, Table } from '../../components/ui/table'
-import { useGetDecksQuery } from '../../services/decks'
+import { useCreateDecksMutation, useGetDecksQuery } from '../../services/decks'
 import { decksSlice } from '../../services/decks/decks.slice.ts'
 import { useAppDispatch, useAppSelector } from '../../services/store.ts'
 
 export const Decks = () => {
   //const [itemsPerPage, setItemsPerPage] = useState(20)
+  const [cardName, setCardName] = useState('')
 
   const dispatch = useAppDispatch()
 
@@ -25,7 +28,13 @@ export const Decks = () => {
     itemsPerPage,
     currentPage,
     name: searchByName,
+    orderBy: 'created-desc',
   })
+
+  const [createDeck, { isLoading: isCreateDeckLoading }] = useCreateDecksMutation()
+  const handleCreateDeck = () => createDeck({ name: cardName })
+
+  if (isLoading) return <div>isLoading: {isLoading.toString()}</div>
 
   return (
     <div>
@@ -36,7 +45,13 @@ export const Decks = () => {
       <Button onClick={() => setCurrentPage(2)}>currentPage:2</Button>
       <Button onClick={() => setCurrentPage(3)}>currentPage:3</Button>
       <TextField value={searchByName} onChange={e => setSearch(e.currentTarget.value)}></TextField>
-      isLoading: {isLoading.toString()}
+      <TextField
+        value={cardName}
+        onChange={e => setCardName(e.currentTarget.value)}
+        label={'card-name'}
+      ></TextField>
+      <Button onClick={handleCreateDeck}>Create deck</Button>
+      isCreateDeckLoading: {isCreateDeckLoading.toString()}
       <Table.Root>
         <Table.Head>
           <Table.Row>
