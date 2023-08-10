@@ -3,17 +3,28 @@ import { baseApi } from '../base-api.tsx'
 const decksApi = baseApi.injectEndpoints({
   endpoints: builder => {
     return {
-      getDecks: builder.query<DecksResponse, void>({
-        query: () => {
+      getDecks: builder.query<DecksResponse, GetDecksArgs>({
+        query: args => {
           return {
             url: `v1/decks`,
             method: 'GET',
+            params: args,
           }
         },
       }),
     }
   },
 })
+
+type GetDecksArgs = {
+  minCardsCount?: number
+  maxCardsCount?: number
+  name?: string
+  authorId?: string
+  orderBy?: string
+  currentPage?: number
+  itemsPerPage?: number
+}
 
 export const { useGetDecksQuery, useLazyGetDecksQuery } = decksApi
 
