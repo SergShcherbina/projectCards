@@ -24,7 +24,7 @@ export const Decks = () => {
 
   const setSearch = (search: string) => dispatch(decksSlice.actions.setSearchByName(search))
 
-  const { data, isLoading } = useGetDecksQuery({
+  const { data, isLoading, refetch } = useGetDecksQuery({
     itemsPerPage,
     currentPage,
     name: searchByName,
@@ -38,6 +38,7 @@ export const Decks = () => {
 
   return (
     <div>
+      <Button onClick={refetch}>refetch</Button>
       <Button onClick={() => setItemsPerPage(10)}>itemsPerPage:10</Button>
       <Button onClick={() => setItemsPerPage(15)}>itemsPerPage:15</Button>
       <Button onClick={() => setItemsPerPage(20)}>itemsPerPage:20</Button>
