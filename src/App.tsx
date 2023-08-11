@@ -1,3 +1,9 @@
+import { Select } from './components/ui/select'
+
 export function App() {
-  return <div>Hello!</div>
+  return (
+    <div>
+      <Select />
+    </div>
+  )
 }
