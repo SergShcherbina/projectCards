@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import userImg from './img/Ellipse 1.png'
-import imageLogo from './img/Logo.png'
+import userImg from './img/headerEllipse.png'
+import imageLogo from './img/logo.png'
 
 import { Header } from './'
 
@@ -20,7 +20,7 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const HeaderSingIn: Story = {
+export const HeaderSignIn: Story = {
   args: {
     isAuth: false,
     logo: imageLogo,
