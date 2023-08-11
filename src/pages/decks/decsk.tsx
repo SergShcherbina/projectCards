@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 import { Button, TextField } from '../../components'
-import { Column, SortTable, Table } from '../../components/ui/table'
+import { Table } from '../../components/ui/table'
 import { useCreateDecksMutation, useGetDecksQuery } from '../../services/decks'
 import { decksSlice } from '../../services/decks/decks.slice.ts'
 import { useAppDispatch, useAppSelector } from '../../services/store.ts'

@@ -256,7 +256,7 @@ const data2 = [
 
 export const WithSort2 = {
   render: () => {
-    const [sort, setSort] = useState<Sort>(null)
+    const [sort, setSort] = useState<SortTable>(null)
 
     console.log(sort)
 
