@@ -1,9 +1,12 @@
-import { Select } from './components/ui/select'
+import { Provider } from 'react-redux'
+
+import { Router } from './router.tsx'
+import { store } from './services/store.ts'
 
 export function App() {
   return (
-    <div>
-      <Select />
-    </div>
+    <Provider store={store}>
+      <Router />
+    </Provider>
   )
 }
