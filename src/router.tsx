@@ -6,6 +6,7 @@ import {
   Navigate,
 } from 'react-router-dom'
 
+import { Cards } from './pages/cards/cards.tsx'
 import { Decks } from './pages/decks/decsk.tsx'
 
 const publicRoutes: RouteObject[] = [
@@ -17,8 +18,13 @@ const publicRoutes: RouteObject[] = [
 
 const privateRoutes: RouteObject[] = [
   {
-    path: '/',
+    path: '/Decks',
     element: <Decks />,
+  },
+
+  {
+    path: '/',
+    element: <Cards />,
   },
 ]
 
