@@ -11,12 +11,22 @@ type Props = {
   name: string
   email: string
   logoutHandler: () => void
+  replaceNickname: (name: string) => void
+  replaceAvatar: (data: Blob | MediaSource) => void
 }
 
-export const EditProfile: FC<Props> = ({ name, src, email, logoutHandler }) => {
+export const EditProfile: FC<Props> = ({
+  name,
+  src,
+  email,
+  logoutHandler,
+  replaceNickname,
+  replaceAvatar,
+}) => {
   let [switcher, setSwitcher] = useState(false)
 
-  const toggleHandler = () => {
+  const onReplaceName = (name: string) => {
+    replaceNickname(name)
     setSwitcher(!switcher)
   }
 
@@ -26,17 +36,17 @@ export const EditProfile: FC<Props> = ({ name, src, email, logoutHandler }) => {
         Personal Information
       </Typography>
 
-      <ReplaceAvatar src={src} />
+      <ReplaceAvatar src={src} replaceAvatar={replaceAvatar} />
 
       {switcher ? (
-        <EditName callBack={toggleHandler} nickname={name} />
+        <EditName onReplaceName={onReplaceName} nickname={name} />
       ) : (
         <>
           <Typography
             variant={'subtitle1'}
             as={'span'}
             className={s.nickname}
-            onDoubleClick={toggleHandler}
+            onDoubleClick={() => setSwitcher(!switcher)}
           >
             {name}
           </Typography>

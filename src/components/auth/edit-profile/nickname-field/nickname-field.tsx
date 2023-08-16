@@ -10,10 +10,10 @@ import s from './nickname-field.module.scss'
 import { nicknameScheme } from './validation'
 
 type PropsType = {
-  callBack: () => void
+  onReplaceName: (text: string) => void
 } & z.infer<typeof nicknameScheme>
 
-export const EditName: FC<PropsType> = ({ callBack }) => {
+export const EditName: FC<PropsType> = ({ onReplaceName }) => {
   const {
     handleSubmit,
     control,
@@ -23,8 +23,7 @@ export const EditName: FC<PropsType> = ({ callBack }) => {
   })
 
   const onSubmit = (data: PropsType) => {
-    alert(JSON.stringify(data))
-    callBack()
+    onReplaceName(data.nickname)
   }
 
   return (

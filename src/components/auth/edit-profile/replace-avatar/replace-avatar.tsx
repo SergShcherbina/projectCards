@@ -7,13 +7,18 @@ import s from './replace-avatar.module.scss'
 
 type PropsType = {
   src?: string
+  replaceAvatar: (data: Blob | MediaSource) => void
 }
-export const ReplaceAvatar: FC<PropsType> = ({ src }) => {
+export const ReplaceAvatar: FC<PropsType> = ({ src, replaceAvatar }) => {
   const onChangeFile = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.currentTarget.files) {
       const imgFile = e.currentTarget.files[0]
 
-      alert(JSON.stringify({ name: imgFile.name, type: imgFile.type }))
+      if (imgFile.type === 'image/jpeg' || imgFile.type === 'image/png') {
+        replaceAvatar(imgFile)
+      } else {
+        alert('This file is not not .jpg & .png')
+      }
     }
   }
 
