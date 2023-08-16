@@ -37,7 +37,7 @@ export const Default: Story = {
           count={300}
           page={page}
           onChange={setPage}
-          perPageOptions={[20, 30]}
+          perPageOptions={[10, 20, 30]}
           perPage={perPage}
           onPerPageChange={setPerPage}
         />
