@@ -1,46 +1,41 @@
-import { FC, ReactNode } from 'react'
+import { FC, ReactNode, useState } from 'react'
 
 import { ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons'
 import * as SelectRadix from '@radix-ui/react-select'
 
 import s from './select.module.scss'
 
-type selectPropsType = {
+type SelectPropsType = {
+  className: string
   options?: number[]
   value?: number
-  onChange?: (value: number) => void
+  onChangeValue: (value: number) => void
 }
 
-export const Select: FC<selectPropsType> = ({ options, onChange, value }) => {
+export const Select: FC<SelectPropsType> = ({ options, value, onChangeValue, className }) => {
+  const [open, setOpen] = useState(false)
+  const onChangeSelect = (value: string) => {
+    onChangeValue(+value)
+  }
+
   return (
-    <div className={s.root}>
-      <SelectRadix.Root value={value ? value.toString() : ''}>
+    <div className={`${className}`}>
+      <SelectRadix.Root onValueChange={onChangeSelect} onOpenChange={() => setOpen(!open)}>
         <SelectRadix.Trigger className={s.selectTrigger}>
-          <SelectRadix.Value placeholder="Select value" />
-          <SelectRadix.Icon className={s.selectIcon}>
-            <ChevronDownIcon />
-          </SelectRadix.Icon>
+          <SelectRadix.Value placeholder={value} />
+          <SelectRadix.Icon>{open ? <ChevronUpIcon /> : <ChevronDownIcon />}</SelectRadix.Icon>
         </SelectRadix.Trigger>
         <SelectRadix.Portal>
-          <SelectRadix.Content
-            className={s.selectContent}
-            defaultValue={'0'}
-            align={'start'}
-            position={'popper'}
-          >
-            <SelectRadix.ScrollUpButton className={s.selectScrollButton}>
-              <ChevronUpIcon />
-            </SelectRadix.ScrollUpButton>
-            <SelectRadix.Viewport className={s.selectViewport}>
-              {options?.map(el => (
-                <SelectItem onChange={onChange} key={el} value={el.toString()}>
-                  {el}
-                </SelectItem>
-              ))}
+          <SelectRadix.Content className={s.selectContent} position={'popper'}>
+            <SelectRadix.Viewport>
+              <SelectRadix.Group>
+                {options?.map(el => (
+                  <SelectItem key={el} value={el.toString()}>
+                    {el}
+                  </SelectItem>
+                ))}
+              </SelectRadix.Group>
             </SelectRadix.Viewport>
-            <SelectRadix.ScrollDownButton className={s.selectScrollButton}>
-              <ChevronDownIcon />
-            </SelectRadix.ScrollDownButton>
           </SelectRadix.Content>
         </SelectRadix.Portal>
       </SelectRadix.Root>
@@ -48,19 +43,14 @@ export const Select: FC<selectPropsType> = ({ options, onChange, value }) => {
   )
 }
 
-type selectItemPropsType = {
+type SelectItemPropsType = {
   children: ReactNode
   value: string
-  onChange?: (value: number) => void
 }
 
-const SelectItem: FC<selectItemPropsType> = ({ children, onChange, ...props }) => {
-  const onChangeHandler = (e: any) => {
-    onChange?.(e.currentTarget.value)
-  }
-
+const SelectItem: FC<SelectItemPropsType> = ({ children, ...props }) => {
   return (
-    <SelectRadix.Item onChange={onChangeHandler} className={s.selectItem} {...props}>
+    <SelectRadix.Item className={s.selectItem} {...props}>
       <SelectRadix.ItemText>{children}</SelectRadix.ItemText>
     </SelectRadix.Item>
   )

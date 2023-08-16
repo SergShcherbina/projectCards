@@ -21,6 +21,6 @@ export const Default: Story = {
   render: args => {
     const [value, setValue] = useState(1)
 
-    return <Select {...args} value={value} onChange={setValue} />
+    return <Select {...args} value={value} onChangeValue={setValue} />
   },
 }
