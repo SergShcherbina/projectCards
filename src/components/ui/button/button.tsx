@@ -1,10 +1,11 @@
 import { ComponentPropsWithoutRef, ElementType } from 'react'
 
 import s from './button.module.scss'
+import icon from './img/sampleIcon.svg'
 
 export type ButtonProps<T extends ElementType = 'button'> = {
   as?: T
-  variant?: 'primary' | 'secondary' | 'tertiary' | 'link'
+  variant?: 'primary' | 'secondary' | 'tertiary' | 'link' | 'primaryWithIcon' | 'secondaryWithIcon'
   fullWidth?: boolean
   className?: string
   disabled?: boolean
@@ -29,7 +30,12 @@ export const Button = <T extends ElementType = 'button'>(
       } ${className} `}
       {...rest}
     >
-      <span className={s.byCenter}>{rest.children}</span>
+      <span className={s.byCenter}>
+        {(variant === 'primaryWithIcon' || variant === 'secondaryWithIcon') && (
+          <img src={icon} alt={'icon'} />
+        )}
+        {rest.children}
+      </span>
     </Component>
   )
 }
