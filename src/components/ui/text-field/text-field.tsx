@@ -4,18 +4,18 @@ import { clsx } from 'clsx'
 
 import { Typography } from '../typography'
 
-import { CloseEye } from './icons/CloseEye.tsx'
-import { CloseIcon } from './icons/CloseIcon.tsx'
-import { Eye } from './icons/Eye.tsx'
-import { Search } from './icons/Search.tsx'
+import { CloseEye } from './img/closeEye.tsx'
+import { CloseIcon } from './img/closeIcon.tsx'
+import { Eye } from './img/eye.tsx'
+import { Search } from './img/search.tsx'
 import s from './text-field.module.scss'
 
 export type TextFieldProps = {
   errorMessage?: string
   label?: string
   isSearch?: boolean
-  onChangeValue: (value: string) => void
-  value: string
+  onChangeValue?: (value: string) => void
+  value?: string
 } & ComponentPropsWithoutRef<'input'>
 
 export const TextField = ({
@@ -55,7 +55,7 @@ export const TextField = ({
           value={value}
           placeholder={placeholder}
           disabled={disabled}
-          onChange={e => onChangeValue(e.currentTarget.value)}
+          onChange={e => onChangeValue?.(e.currentTarget.value)}
           {...rest}
         />
         {type === 'search' && (
@@ -64,7 +64,7 @@ export const TextField = ({
               <Search />
             </div>
             {value && (
-              <button className={classNames.rightIcon} onClick={() => onChangeValue('')}>
+              <button className={classNames.rightIcon} onClick={() => onChangeValue?.('')}>
                 <CloseIcon />
               </button>
             )}
