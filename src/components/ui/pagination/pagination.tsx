@@ -2,6 +2,7 @@ import { FC } from 'react'
 
 import { clsx } from 'clsx'
 
+import { Select } from '../select'
 import { Typography } from '../typography'
 
 import { usePagination } from './hook/usePagination.ts'
@@ -81,14 +82,15 @@ export const Pagination: FC<PaginationProps> = ({
         <NextButton onClick={handleNextPageClicked} disabled={isLastPage} />
       </div>
 
-      {showPerPageSelect &&
-        `<PerPageSelect
+      {showPerPageSelect && (
+        <PerPageSelect
           {...{
             perPage,
             perPageOptions,
             onPerPageChange,
           }}
-        />`}
+        />
+      )}
     </div>
   )
 }
@@ -159,33 +161,27 @@ const MainPaginationButtons: FC<MainPaginationButtonsProps> = ({
   )
 }
 
-// export type PerPageSelectProps = {
-//   perPage: number
-//   perPageOptions: number[]
-//   onPerPageChange: (itemPerPage: number) => void
-// }
-//
-// export const PerPageSelect: FC<PerPageSelectProps> = ({
-//   perPage,
-//   perPageOptions,
-//   onPerPageChange,
-// }) => {
-//   const selectOptions = perPageOptions.map(value => ({
-//     label: value,
-//     value,
-//   }))
-//
-//   return (
-//     <div className={classNames.selectBox}>
-//       Показать
-//       <Select
-//         className={classNames.select}
-//         value={perPage}
-//         options={selectOptions}
-//         onChange={onPerPageChange}
-//         variant="pagination"
-//       />
-//       на странице
-//     </div>
-//   )
-// }
+export type PerPageSelectProps = {
+  perPage: number
+  perPageOptions: number[]
+  onPerPageChange: (itemPerPage: number) => void
+}
+
+export const PerPageSelect: FC<PerPageSelectProps> = ({
+  perPage,
+  perPageOptions,
+  onPerPageChange,
+}) => {
+  return (
+    <div className={classNames.selectBox}>
+      Показать
+      <Select
+        className={classNames.select}
+        value={perPage}
+        options={perPageOptions}
+        onChangeValue={onPerPageChange}
+      />
+      на странице
+    </div>
+  )
+}

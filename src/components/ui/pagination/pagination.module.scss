@@ -1,8 +1,8 @@
-//.root {
-//  display: flex;
-//  gap: 25px;
-//  align-items: center;
-//}
+.root {
+  display: flex;
+  gap: 25px;
+  align-items: center;
+}
 
 .container {
   display: flex;
@@ -65,16 +65,9 @@
   }
 }
 
-//.selectBox {
-//  display: flex;
-//  gap: 12px;
-//  align-items: center;
-//
-//  color: var(--color-text-primary);
-//  white-space: nowrap;
-//}
-//
-//.select {
-//  flex-shrink: 0;
-//  width: 50px;
-//}
+.selectBox {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  white-space: nowrap;
+}
