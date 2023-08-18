@@ -1,0 +1,20 @@
+.wrapperAvatar {
+  position: relative;
+
+  .avatarEdit {
+    cursor: pointer;
+    user-select: none;
+
+    position: absolute;
+    top: 60px;
+    left: 60px;
+
+    width: 44px;
+    height: 44px;
+  }
+
+  .input {
+    user-select: none;
+    display: none;
+  }
+}

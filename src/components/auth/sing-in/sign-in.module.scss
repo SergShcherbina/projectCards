@@ -4,10 +4,6 @@
   .inputMargin {
     margin-bottom: 1.5rem;
   }
-
-  .lastInputMargin {
-    margin-bottom: 3.75rem;
-  }
 }
 
 .questionStyle {
@@ -15,6 +11,12 @@
   color: var(--color-light-900);
 }
 
-.underlineBtn > * {
+.underlineBtn > span {
   text-decoration: underline;
+}
+
+.forgotPassword {
+  display: flex;
+  justify-content: end;
+  padding-bottom: 50px;
 }
