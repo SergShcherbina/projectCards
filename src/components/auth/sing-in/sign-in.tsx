@@ -63,7 +63,7 @@ export const SignIn = () => {
         Don't have an account?
       </Typography>
       <Button variant={'link'} as={'a'} className={s.underlineBtn}>
-        Sing Up
+        Sign Up
       </Button>
     </Card>
   )
