@@ -8,24 +8,24 @@ import { signUpScheme } from '../validation'
 
 import s from './sign-up.module.scss'
 
-type SingUpType = z.infer<typeof signUpScheme>
+type SignUpType = z.infer<typeof signUpScheme>
 
 export const SignUp = () => {
   const {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<SingUpType>({
+  } = useForm<SignUpType>({
     resolver: zodResolver(signUpScheme),
   })
 
-  const onSubmit = (data: SingUpType) => {
+  const onSubmit = (data: SignUpType) => {
     alert(JSON.stringify(data))
   }
 
   return (
     <Card>
-      <Typography variant={'large'}>Sing Up</Typography>
+      <Typography variant={'large'}>Sign Up</Typography>
       <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
         {/**/}
         <DevTool control={control} />
@@ -59,14 +59,14 @@ export const SignUp = () => {
         />
 
         <Button type="submit" fullWidth={true}>
-          Sing Up
+          Sign Up
         </Button>
       </form>
       <Typography variant={'body2'} className={s.questionStyle}>
         Already have an account?
       </Typography>
       <Button variant={'link'} as={'a'} className={s.underlineBtn}>
-        Sing In
+        Sign In
       </Button>
     </Card>
   )
