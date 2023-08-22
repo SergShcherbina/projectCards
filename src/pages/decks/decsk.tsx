@@ -1,6 +1,9 @@
 import { useState } from 'react'
 
+import { Link } from 'react-router-dom'
+
 import { Button, TextField } from '../../components'
+import s from '../../components/auth/forgot-password/forgot-password.module.scss'
 import { Table } from '../../components/ui/table'
 import { useCreateDecksMutation, useGetDecksQuery } from '../../services/decks'
 import { decksSlice } from '../../services/decks/decks.slice.ts'
@@ -66,7 +69,10 @@ export const Decks = () => {
           {data?.items.map(deck => {
             return (
               <Table.Row key={deck.id}>
-                <Table.Cell>{deck.name}</Table.Cell>
+                <Table.Cell>
+                  <Link to={`/cards/${deck.id}`}>{deck.name}</Link>
+                </Table.Cell>
+
                 <Table.Cell>{deck.cardsCount}</Table.Cell>
                 <Table.Cell>{new Date(deck.updated).toLocaleDateString('ru-Ru')}</Table.Cell>
                 <Table.Cell>{deck.author.name}</Table.Cell>

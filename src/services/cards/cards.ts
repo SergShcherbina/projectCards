@@ -1,34 +1,34 @@
 import { baseApi } from '../base-api.tsx'
 
-import { Card, CardsResponse, CreateDecksArgs, GetCardsArgs } from './types.ts'
+import { Card, CardsResponse, CreateCardArgs, DeleteCardArgs, GetCardsArgs } from './types.ts'
 
 const cardsApi = baseApi.injectEndpoints({
   endpoints: builder => {
     return {
       getCards: builder.query<CardsResponse, GetCardsArgs>({
-        query: args => {
+        query: ({ deckId, ...params }) => {
           return {
-            url: `v1/cards/{id}`,
+            url: `v1/decks/${deckId}/cards`,
             method: 'GET',
-            params: args,
+            params: params,
           }
         },
         providesTags: ['Cards'],
       }),
-      patchCards: builder.mutation<Card, CreateDecksArgs>({
-        query: ({ name }) => {
+      createCards: builder.mutation<Card, CreateCardArgs>({
+        query: ({ deckId, ...body }) => {
           return {
-            url: `v1/cards/{id}`,
-            method: 'PATCH',
-            body: { name },
+            url: `v1/cards/${deckId}`,
+            method: 'POST',
+            body,
           }
         },
         invalidatesTags: ['Cards'],
       }),
       deleteCards: builder.mutation<any, DeleteCardArgs>({
-        query: ({ name }) => {
+        query: ({ cardId }) => {
           return {
-            url: `v1/cards/{id}`,
+            url: `v1/cards/${cardId}`,
             method: 'DELETE',
           }
         },
@@ -41,6 +41,6 @@ const cardsApi = baseApi.injectEndpoints({
 export const {
   useGetCardsQuery,
   useLazyGetCardsQuery,
-  usePatchCardsMutation,
+  useCreateCardsMutation,
   useDeleteCardsMutation,
 } = cardsApi

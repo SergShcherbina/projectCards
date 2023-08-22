@@ -21,14 +21,14 @@ export type CardsResponse = PaginatedEntity<Card> & {
 }
 
 export type GetCardsArgs = {
-  deskId: Card['deckId']
+  deckId: string
   currentPage?: Pagination['currentPage']
   itemsPerPage?: Pagination['itemsPerPage']
-  orderBy?: string
+  orderBy?: string | null
 }
 
 export type CreateCardArgs = Pick<Card, 'question' | 'answer' | 'deckId'>
 
 export type DeleteCardArgs = {
-  id: Card['id']
+  cardId: Card['id']
 }
