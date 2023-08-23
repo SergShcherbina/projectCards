@@ -8,7 +8,7 @@ import { Modal } from '../../components/ui/modal'
 import { Page } from '../../components/ui/page'
 import { Pagination } from '../../components/ui/pagination'
 import { Column, SortTable, Table } from '../../components/ui/table'
-import { useCreateCardsMutation, useGetCardsQuery } from '../../services/cards'
+import { Card, useCreateCardsMutation, useGetCardsQuery } from '../../services/cards'
 import { cardsSlice } from '../../services/cards/cards.slice.ts'
 import { useGetDeckByIdQuery } from '../../services/decks'
 import { useAppDispatch, useAppSelector } from '../../services/store.ts'
@@ -19,7 +19,6 @@ import ArrowBackIcon from './icons/ArrowBackIcon.tsx'
 export const Cards = () => {
   const { deckId } = useParams<{ deckId: string }>()
   const [sortTable, setSortTable] = useState<SortTable>({ key: 'updated', direction: 'asc' })
-  const [cardName, setCardName] = useState('')
   const orderBy = sortTable ? `${sortTable.key}-${sortTable.direction}` : null
 
   const dispatch = useAppDispatch()
@@ -39,11 +38,7 @@ export const Cards = () => {
 
   const { data: deck } = useGetDeckByIdQuery(deckId || '')
 
-  const {
-    data: cards,
-    isLoading,
-    refetch,
-  } = useGetCardsQuery({
+  const { data: cards, isLoading } = useGetCardsQuery({
     deckId: deckId || '',
     itemsPerPage,
     currentPage,
@@ -51,6 +46,15 @@ export const Cards = () => {
   })
 
   if (!deckId) return <div>Deck not found</div>
+
+  if (searchByName) {
+    cards?.items?.forEach((item: Card, index: number, object: any) => {
+      debugger
+      if (!item.question.search(searchByName)) {
+        object.splice(index, 1)
+      }
+    })
+  }
 
   const columns: Column[] = [
     { key: 'question', sortable: true, title: 'Question' },
@@ -72,10 +76,19 @@ export const Cards = () => {
       <div className={s.rowFlex}>
         <Typography variant={'large'}>{deck?.name}</Typography>
         <Button variant={'primary'} onClick={() => navigate('/')}>
-          <Typography variant={'body2'}>Add New Card</Typography>
+          <Typography as={'span'} variant={'body2'}>
+            Add New Card
+          </Typography>
         </Button>
       </div>
       <TextField placeholder={'Search'} value={searchByName} />
+      <TextField
+        label="Search"
+        onChangeValue={setSearch}
+        value={searchByName}
+        placeholder="input search"
+        type="search"
+      />
 
       <Table.Root>
         <Table.Header columns={columns} sort={sortTable} onSort={setSortTable} />
@@ -97,7 +110,10 @@ export const Cards = () => {
       <Pagination
         page={currentPage}
         onChange={setCurrentPage}
+        onPerPageChange={setItemsPerPage}
         count={cards?.pagination?.totalPages || 1}
+        perPage={itemsPerPage}
+        perPageOptions={[5, 10, 15, 20, 100]}
       />
     </Page>
   )
