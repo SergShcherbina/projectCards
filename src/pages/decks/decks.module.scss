@@ -1,0 +1,18 @@
+.wrapperTitle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+.gridContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 150px;
+  gap: 20px;
+  align-items: end;
+
+  .sliderFlex {
+    display: grid;
+    gap: 10px;
+  }
+}

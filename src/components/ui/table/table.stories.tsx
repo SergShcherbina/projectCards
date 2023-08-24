@@ -127,7 +127,7 @@ export const WithMapMethod = {
 export const WithSort = {
   render: (args: any) => {
     const [sort, setSort] = useState<SortTable>(null)
-    const sortString: string | null = sort ? `${sort?.key}-${sort?.direction}` : null
+    const sortString: string | undefined = sort ? `${sort?.key}-${sort?.direction}` : undefined
 
     console.log(sort, sortString)
 
