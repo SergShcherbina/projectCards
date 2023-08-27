@@ -129,8 +129,6 @@ export const WithSort = {
     const [sort, setSort] = useState<SortTable>(null)
     const sortString: string | undefined = sort ? `${sort?.key}-${sort?.direction}` : undefined
 
-    console.log(sort, sortString)
-
     const columns: Column[] = [
       {
         key: 'title',
@@ -257,8 +255,6 @@ const data2 = [
 export const WithSort2 = {
   render: () => {
     const [sort, setSort] = useState<SortTable>(null)
-
-    console.log(sort)
 
     const handleSort = (key: string) => {
       if (sort && sort.key === key) {

@@ -1,23 +1,23 @@
 import { useState } from 'react'
 
+import { useDebounce } from 'usehooks-ts'
+
 import { Button, Slider, TabSwitcher, TextField, Typography } from '../../components'
 import { Page } from '../../components/ui/page/page.tsx'
 import { Pagination } from '../../components/ui/pagination'
-import { Table } from '../../components/ui/table'
+import { SortTable } from '../../components/ui/table'
 import { useGetDecksQuery } from '../../services/decks'
 import { decksSlice } from '../../services/decks/decks.slice.ts'
 import { useAppDispatch, useAppSelector } from '../../services/store.ts'
 
+import { tabs } from './data/tabs.ts'
 import s from './decks.module.scss'
 import removeImg from './img/remove.svg'
+import { DecksTable } from './table/decks-table.tsx'
 
 export const Decks = () => {
-  const [timer, setTimer] = useState(0)
-  const [sliderValue, setSliderValue] = useState([0, 20])
-  const [sort, setSort] = useState<{ key: string; direction: 'desc' | 'asc' }>({
-    key: 'created',
-    direction: 'desc',
-  })
+  const [sort, setSort] = useState<SortTable>(null)
+  const sortString = sort ? `${sort?.key}-${sort?.direction}` : null
 
   const dispatch = useAppDispatch()
 
@@ -25,31 +25,10 @@ export const Decks = () => {
   const currentPage = useAppSelector(state => state.decksSlice.currentPage)
   const searchByName = useAppSelector(state => state.decksSlice.searchByName)
   const showDecks = useAppSelector(state => state.decksSlice.showDecks)
-  const numberOfCards = useAppSelector(state => state.decksSlice.numberOfCards)
+  const sliderValue = useAppSelector(state => state.decksSlice.sliderValue)
 
-  const sortString = sort ? `${sort?.key}-${sort?.direction}` : null
-  const columns = [
-    {
-      key: 'name',
-      title: 'Name',
-      sortable: true,
-    },
-    {
-      key: 'cardsCount',
-      title: 'Cards',
-      sortable: true,
-    },
-    {
-      key: 'updated',
-      title: 'Last Updated',
-      sortable: true,
-    },
-    {
-      key: 'created',
-      title: 'Created by',
-      sortable: true,
-    },
-  ]
+  const debounceSliderValue = useDebounce<number[]>(sliderValue, 1000)
+  const debounceSearchByName = useDebounce<string>(searchByName, 1000)
 
   const setItemsPerPage = (itemsPerPage: number) =>
     dispatch(decksSlice.actions.setItemsPerPage(itemsPerPage))
@@ -58,46 +37,43 @@ export const Decks = () => {
     dispatch(decksSlice.actions.setCurrentPage(currentPage))
 
   const setSearch = (search: string) => {
-    clearTimeout(timer)
-
-    const timeout = setTimeout(() => {
-      dispatch(decksSlice.actions.setSearchByName(search))
-    }, 1000)
-
-    setTimer(+timeout)
+    dispatch(decksSlice.actions.setSearchByName(search))
   }
+
+  const onSetSliderValue = (value: number[]) => {
+    dispatch(decksSlice.actions.setSliderValue(value))
+  }
+
   const setShowCards = (whoseCards: string) => {
-    if (whoseCards === 'My Cards') {
-      dispatch(decksSlice.actions.setShowDecks('77e008a5-9e91-485e-809b-81081e0d00cb'))
+    if (whoseCards === 'My cards') {
+      dispatch(
+        decksSlice.actions.setShowDecks([whoseCards, '77e008a5-9e91-485e-809b-81081e0d00cb'])
+      )
     } else {
-      dispatch(decksSlice.actions.setShowDecks(''))
+      dispatch(decksSlice.actions.setShowDecks([whoseCards, '']))
     }
   }
 
-  const onChangeSliderValue = (value: number[]) => {
-    setSliderValue(value)
-    clearTimeout(timer)
-
-    const timeout = setTimeout(() => {
-      dispatch(decksSlice.actions.setNumberOfCards(sliderValue))
-    }, 1000)
-
-    setTimer(+timeout)
+  const onClearFilter = () => {
+    setCurrentPage(1)
+    setSearch('')
+    setShowCards('All cards')
+    onSetSliderValue([0, 20])
   }
 
   const { data, isLoading } = useGetDecksQuery({
     itemsPerPage,
     currentPage,
-    name: searchByName,
-    // orderBy: 'name-asc',
+    name: debounceSearchByName,
+    authorId: showDecks[1],
     orderBy: sortString ?? '',
-    authorId: showDecks,
-    minCardsCount: numberOfCards[0],
-    maxCardsCount: numberOfCards[1],
+    minCardsCount: debounceSliderValue[0],
+    maxCardsCount: debounceSliderValue[1],
   })
 
   const totalPages = data ? data.pagination.totalPages : 1
 
+  console.log(showDecks)
   // const [createDeck, { isLoading: isCreateDeckLoading }] = useCreateDecksMutation()
   // const handleCreateDeck = () => createDeck({ name: cardName })
 
@@ -113,48 +89,35 @@ export const Decks = () => {
           </Typography>
         </Button>
       </div>
+
       <div className={s.gridContainer}>
-        <TextField type={'search'} onChangeValue={setSearch} placeholder={'Input search'} />
+        <TextField
+          type={'search'}
+          onChangeValue={setSearch}
+          placeholder={'Input search'}
+          value={searchByName}
+        />
+
         <TabSwitcher
           title={'Show packs cards'}
-          defaultValue={'All cards'}
+          value={showDecks[0]}
           onValueChange={setShowCards}
-          tabs={[
-            {
-              title: 'My Cards',
-              value: 'My Cards',
-            },
-            {
-              title: 'All cards',
-              value: 'All cards',
-            },
-          ]}
+          tabs={tabs}
         />
+
         <div className={s.sliderFlex}>
           <Typography as={'span'} variant="body2">
             Number of cards
           </Typography>
-          <Slider value={sliderValue} max={20} onValueChange={onChangeSliderValue} />
+          <Slider value={sliderValue} max={20} onValueChange={onSetSliderValue} />
         </div>
-        <Button variant={'secondary'}>
+
+        <Button variant={'secondary'} onClick={onClearFilter}>
           <img src={removeImg} alt={'remove icon'} /> Clear filter
         </Button>
       </div>
-      <Table.Root style={{ marginTop: '20px' }}>
-        <Table.Header columns={columns} onSort={setSort} sort={sort} />
-        <Table.Body>
-          {data?.items.map(deck => {
-            return (
-              <Table.Row key={deck.id}>
-                <Table.Cell>{deck.name}</Table.Cell>
-                <Table.Cell>{deck.cardsCount}</Table.Cell>
-                <Table.Cell>{new Date(deck.updated).toLocaleDateString('ru-Ru')}</Table.Cell>
-                <Table.Cell>{deck.author.name}</Table.Cell>
-              </Table.Row>
-            )
-          })}
-        </Table.Body>
-      </Table.Root>
+
+      <DecksTable setSort={setSort} sort={sort} data={data?.items} />
 
       <Pagination
         count={totalPages}
