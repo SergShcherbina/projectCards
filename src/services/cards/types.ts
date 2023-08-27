@@ -27,7 +27,10 @@ export type GetCardsArgs = {
   orderBy?: string | null
 }
 
-export type CreateCardArgs = Pick<Card, 'question' | 'answer' | 'deckId'>
+export type CreateCardArgs = Pick<
+  Card,
+  'question' | 'answer' | 'deckId' | 'answerImg' | 'questionImg'
+>
 
 export type DeleteCardArgs = {
   cardId: Card['id']

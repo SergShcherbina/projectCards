@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import { useForm } from 'react-hook-form'
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import { toast, ToastContainer } from 'react-toastify'
 
@@ -13,6 +14,7 @@ import { cardsSlice } from '../../services/cards/cards.slice.ts'
 import { useGetDeckByIdQuery } from '../../services/decks'
 import { useAppDispatch, useAppSelector } from '../../services/store.ts'
 
+import { CardModal } from './cards-modals.tsx'
 import s from './cards.module.scss'
 import ArrowBackIcon from './icons/ArrowBackIcon.tsx'
 
@@ -80,6 +82,7 @@ export const Cards = () => {
             Add New Card
           </Typography>
         </Button>
+        <CardModal deckId={deckId} />
       </div>
       <TextField placeholder={'Search'} value={searchByName} />
       <TextField
@@ -116,52 +119,5 @@ export const Cards = () => {
         perPageOptions={[5, 10, 15, 20, 100]}
       />
     </Page>
-  )
-}
-
-const CreateCardModal = ({ deckId }: { deckId: string }) => {
-  const [showModal, setShowModal] = useState(false)
-  const closeModal = () => setShowModal(false)
-  const openModal = () => setShowModal(true)
-
-  const [createCard] = useCreateCardsMutation()
-
-  const { control, handleSubmit } = useForm<NewCard>({
-    resolver: zodResolver(newDeckSchema),
-    defaultValues: {
-      question: '',
-      answer: '',
-    },
-  })
-
-  const handleCardCreated = handleSubmit((args: NewCard) => {
-    createCard({ ...args, deckId })
-      .unwrap()
-      .then(() => {
-        toast.success('Card created successfully')
-        closeModal()
-      })
-      .catch(err => {
-        toast.error(err.data.message)
-      })
-  })
-
-  return (
-    <>
-      <Button onClick={openModal}>Add New Card</Button>
-
-      <Modal open={showModal} onClose={closeModal} title={'Create Card'}>
-        <form onSubmit={handleCardCreated} className={'gap-4 flex flex-column'}>
-          <ControlledTextField label={'Question'} control={control} name={'question'} />
-          <ControlledTextField label={'Answer'} control={control} name={'answer'} />
-          <div className={'flex items-center justify-between'}>
-            <Button onClick={closeModal} variant={'secondary'}>
-              Cancel
-            </Button>
-            <Button type={'submit'}>Create</Button>
-          </div>
-        </form>
-      </Modal>
-    </>
   )
 }
