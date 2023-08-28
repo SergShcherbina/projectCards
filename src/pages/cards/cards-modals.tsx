@@ -2,7 +2,8 @@ import { useState } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { toast } from 'react-toastify'
+import { toast, ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import { z } from 'zod'
 
 import { Button, ControlledTextField } from '../../components'
@@ -23,7 +24,11 @@ export const CardModal = ({ deckId }: { deckId: string }) => {
 
   const [createCard] = useCreateCardsMutation()
 
-  const { control, handleSubmit } = useForm<NewCard>({
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<NewCard>({
     resolver: zodResolver(cardSchema),
     defaultValues: {
       question: '',
@@ -35,17 +40,24 @@ export const CardModal = ({ deckId }: { deckId: string }) => {
     createCard({ ...args, deckId })
       .unwrap()
       .then(() => {
-        toast.success('Card created successfully')
-        closeModal()
+        toast.success('Card created successfully', {
+          position: toast.POSITION.TOP_CENTER,
+        })
       })
       .catch(err => {
-        toast.error(err.data.message)
+        toast.error(err.data.message, {
+          position: toast.POSITION.TOP_CENTER,
+        })
       })
+      .finally(() => closeModal())
   })
 
   return (
     <>
-      <Button onClick={openModal}>Add New Card</Button>
+      <Button onClick={openModal}>
+        Add New Card
+        <ToastContainer />
+      </Button>
 
       <Modal
         isOpen={showModal}
@@ -55,10 +67,20 @@ export const CardModal = ({ deckId }: { deckId: string }) => {
         cancelButtonText="Cancel"
         confirmButtonText="Add New Card"
       >
-        <form onSubmit={handleCardCreated}>
-          <ControlledTextField control={control} name={'question'} />
-          <ControlledTextField control={control} name={'answer'} />
-        </form>
+        <ControlledTextField
+          control={control}
+          name={'question'}
+          label={'Question'}
+          placeholder={'Input your question'}
+          errorMessage={errors.question?.message}
+        />
+        <ControlledTextField
+          control={control}
+          name={'answer'}
+          label={'Answer'}
+          placeholder={'Input your answer'}
+          errorMessage={errors.answer?.message}
+        />
       </Modal>
     </>
   )

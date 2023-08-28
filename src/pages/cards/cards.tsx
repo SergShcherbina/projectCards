@@ -1,15 +1,13 @@
 import { useState } from 'react'
 
-import { useForm } from 'react-hook-form'
-import { Link, useParams, useNavigate } from 'react-router-dom'
-import { toast, ToastContainer } from 'react-toastify'
+import { useNavigate, useParams } from 'react-router-dom'
 
-import { Button, ControlledTextField, TextField, Typography } from '../../components'
-import { Modal } from '../../components/ui/modal'
+import { Button, TextField, Typography } from '../../components'
+import { Grade } from '../../components/ui/grade'
 import { Page } from '../../components/ui/page'
 import { Pagination } from '../../components/ui/pagination'
 import { Column, SortTable, Table } from '../../components/ui/table'
-import { Card, useCreateCardsMutation, useGetCardsQuery } from '../../services/cards'
+import { Card, useGetCardsQuery } from '../../services/cards'
 import { cardsSlice } from '../../services/cards/cards.slice.ts'
 import { useGetDeckByIdQuery } from '../../services/decks'
 import { useAppDispatch, useAppSelector } from '../../services/store.ts'
@@ -77,14 +75,9 @@ export const Cards = () => {
       </Button>
       <div className={s.rowFlex}>
         <Typography variant={'large'}>{deck?.name}</Typography>
-        <Button variant={'primary'} onClick={() => navigate('/')}>
-          <Typography as={'span'} variant={'body2'}>
-            Add New Card
-          </Typography>
-        </Button>
         <CardModal deckId={deckId} />
       </div>
-      <TextField placeholder={'Search'} value={searchByName} />
+
       <TextField
         label="Search"
         onChangeValue={setSearch}
@@ -102,7 +95,9 @@ export const Cards = () => {
                 <Table.Cell>{card.question}</Table.Cell>
                 <Table.Cell>{card.answer}</Table.Cell>
                 <Table.Cell>{new Date(card.updated).toLocaleDateString('ru-Ru')}</Table.Cell>
-                <Table.Cell>{card.rating}</Table.Cell>
+                <Table.Cell>
+                  <Grade grade={card.rating} />
+                </Table.Cell>
                 <Table.Cell>{card.rating}</Table.Cell>
               </Table.Row>
             )
