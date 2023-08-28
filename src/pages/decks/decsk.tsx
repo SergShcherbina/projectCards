@@ -3,19 +3,19 @@ import { useState } from 'react'
 import { useDebounce } from 'usehooks-ts'
 
 import { Button, Slider, TabSwitcher, TextField, Typography } from '../../components'
-import { Page } from '../../components/ui/page/page.tsx'
+import { Page } from '../../components/ui/page'
 import { Pagination } from '../../components/ui/pagination'
 import { SortTable } from '../../components/ui/table'
-import { useGetDecksQuery } from '../../services/decks'
-import { decksSlice } from '../../services/decks/decks.slice.ts'
-import { useAppDispatch, useAppSelector } from '../../services/store.ts'
+import { useGetDecksQuery, decksSlice, useAppDispatch, useAppSelector } from '../../services'
 
 import { tabs } from './data/tabs.ts'
+import { DecksModal } from './decks-modal'
+import { DecksTable } from './decks-table'
 import s from './decks.module.scss'
 import removeImg from './img/remove.svg'
-import { DecksTable } from './table/decks-table.tsx'
 
 export const Decks = () => {
+  const [toggleModal, setToggleModal] = useState(false)
   const [sort, setSort] = useState<SortTable>(null)
   const sortString = sort ? `${sort?.key}-${sort?.direction}` : null
 
@@ -73,17 +73,13 @@ export const Decks = () => {
 
   const totalPages = data ? data.pagination.totalPages : 1
 
-  console.log(showDecks)
-  // const [createDeck, { isLoading: isCreateDeckLoading }] = useCreateDecksMutation()
-  // const handleCreateDeck = () => createDeck({ name: cardName })
-
   if (isLoading) return <div>isLoading: {isLoading.toString()}</div>
 
   return (
     <Page>
       <div className={s.wrapperTitle}>
         <Typography variant={'large'}>Packs list</Typography>
-        <Button>
+        <Button onClick={() => setToggleModal(true)}>
           <Typography variant={'subtitle1'} as={'span'}>
             Add New Pack
           </Typography>
@@ -118,6 +114,8 @@ export const Decks = () => {
       </div>
 
       <DecksTable setSort={setSort} sort={sort} data={data?.items} />
+
+      <DecksModal toggleModal={toggleModal} setToggleModal={setToggleModal} />
 
       <Pagination
         count={totalPages}
