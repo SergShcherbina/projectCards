@@ -46,6 +46,7 @@ export const Cards = () => {
   })
 
   if (!deckId) return <div>Deck not found</div>
+  const isOwner = deck?.userId == 'f2be95b9-4d07-4751-a775-bd612fc9553a' // test acc
 
   if (searchByName) {
     cards?.items?.forEach((item: Card, index: number, object: any) => {
@@ -77,6 +78,7 @@ export const Cards = () => {
         <Typography variant={'large'}>{deck?.name}</Typography>
         <CardModal deckId={deckId} />
       </div>
+      {deck?.cover && <img className={s.cover} src={deck?.cover} alt="cover" />}
 
       <TextField
         label="Search"
@@ -99,6 +101,19 @@ export const Cards = () => {
                   <Grade grade={card.rating} />
                 </Table.Cell>
                 <Table.Cell>{card.rating}</Table.Cell>
+
+                {isMyDeck && (
+                  <Table.DataCell>
+                    <div className={cNames.actions}>
+                      <button onClick={onClickEditHandler}>
+                        <EditIcon />
+                      </button>
+                      <button onClick={onClickDeleteHandler}>
+                        <DeleteIcon />
+                      </button>
+                    </div>
+                  </Table.DataCell>
+                )}
               </Table.Row>
             )
           })}

@@ -3,7 +3,6 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { Button, TextField } from '../../components'
-import s from '../../components/auth/forgot-password/forgot-password.module.scss'
 import { Table } from '../../components/ui/table'
 import { useCreateDecksMutation, useGetDecksQuery } from '../../services/decks'
 import { decksSlice } from '../../services/decks/decks.slice.ts'

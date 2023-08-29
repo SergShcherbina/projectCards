@@ -16,3 +16,12 @@
   align-items: center;
   justify-content: space-between;
 }
+
+.cover {
+  width: 170px;
+  height: 107px;
+
+  object-fit: scale-down;
+  object-position: 0 0;
+  border-radius: 2px;
+}
