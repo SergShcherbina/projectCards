@@ -12,12 +12,13 @@ import { cardsSlice } from '../../services/cards/cards.slice.ts'
 import { useGetDeckByIdQuery } from '../../services/decks'
 import { useAppDispatch, useAppSelector } from '../../services/store.ts'
 
-import { CardModal } from './cards-modals.tsx'
 import s from './cards.module.scss'
 import ArrowBackIcon from './icons/ArrowBackIcon.tsx'
+import { CardModalAdd, CardModalDelete } from './modals'
 
 export const Cards = () => {
   const { deckId } = useParams<{ deckId: string }>()
+
   const [sortTable, setSortTable] = useState<SortTable>({ key: 'updated', direction: 'asc' })
   const orderBy = sortTable ? `${sortTable.key}-${sortTable.direction}` : null
 
@@ -62,7 +63,7 @@ export const Cards = () => {
     { key: 'answer', sortable: true, title: 'Answer' },
     { key: 'updated', sortable: true, title: 'Updated' },
     { key: 'rating', sortable: true, title: 'Grade' },
-    { key: 'actions', sortable: false, title: '' },
+    { key: 'actions', sortable: false, title: 'Actions' },
   ]
 
   if (isLoading) return <div>isLoading: {isLoading.toString()}</div>
@@ -76,7 +77,7 @@ export const Cards = () => {
       </Button>
       <div className={s.rowFlex}>
         <Typography variant={'large'}>{deck?.name}</Typography>
-        <CardModal deckId={deckId} />
+        <CardModalAdd deckId={deckId} />
       </div>
       {deck?.cover && <img className={s.cover} src={deck?.cover} alt="cover" />}
 
@@ -100,19 +101,14 @@ export const Cards = () => {
                 <Table.Cell>
                   <Grade grade={card.rating} />
                 </Table.Cell>
-                <Table.Cell>{card.rating}</Table.Cell>
 
-                {isMyDeck && (
-                  <Table.DataCell>
-                    <div className={cNames.actions}>
-                      <button onClick={onClickEditHandler}>
-                        <EditIcon />
-                      </button>
-                      <button onClick={onClickDeleteHandler}>
-                        <DeleteIcon />
-                      </button>
+                {isOwner && (
+                  <Table.Cell>
+                    <div className={s.actions}>
+                      <CardModalDelete cardId={card.id} />
+                      <CardModalDelete cardId={card.id} />
                     </div>
-                  </Table.DataCell>
+                  </Table.Cell>
                 )}
               </Table.Row>
             )

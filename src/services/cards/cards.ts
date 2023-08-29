@@ -23,6 +23,7 @@ const cardsApi = baseApi.injectEndpoints({
             body,
           }
         },
+
         invalidatesTags: ['Cards'],
       }),
       deleteCards: builder.mutation<any, DeleteCardArgs>({

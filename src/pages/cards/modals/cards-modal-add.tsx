@@ -6,9 +6,9 @@ import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { z } from 'zod'
 
-import { Button, ControlledTextField } from '../../components'
-import { Modal } from '../../components/ui/modal'
-import { useCreateCardsMutation } from '../../services/cards'
+import { Button, ControlledTextField } from '../../../components'
+import { Modal } from '../../../components/ui/modal'
+import { useCreateCardsMutation } from '../../../services/cards'
 
 const cardSchema = z.object({
   question: z.string().min(3).max(200),
@@ -17,7 +17,7 @@ const cardSchema = z.object({
 
 type NewCard = z.infer<typeof cardSchema>
 
-export const CardModal = ({ deckId }: { deckId: string }) => {
+export const CardModalAdd = ({ deckId }: { deckId: string }) => {
   const [showModal, setShowModal] = useState(false)
   const closeModal = () => setShowModal(false)
   const openModal = () => setShowModal(true)
@@ -42,6 +42,7 @@ export const CardModal = ({ deckId }: { deckId: string }) => {
       .then(() => {
         toast.success('Card created successfully', {
           position: toast.POSITION.TOP_CENTER,
+          autoClose: 20,
         })
       })
       .catch(err => {
