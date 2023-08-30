@@ -6,7 +6,7 @@ import {
   Navigate,
 } from 'react-router-dom'
 
-import { Decks } from './pages/decks/decsk.tsx'
+import { Decks } from './pages'
 
 const publicRoutes: RouteObject[] = [
   {

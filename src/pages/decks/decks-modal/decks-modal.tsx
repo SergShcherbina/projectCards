@@ -1,5 +1,8 @@
 import { ChangeEvent, FC, useRef, useState } from 'react'
 
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
 import { Button, Checkbox, TextField, Modal } from '../../../components'
 import { useCreateDeckMutation } from '../../../services'
 import Mask from '../img/Mask.png'
@@ -17,7 +20,7 @@ export const DecksModal: FC<Props> = ({ toggleModal, setToggleModal }) => {
   const [cover, setCover] = useState<string | Blob>(Mask)
   const filePicker = useRef<HTMLInputElement>(null)
 
-  const [createDeck, { isLoading, isError }] = useCreateDeckMutation()
+  const [createDeck, { isLoading }] = useCreateDeckMutation()
 
   const onCreateDeck = () => {
     const formData = new FormData()
@@ -26,12 +29,6 @@ export const DecksModal: FC<Props> = ({ toggleModal, setToggleModal }) => {
     formData.append('isPrivate', String(checked))
     formData.append('cover', cover)
     createDeck(formData)
-
-    onCancel()
-
-    if (isError) {
-      alert('Error witch onCreateDeck')
-    }
   }
 
   const onModalToggle = (close: boolean = false) => {
@@ -58,11 +55,18 @@ export const DecksModal: FC<Props> = ({ toggleModal, setToggleModal }) => {
 
   const onCancel = () => {
     onChangeValue('')
-    onModalToggle(false)
     onChecked(false)
+    setCover(Mask)
   }
 
   if (isLoading) return <div>{'Loading...'}</div>
+  // if (data) {
+  //   onCancel()
+  //   onModalToggle(false)
+  // }
+  // if (isError) {
+  //   toast.error('error.data.errorMessages[0].message')
+  // }
 
   return (
     <Modal
@@ -100,6 +104,46 @@ export const DecksModal: FC<Props> = ({ toggleModal, setToggleModal }) => {
         onChangeValue={onChangeValue}
       />
       <Checkbox label={'Private pack'} id={'id'} checked={checked} onChange={onChecked} />
+
+      <ToastContainer position={'top-center'} />
     </Modal>
+    // <Modal
+    //   isOpen={toggleModal}
+    //   onClose={onModalToggle}
+    //   title={'Add New Pack'}
+    //   cancelButtonText={'Cancel'}
+    //   confirmButtonText={'Add new pack'}
+    //   onCancelButtonClick={onCancel}
+    //   onConfirmButtonClick={onCreateDeck}
+    // >
+    //   <div className={s.decksCover}>
+    //     <img
+    //       src={typeof cover === 'string' ? Mask : URL.createObjectURL(cover)}
+    //       alt={'image deck'}
+    //     />
+    //     <input
+    //       type="file"
+    //       className={s.hidden}
+    //       onChange={onChangeFile}
+    //       accept={'image/*, .png, .jpeg, .gif, .svg'}
+    //       ref={filePicker}
+    //     />
+    //   </div>
+    //
+    //   <Button variant={'secondaryWithIcon'} fullWidth={true} onClick={handlePick}>
+    //     Change Cover
+    //   </Button>
+    //
+    //   <TextField
+    //     type={'text'}
+    //     value={inputValue}
+    //     placeholder={'Input'}
+    //     label={'Name Pack'}
+    //     onChangeValue={onChangeValue}
+    //   />
+    //   <Checkbox label={'Private pack'} id={'id'} checked={checked} onChange={onChecked} />
+    //
+    //   <ToastContainer position={'top-center'} />
+    // </Modal>
   )
 }

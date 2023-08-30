@@ -1,5 +1,7 @@
 import { FC } from 'react'
 
+import { Link } from 'react-router-dom'
+
 import { SortTable, Table } from '../../../components/ui/table'
 import { Deck } from '../../../services'
 import { columns } from '../data/columns.ts'
@@ -26,7 +28,9 @@ export const DecksTable: FC<Props> = ({ setSort, sort, data }) => {
                   <div className={s.cover}>
                     <img src={deck.cover ? deck.cover : Mask} alt={`cover ${deck.name}`} />
                   </div>
-                  {deck.name}
+                  <Link className={s.link} to={`/cards/${deck.id}`}>
+                    {deck.name}
+                  </Link>
                 </div>
               </Table.Cell>
               <Table.Cell>{deck.cardsCount}</Table.Cell>
