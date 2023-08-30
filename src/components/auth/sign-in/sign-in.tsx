@@ -1,3 +1,5 @@
+import { FC } from 'react'
+
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
@@ -9,24 +11,28 @@ import { signInScheme } from '../validation/sing-in-scheme.ts'
 import s from './sign-in.module.scss'
 
 type SignInType = z.infer<typeof signInScheme>
-
-export const SignIn = () => {
+type SignInPropsType = {
+  onSubmit: (data: SignInType) => void
+  isSubmitting: boolean
+}
+export const SignIn: FC<SignInPropsType> = ({ onSubmit, isSubmitting }) => {
   const {
     handleSubmit,
     control,
     formState: { errors },
   } = useForm<SignInType>({
     resolver: zodResolver(signInScheme),
+    mode: 'onSubmit',
   })
 
-  const onSubmit = (data: SignInType) => {
-    alert(JSON.stringify(data))
-  }
+  const onSubmitForm = handleSubmit(data => {
+    onSubmit({ email: data.email, password: data.password, rememberMe: data.rememberMe })
+  })
 
   return (
     <Card>
       <Typography variant={'large'}>Sign In</Typography>
-      <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
+      <form className={s.form} onSubmit={onSubmitForm}>
         <DevTool control={control} />
 
         <ControlledTextField
@@ -54,7 +60,7 @@ export const SignIn = () => {
         <Typography variant={'body2'} className={s.forgotPassword}>
           Forgot Password?
         </Typography>
-        <Button type="submit" fullWidth={true}>
+        <Button type="submit" fullWidth={true} disabled={isSubmitting}>
           Sign In
         </Button>
       </form>

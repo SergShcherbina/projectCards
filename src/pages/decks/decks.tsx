@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import { Button, TextField } from '../../components'
 import { Table } from '../../components/ui/table'
+import { useLogoutMutation } from '../../services/auth/auth.ts'
 import { useCreateDecksMutation, useGetDecksQuery } from '../../services/decks'
 import { decksSlice } from '../../services/decks/decks.slice.ts'
 import { useAppDispatch, useAppSelector } from '../../services/store.ts'
@@ -32,12 +33,14 @@ export const Decks = () => {
   })
 
   const [createDeck, { isLoading: isCreateDeckLoading }] = useCreateDecksMutation()
+  const [logout] = useLogoutMutation()
   const handleCreateDeck = () => createDeck({ name: cardName })
 
   if (isLoading) return <div>isLoading: {isLoading.toString()}</div>
 
   return (
     <div>
+      <Button onClick={logout}>Logout</Button>
       <Button onClick={refetch}>refetch</Button>
       <Button onClick={() => setItemsPerPage(10)}>itemsPerPage:10</Button>
       <Button onClick={() => setItemsPerPage(15)}>itemsPerPage:15</Button>
