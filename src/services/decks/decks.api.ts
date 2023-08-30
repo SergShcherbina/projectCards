@@ -15,12 +15,12 @@ const decksApi = baseApi.injectEndpoints({
         },
         providesTags: ['Decks'],
       }),
-      createDecks: builder.mutation<Deck, CreateDecksArgs>({
-        query: ({ name }) => {
+      createDeck: builder.mutation<Deck, CreateDecksArgs>({
+        query: body => {
           return {
             url: `v1/decks`,
             method: 'POST',
-            body: { name },
+            body,
           }
         },
         invalidatesTags: ['Decks'],
@@ -29,4 +29,4 @@ const decksApi = baseApi.injectEndpoints({
   },
 })
 
-export const { useGetDecksQuery, useLazyGetDecksQuery, useCreateDecksMutation } = decksApi
+export const { useGetDecksQuery, useLazyGetDecksQuery, useCreateDeckMutation } = decksApi

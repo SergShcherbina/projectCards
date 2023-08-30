@@ -60,7 +60,9 @@ export const TabSwitcher: FC<TabSwitherProps> = ({
       defaultValue={defaultValue}
       onValueChange={onValueChange}
     >
-      <Typography variant="body2">{title}</Typography>
+      <Typography as={'span'} variant="body2">
+        {title}
+      </Typography>
       <TabsRadixUI.List className={classNames.list}>
         {tabs.map(tab => (
           <TabsRadixUI.Trigger
