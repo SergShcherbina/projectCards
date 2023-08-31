@@ -6,7 +6,7 @@ import {
   Navigate,
 } from 'react-router-dom'
 
-import { Decks } from './pages/decks/decks.tsx'
+import { Decks } from './pages'
 import { SignInPage } from './pages/sign-in/sign-in.tsx'
 import { useMeQuery } from './services/auth/auth.ts'
 
