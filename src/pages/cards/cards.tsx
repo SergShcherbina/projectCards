@@ -1,20 +1,21 @@
 import { useState } from 'react'
 
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
-import { Button, TextField, Typography } from '../../components'
+import { TextField, Typography } from '../../components'
+import { ButtonBack } from '../../components/ui/button-back/button-back.tsx'
 import { Grade } from '../../components/ui/grade'
 import { Page } from '../../components/ui/page'
 import { Pagination } from '../../components/ui/pagination'
 import { Column, SortTable, Table } from '../../components/ui/table'
+import { useGetDeckByIdQuery } from '../../services'
 import { Card, useGetCardsQuery } from '../../services/cards'
 import { cardsSlice } from '../../services/cards/cards.slice.ts'
-import { useGetDeckByIdQuery } from '../../services/decks'
 import { useAppDispatch, useAppSelector } from '../../services/store.ts'
 
 import s from './cards.module.scss'
-import ArrowBackIcon from './icons/ArrowBackIcon.tsx'
 import { CardModalAdd, CardModalDelete } from './modals'
+import { CardModalEdit } from './modals/cards-modal-edit.tsx'
 
 export const Cards = () => {
   const { deckId } = useParams<{ deckId: string }>()
@@ -23,7 +24,6 @@ export const Cards = () => {
   const orderBy = sortTable ? `${sortTable.key}-${sortTable.direction}` : null
 
   const dispatch = useAppDispatch()
-  const navigate = useNavigate()
 
   const itemsPerPage = useAppSelector(state => state.cardsSlice.itemsPerPage)
   const currentPage = useAppSelector(state => state.cardsSlice.currentPage)
@@ -70,11 +70,7 @@ export const Cards = () => {
 
   return (
     <Page>
-      <Button variant={'link'} onClick={() => navigate('/')} style={{ outline: 'none' }}>
-        <Typography variant={'body2'} className={s.backLabel}>
-          <ArrowBackIcon width={16} /> Back to Packs Lists
-        </Typography>
-      </Button>
+      <ButtonBack />
       <div className={s.rowFlex}>
         <Typography variant={'large'}>{deck?.name}</Typography>
         <CardModalAdd deckId={deckId} />
@@ -106,7 +102,7 @@ export const Cards = () => {
                   <Table.Cell>
                     <div className={s.actions}>
                       <CardModalDelete cardId={card.id} />
-                      <CardModalDelete cardId={card.id} />
+                      <CardModalEdit currentCard={card} />
                     </div>
                   </Table.Cell>
                 )}

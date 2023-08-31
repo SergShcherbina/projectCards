@@ -6,41 +6,40 @@ import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { z } from 'zod'
 
-import { Button, ControlledTextField } from '../../../components'
-import { Modal } from '../../../components/ui/modal'
-import { useCreateCardsMutation } from '../../../services/cards'
+import { ControlledTextField, Modal } from '../../../components'
+import { Card, useUpdateCardsMutation } from '../../../services/cards'
+import EditIcon from '../icons/EditIcon.tsx'
 
-const cardSchema = z.object({
-  question: z.string().min(3).max(200),
-  answer: z.string().min(3).max(200),
-})
+import { cardSchema } from './card-z-schema.ts'
 
-type NewCard = z.infer<typeof cardSchema>
+type zCard = z.infer<typeof cardSchema>
 
-export const CardModalEdit = ({ deckId }: { deckId: string }) => {
+export const CardModalEdit = ({ currentCard }: { currentCard: Card }) => {
   const [showModal, setShowModal] = useState(false)
   const closeModal = () => setShowModal(false)
   const openModal = () => setShowModal(true)
 
-  const [createCard] = useCreateCardsMutation()
+  const [updateCard] = useUpdateCardsMutation()
 
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<NewCard>({
+  } = useForm<zCard>({
     resolver: zodResolver(cardSchema),
     defaultValues: {
-      question: '',
-      answer: '',
+      question: currentCard.question,
+      answer: currentCard.answer,
+      answerImg: currentCard.answerImg,
+      questionImg: currentCard.questionImg,
     },
   })
 
-  const handleCardCreated = handleSubmit((args: NewCard) => {
-    createCard({ ...args, deckId })
+  const handleCardUpdated = handleSubmit((args: zCard) => {
+    updateCard({ ...args, id: currentCard.id })
       .unwrap()
       .then(() => {
-        toast.success('Card created successfully', {
+        toast.success('Card updated successfully', {
           position: toast.POSITION.TOP_CENTER,
           autoClose: 20,
         })
@@ -55,25 +54,24 @@ export const CardModalEdit = ({ deckId }: { deckId: string }) => {
 
   return (
     <>
-      <Button onClick={openModal}>
-        Add New Card
+      <EditIcon onClick={openModal}>
         <ToastContainer />
-      </Button>
+      </EditIcon>
 
       <Modal
         isOpen={showModal}
         onClose={closeModal}
-        onConfirmButtonClick={handleCardCreated}
-        title={'Add New Card'}
+        onConfirmButtonClick={handleCardUpdated}
+        title={'Edit Card'}
         cancelButtonText="Cancel"
-        confirmButtonText="Add New Card"
+        confirmButtonText="Save Changes"
       >
         <ControlledTextField
           control={control}
           name={'question'}
           label={'Question'}
           placeholder={'Input your question'}
-          errorMessage={errors.question?.message}
+          errorMessage={errors.root?.message}
         />
         <ControlledTextField
           control={control}

@@ -32,6 +32,8 @@ export type CreateCardArgs = Pick<
   'question' | 'answer' | 'deckId' | 'answerImg' | 'questionImg'
 >
 
+export type UpdateCardArgs = Pick<Card, 'id' | 'question' | 'answer' | 'answerImg' | 'questionImg'>
+
 export type DeleteCardArgs = {
   cardId: Card['id']
 }

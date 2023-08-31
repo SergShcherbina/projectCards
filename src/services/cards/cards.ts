@@ -1,6 +1,13 @@
 import { baseApi } from '../base-api.tsx'
 
-import { Card, CardsResponse, CreateCardArgs, DeleteCardArgs, GetCardsArgs } from './types.ts'
+import {
+  Card,
+  CardsResponse,
+  CreateCardArgs,
+  DeleteCardArgs,
+  GetCardsArgs,
+  UpdateCardArgs,
+} from './types.ts'
 
 const cardsApi = baseApi.injectEndpoints({
   endpoints: builder => {
@@ -26,6 +33,17 @@ const cardsApi = baseApi.injectEndpoints({
 
         invalidatesTags: ['Cards'],
       }),
+      updateCards: builder.mutation<Card, UpdateCardArgs>({
+        query: ({ id, ...body }) => {
+          return {
+            url: `v1/cards/${id}/`,
+            method: 'PATCH',
+            body,
+          }
+        },
+
+        invalidatesTags: ['Cards'],
+      }),
       deleteCards: builder.mutation<any, DeleteCardArgs>({
         query: ({ cardId }) => {
           return {
@@ -44,4 +62,5 @@ export const {
   useLazyGetCardsQuery,
   useCreateCardsMutation,
   useDeleteCardsMutation,
+  useUpdateCardsMutation,
 } = cardsApi
