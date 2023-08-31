@@ -57,9 +57,9 @@ export const SignIn: FC<SignInPropsType> = ({ onSubmit, isSubmitting }) => {
           name={'rememberMe'}
           className={s.rememberMe}
         />
-        <Typography variant={'body2'} className={s.forgotPassword}>
+        <Button variant={'link'} as={'a'} href={'/sign-up'} className={s.forgotPassword}>
           Forgot Password?
-        </Typography>
+        </Button>
         <Button type="submit" fullWidth={true} disabled={isSubmitting}>
           Sign In
         </Button>
@@ -68,7 +68,7 @@ export const SignIn: FC<SignInPropsType> = ({ onSubmit, isSubmitting }) => {
         {/* eslint-disable-next-line react/no-unescaped-entities */}
         Don't have an account?
       </Typography>
-      <Button variant={'link'} as={'a'} className={s.underlineBtn}>
+      <Button variant={'link'} as={'a'} href={'/sign-up'} className={s.underlineBtn}>
         Sing Up
       </Button>
     </Card>
