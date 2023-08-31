@@ -1,8 +1,8 @@
 import { useState } from 'react'
 
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
-import { TextField, Typography } from '../../components'
+import { Button, TextField, Typography } from '../../components'
 import { ButtonBack } from '../../components/ui/button-back/button-back.tsx'
 import { Grade } from '../../components/ui/grade'
 import { Page } from '../../components/ui/page'
@@ -24,7 +24,7 @@ export const Cards = () => {
   const orderBy = sortTable ? `${sortTable.key}-${sortTable.direction}` : null
 
   const dispatch = useAppDispatch()
-
+  const navigate = useNavigate()
   const itemsPerPage = useAppSelector(state => state.cardsSlice.itemsPerPage)
   const currentPage = useAppSelector(state => state.cardsSlice.currentPage)
   const searchByName = useAppSelector(state => state.cardsSlice.searchByName)
@@ -73,7 +73,12 @@ export const Cards = () => {
       <ButtonBack />
       <div className={s.rowFlex}>
         <Typography variant={'large'}>{deck?.name}</Typography>
-        <CardModalAdd deckId={deckId} />
+
+        {isOwner ? (
+          <CardModalAdd deckId={deckId} />
+        ) : (
+          <Button onClick={() => navigate('/learn')}>Learn to Pack </Button>
+        )}
       </div>
       {deck?.cover && <img className={s.cover} src={deck?.cover} alt="cover" />}
 
@@ -98,14 +103,18 @@ export const Cards = () => {
                   <Grade grade={card.rating} />
                 </Table.Cell>
 
-                {isOwner && (
-                  <Table.Cell>
-                    <div className={s.actions}>
-                      <CardModalDelete cardId={card.id} />
-                      <CardModalEdit currentCard={card} />
-                    </div>
-                  </Table.Cell>
-                )}
+                <Table.Cell>
+                  <div className={s.actions}>
+                    {isOwner ? (
+                      <>
+                        <CardModalDelete cardId={card.id} />
+                        <CardModalEdit currentCard={card} />
+                      </>
+                    ) : (
+                      <Grade grade={card.rating} />
+                    )}
+                  </div>
+                </Table.Cell>
               </Table.Row>
             )
           })}

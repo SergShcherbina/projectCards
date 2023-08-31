@@ -25,6 +25,10 @@ const privateRoutes: RouteObject[] = [
     path: 'cards/:deckId',
     element: <Cards />,
   },
+  {
+    path: '/learn',
+    element: <div>learn</div>,
+  },
 ]
 
 const router = createBrowserRouter([
