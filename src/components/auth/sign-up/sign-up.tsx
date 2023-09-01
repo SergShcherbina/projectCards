@@ -1,6 +1,9 @@
+import { FC } from 'react'
+
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom'
 import { z } from 'zod'
 
 import { Button, Card, ControlledTextField, Typography } from '../../ui'
@@ -8,9 +11,14 @@ import { signUpScheme } from '../validation'
 
 import s from './sign-up.module.scss'
 
-type SignUpType = z.infer<typeof signUpScheme>
+export type SignUpType = z.infer<typeof signUpScheme>
 
-export const SignUp = () => {
+type Props = {
+  onSubmit: (data: SignUpType) => void
+  isSubmitting: boolean
+}
+
+export const SignUp: FC<Props> = ({ onSubmit, isSubmitting }) => {
   const {
     handleSubmit,
     control,
@@ -19,14 +27,14 @@ export const SignUp = () => {
     resolver: zodResolver(signUpScheme),
   })
 
-  const onSubmit = (data: SignUpType) => {
-    alert(JSON.stringify(data))
+  const onSubmitValue = (data: SignUpType) => {
+    onSubmit(data)
   }
 
   return (
     <Card>
       <Typography variant={'large'}>Sign Up</Typography>
-      <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
+      <form className={s.form} onSubmit={handleSubmit(onSubmitValue)}>
         {/**/}
         <DevTool control={control} />
         {/**/}
@@ -58,14 +66,14 @@ export const SignUp = () => {
           errorMessage={errors.confirmPassword?.message}
         />
 
-        <Button type="submit" fullWidth={true}>
+        <Button type="submit" fullWidth={true} disabled={isSubmitting}>
           Sign Up
         </Button>
       </form>
       <Typography variant={'body2'} className={s.questionStyle}>
         Already have an account?
       </Typography>
-      <Button variant={'link'} as={'a'} className={s.underlineBtn}>
+      <Button variant={'link'} as={Link} to={'/login'} className={s.underlineBtn}>
         Sign In
       </Button>
     </Card>

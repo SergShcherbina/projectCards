@@ -9,12 +9,17 @@ import {
 import { Decks } from './pages'
 import { Cards } from './pages/cards'
 import { SignInPage } from './pages/sign-in/sign-in.tsx'
+import { SignUpPage } from './pages/sign-up/sign-up-page.tsx'
 import { useMeQuery } from './services/auth'
 
 const publicRoutes: RouteObject[] = [
   {
     path: '/login',
     element: <SignInPage />,
+  },
+  {
+    path: '/sign-up',
+    element: <SignUpPage />,
   },
 ]
 
