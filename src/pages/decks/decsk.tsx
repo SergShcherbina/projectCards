@@ -1,7 +1,9 @@
 import { useState } from 'react'
 
+import { Navigate } from 'react-router-dom'
 import { useDebounce } from 'usehooks-ts'
 
+import { Spinner } from '../../assets'
 import { Button, Slider, TabSwitcher, TextField, Typography } from '../../components'
 import { Page } from '../../components/ui/page'
 import { Pagination } from '../../components/ui/pagination'
@@ -74,7 +76,7 @@ export const Decks = () => {
 
   const totalPages = data ? data.pagination.totalPages : 1
 
-  if (isLoading) return <div>isLoading: {isLoading.toString()}</div>
+  if (!userData) return <Navigate to={'/login'} />
 
   return (
     <Page>
@@ -114,7 +116,7 @@ export const Decks = () => {
         </Button>
       </div>
 
-      <DecksTable setSort={setSort} sort={sort} data={data?.items} />
+      {isLoading ? <Spinner /> : <DecksTable setSort={setSort} sort={sort} data={data?.items} />}
 
       <DecksModal toggleModal={toggleModal} setToggleModal={setToggleModal} />
 

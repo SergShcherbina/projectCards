@@ -1,5 +1,6 @@
 import { ChangeEvent, FC, useRef, useState } from 'react'
 
+import { Spinner } from '../../../assets'
 import { Button, Checkbox, TextField, Modal } from '../../../components'
 import { useCreateDeckMutation } from '../../../services'
 import Mask from '../img/Mask.png'
@@ -17,7 +18,7 @@ export const DecksModal: FC<Props> = ({ toggleModal, setToggleModal }) => {
   const [cover, setCover] = useState<string | Blob>(Mask)
   const filePicker = useRef<HTMLInputElement>(null)
 
-  const [createDeck, { isLoading, isError }] = useCreateDeckMutation()
+  const [createDeck, { isLoading }] = useCreateDeckMutation()
 
   const onCreateDeck = () => {
     const formData = new FormData()
@@ -28,10 +29,6 @@ export const DecksModal: FC<Props> = ({ toggleModal, setToggleModal }) => {
     createDeck(formData)
 
     onCancel()
-
-    if (isError) {
-      alert('Error witch onCreateDeck')
-    }
   }
 
   const onModalToggle = (close: boolean = false) => {
@@ -60,9 +57,10 @@ export const DecksModal: FC<Props> = ({ toggleModal, setToggleModal }) => {
     onChangeValue('')
     onModalToggle(false)
     onChecked(false)
+    setCover(Mask)
   }
 
-  if (isLoading) return <div>{'Loading...'}</div>
+  if (isLoading) return <Spinner />
 
   return (
     <Modal

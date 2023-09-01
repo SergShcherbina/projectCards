@@ -6,6 +6,7 @@ import {
   Navigate,
 } from 'react-router-dom'
 
+import { Spinner } from './assets'
 import { Decks } from './pages'
 import { Cards } from './pages/cards'
 import { SignInPage } from './pages/sign-in/sign-in.tsx'
@@ -53,7 +54,7 @@ export const Router = () => {
 function PrivateRoutes() {
   const { data, isLoading } = useMeQuery()
 
-  if (isLoading) return <div>Loading...</div>
+  if (isLoading) return <Spinner />
 
   const isAuthenticated = !!data
 

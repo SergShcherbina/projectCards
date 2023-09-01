@@ -1,6 +1,7 @@
 import { Navigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify'
 
+import { Spinner } from '../../assets'
 import { SignUp, SignUpType } from '../../components'
 import { useMeQuery, useSignUpMutation } from '../../services/auth'
 
@@ -20,7 +21,7 @@ export const SignUpPage = () => {
     }
   }
 
-  if (isLoading) return <div> Loading... </div>
+  if (isLoading) return <Spinner />
   if (data) return <Navigate to="/" />
 
   return (
