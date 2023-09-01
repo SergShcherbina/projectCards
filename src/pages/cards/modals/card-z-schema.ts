@@ -7,12 +7,12 @@ export const cardSchema = z.object({
     .string()
     .nonempty('Enter a question')
     .min(3, 'Question must be at least 3 characters')
-    .max(50, 'Question must be at more 200 characters'),
+    .max(200, 'Question must be at more 200 characters'),
   answer: z
     .string()
     .nonempty('Enter a answer')
     .min(3, 'Answer must be at least 3 characters')
-    .max(100, 'Answer must be at more 200 characters'),
+    .max(200, 'Answer must be at more 200 characters'),
   // questionImg: z
   //   .any()
   //   .refine(file => file?.size <= MAX_FILE_SIZE, `Max file size is 1MB.`)

@@ -9,11 +9,13 @@ import { Page } from '../../components/ui/page'
 import { Pagination } from '../../components/ui/pagination'
 import { Column, SortTable, Table } from '../../components/ui/table'
 import { useGetDeckByIdQuery } from '../../services'
+import { useMeQuery } from '../../services/auth'
 import { Card, useGetCardsQuery } from '../../services/cards'
 import { cardsSlice } from '../../services/cards/cards.slice.ts'
 import { useAppDispatch, useAppSelector } from '../../services/store.ts'
 
 import s from './cards.module.scss'
+import LearnIcon from './icons/LearnIcon.tsx'
 import { CardModalAdd, CardModalDelete } from './modals'
 import { CardModalEdit } from './modals/cards-modal-edit.tsx'
 
@@ -46,8 +48,11 @@ export const Cards = () => {
     orderBy,
   })
 
+  const { data: me } = useMeQuery()
+  const isOwner = me?.id === deck?.userId
+
   if (!deckId) return <div>Deck not found</div>
-  const isOwner = deck?.userId == 'f2be95b9-4d07-4751-a775-bd612fc9553a' // test acc
+  //const isOwner = deck?.userId == 'f2be95b9-4d07-4751-a775-bd612fc9553a' // test acc
 
   if (searchByName) {
     cards?.items?.forEach((item: Card, index: number, object: any) => {
@@ -77,7 +82,7 @@ export const Cards = () => {
         {isOwner ? (
           <CardModalAdd deckId={deckId} />
         ) : (
-          <Button onClick={() => navigate('/learn')}>Learn to Pack </Button>
+          <Button onClick={() => navigate(`/learn/${deckId}`)}>Learn to Pack </Button>
         )}
       </div>
       {deck?.cover && <img className={s.cover} src={deck?.cover} alt="cover" />}
@@ -111,7 +116,7 @@ export const Cards = () => {
                         <CardModalEdit currentCard={card} />
                       </>
                     ) : (
-                      <Grade grade={card.rating} />
+                      <LearnIcon onClick={() => navigate(`/learn/${deckId}`)} />
                     )}
                   </div>
                 </Table.Cell>

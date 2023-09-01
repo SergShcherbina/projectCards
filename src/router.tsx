@@ -6,11 +6,10 @@ import {
   Navigate,
 } from 'react-router-dom'
 
-import { Cards } from './pages/cards/cards.tsx'
-import { Decks } from './pages/decks/decsk.tsx'
 import { Decks } from './pages'
+import { Cards } from './pages/cards'
 import { SignInPage } from './pages/sign-in/sign-in.tsx'
-import { useMeQuery } from './services/auth/auth.api.ts'
+import { useMeQuery } from './services/auth'
 
 const publicRoutes: RouteObject[] = [
   {
@@ -29,8 +28,8 @@ const privateRoutes: RouteObject[] = [
     element: <Cards />,
   },
   {
-    path: '/learn',
-    element: <div>learn</div>,
+    path: '/learn/:deckId',
+    element: <div>learn </div>,
   },
 ]
 
