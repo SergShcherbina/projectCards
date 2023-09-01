@@ -8,7 +8,7 @@ import {
 
 import { Decks } from './pages'
 import { SignInPage } from './pages/sign-in/sign-in.tsx'
-import { useMeQuery } from './services/auth/auth.ts'
+import { useMeQuery } from './services/auth/auth.api.ts'
 
 const publicRoutes: RouteObject[] = [
   {

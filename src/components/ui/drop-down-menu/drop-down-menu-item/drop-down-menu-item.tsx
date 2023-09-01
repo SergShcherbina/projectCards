@@ -8,7 +8,7 @@ import s from './drop-down-menu-item.module.scss'
 
 type DropDownMenuItemType = {
   text: string
-  icon?: string
+  icon?: string | undefined
   onClick: () => void
 }
 
