@@ -8,11 +8,14 @@ import {
 
 import { Cards } from './pages/cards/cards.tsx'
 import { Decks } from './pages/decks/decsk.tsx'
+import { Decks } from './pages'
+import { SignInPage } from './pages/sign-in/sign-in.tsx'
+import { useMeQuery } from './services/auth/auth.api.ts'
 
 const publicRoutes: RouteObject[] = [
   {
     path: '/login',
-    element: <div>login</div>,
+    element: <SignInPage />,
   },
 ]
 
@@ -44,7 +47,11 @@ export const Router = () => {
 }
 
 function PrivateRoutes() {
-  const isAuthenticated = true
+  const { data, isLoading } = useMeQuery()
+
+  if (isLoading) return <div>Loading...</div>
+
+  const isAuthenticated = !!data
 
   return isAuthenticated ? <Outlet /> : <Navigate to="/login" />
 }
