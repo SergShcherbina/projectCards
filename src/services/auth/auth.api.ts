@@ -1,9 +1,11 @@
 import { baseApi } from '../base-api.tsx'
 
+import { UserType } from './types.ts'
+
 const authApi = baseApi.injectEndpoints({
   endpoints: builder => {
     return {
-      me: builder.query<any, void>({
+      me: builder.query<UserType | null, void>({
         query: () => {
           return {
             url: `v1/auth/me`,
@@ -25,7 +27,7 @@ const authApi = baseApi.injectEndpoints({
         },
         invalidatesTags: ['Me'],
       }),
-      logout: builder.mutation({
+      logout: builder.mutation<void, void>({
         query: () => {
           return {
             url: `v1/auth/logout`,

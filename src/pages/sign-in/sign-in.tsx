@@ -1,7 +1,7 @@
 import { Navigate, useNavigate } from 'react-router-dom'
 
 import { SignIn } from '../../components/auth/sign-in'
-import { useLoginMutation, useMeQuery } from '../../services/auth/auth.ts'
+import { useLoginMutation, useMeQuery } from '../../services/auth/auth.api.ts'
 
 export const SignInPage = () => {
   const { data, isLoading } = useMeQuery()
