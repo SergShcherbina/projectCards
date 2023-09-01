@@ -28,7 +28,9 @@ export const DecksTable: FC<Props> = ({ setSort, sort, data }) => {
                   <div className={s.cover}>
                     <img src={deck.cover ? deck.cover : Mask} alt={`cover ${deck.name}`} />
                   </div>
-                  <Link to={`/cards/${deck.id}`}>{deck.name}</Link>
+                  <Link className={s.link} to={`/cards/${deck.id}`}>
+                    {deck.name}
+                  </Link>
                 </div>
               </Table.Cell>
               <Table.Cell>{deck.cardsCount}</Table.Cell>

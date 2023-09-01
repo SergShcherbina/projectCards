@@ -4,6 +4,8 @@ import { ToastContainer, toast } from 'react-toastify'
 import { SignUp, SignUpType } from '../../components'
 import { useMeQuery, useSignUpMutation } from '../../services/auth'
 
+import s from './sign-up-page.module.scss'
+
 export const SignUpPage = () => {
   const { data, isLoading } = useMeQuery()
   const [signUpQuery, { isLoading: isSubmitting }] = useSignUpMutation()
@@ -23,7 +25,7 @@ export const SignUpPage = () => {
 
   return (
     <>
-      <SignUp onSubmit={onSubmit} isSubmitting={isSubmitting} />
+      <SignUp className={s.center} onSubmit={onSubmit} isSubmitting={isSubmitting} />
       <ToastContainer position={'top-center'} />
     </>
   )
