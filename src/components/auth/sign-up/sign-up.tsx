@@ -16,9 +16,11 @@ export type SignUpType = z.infer<typeof signUpScheme>
 type Props = {
   onSubmit: (data: SignUpType) => void
   isSubmitting: boolean
+  className: string
 }
 
-export const SignUp: FC<Props> = ({ onSubmit, isSubmitting }) => {
+export const SignUp: FC<Props> = ({ onSubmit, isSubmitting, className }) => {
+  debugger
   const {
     handleSubmit,
     control,
@@ -32,7 +34,7 @@ export const SignUp: FC<Props> = ({ onSubmit, isSubmitting }) => {
   }
 
   return (
-    <Card>
+    <Card className={className}>
       <Typography variant={'large'}>Sign Up</Typography>
       <form className={s.form} onSubmit={handleSubmit(onSubmitValue)}>
         {/**/}

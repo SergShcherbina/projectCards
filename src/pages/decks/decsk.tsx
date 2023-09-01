@@ -7,6 +7,7 @@ import { Page } from '../../components/ui/page'
 import { Pagination } from '../../components/ui/pagination'
 import { SortTable } from '../../components/ui/table'
 import { useGetDecksQuery, decksSlice, useAppDispatch, useAppSelector } from '../../services'
+import { useMeQuery } from '../../services/auth'
 
 import { tabs } from './data/tabs.ts'
 import { DecksModal } from './decks-modal'
@@ -20,6 +21,8 @@ export const Decks = () => {
   const sortString = sort ? `${sort?.key}-${sort?.direction}` : null
 
   const dispatch = useAppDispatch()
+
+  const { data: userData } = useMeQuery()
 
   const itemsPerPage = useAppSelector(state => state.decksSlice.itemsPerPage)
   const currentPage = useAppSelector(state => state.decksSlice.currentPage)
@@ -45,10 +48,8 @@ export const Decks = () => {
   }
 
   const setShowCards = (whoseCards: string) => {
-    if (whoseCards === 'My cards') {
-      dispatch(
-        decksSlice.actions.setShowDecks([whoseCards, '77e008a5-9e91-485e-809b-81081e0d00cb'])
-      )
+    if (whoseCards === 'My cards' && userData) {
+      dispatch(decksSlice.actions.setShowDecks([whoseCards, userData.id]))
     } else {
       dispatch(decksSlice.actions.setShowDecks([whoseCards, '']))
     }
