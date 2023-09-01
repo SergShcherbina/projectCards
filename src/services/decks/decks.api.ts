@@ -15,6 +15,9 @@ const decksApi = baseApi.injectEndpoints({
         },
         providesTags: ['Decks'],
       }),
+      getDeckById: builder.query<Deck, string>({
+        query: deckId => `v1/decks/${deckId}`,
+      }),
       createDeck: builder.mutation<Deck, CreateDecksArgs>({
         query: body => {
           return {
@@ -29,4 +32,9 @@ const decksApi = baseApi.injectEndpoints({
   },
 })
 
-export const { useGetDecksQuery, useLazyGetDecksQuery, useCreateDeckMutation } = decksApi
+export const {
+  useGetDecksQuery,
+  useLazyGetDecksQuery,
+  useCreateDeckMutation,
+  useGetDeckByIdQuery,
+} = decksApi
