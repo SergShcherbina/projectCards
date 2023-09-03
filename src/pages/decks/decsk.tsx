@@ -12,7 +12,7 @@ import { useGetDecksQuery, decksSlice, useAppDispatch, useAppSelector } from '..
 import { useMeQuery } from '../../services/auth'
 
 import { tabs } from './data/tabs.ts'
-import { DecksModal } from './decks-modal'
+import { DecksModalCreate } from './decks-modal'
 import { DecksTable } from './decks-table'
 import s from './decks.module.scss'
 import removeImg from './img/remove.svg'
@@ -118,7 +118,7 @@ export const Decks = () => {
 
       {isLoading ? <Spinner /> : <DecksTable setSort={setSort} sort={sort} data={data?.items} />}
 
-      <DecksModal toggleModal={toggleModal} setToggleModal={setToggleModal} />
+      <DecksModalCreate toggleModal={toggleModal} setToggleModal={setToggleModal} />
 
       <Pagination
         count={totalPages}
