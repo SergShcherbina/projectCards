@@ -2,9 +2,11 @@ import { FC } from 'react'
 
 import { Link } from 'react-router-dom'
 
+import iconLearn from '../../../assets/icons/play.svg'
 import { SortTable, Table } from '../../../components/ui/table'
 import { Deck } from '../../../services'
 import { columns } from '../data/columns.ts'
+import { DecksModalDelete } from '../decks-modals'
 import Mask from '../img/Mask-small.png'
 
 import s from './decks-table.module.scss'
@@ -13,9 +15,10 @@ type Props = {
   setSort: (sort: SortTable) => void
   sort?: SortTable
   data: Deck[] | undefined
+  myCards: string
 }
 
-export const DecksTable: FC<Props> = ({ setSort, sort, data }) => {
+export const DecksTable: FC<Props> = ({ setSort, sort, data, myCards }) => {
   return (
     <Table.Root style={{ margin: '20px 0 10px' }}>
       <Table.Header columns={columns} onSort={setSort} sort={sort} />
@@ -26,7 +29,11 @@ export const DecksTable: FC<Props> = ({ setSort, sort, data }) => {
               <Table.Cell>
                 <div className={s.wrapperName}>
                   <div className={s.cover}>
-                    <img src={deck.cover ? deck.cover : Mask} alt={`cover ${deck.name}`} />
+                    <img
+                      className={s.coverImg}
+                      src={deck.cover ? deck.cover : Mask}
+                      alt={`cover ${deck.name}`}
+                    />
                   </div>
                   <Link className={s.link} to={`/cards/${deck.id}`}>
                     {deck.name}
@@ -36,6 +43,19 @@ export const DecksTable: FC<Props> = ({ setSort, sort, data }) => {
               <Table.Cell>{deck.cardsCount}</Table.Cell>
               <Table.Cell>{new Date(deck.updated).toLocaleDateString('ru-Ru')}</Table.Cell>
               <Table.Cell>{deck.author.name}</Table.Cell>
+              <Table.Cell>
+                <div className={s.wrapperIcons}>
+                  <Link to={`/learn/${deck.id}`} className={s.itemLink}>
+                    <img src={iconLearn} alt={'icon learn packs'} />
+                  </Link>
+
+                  {myCards && (
+                    <>
+                      <DecksModalDelete decksId={deck.id} />
+                    </>
+                  )}
+                </div>
+              </Table.Cell>
             </Table.Row>
           )
         })}

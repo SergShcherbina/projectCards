@@ -28,6 +28,15 @@ const decksApi = baseApi.injectEndpoints({
         },
         invalidatesTags: ['Decks'],
       }),
+      deleteDeck: builder.mutation<Deck, string>({
+        query: deckId => {
+          return {
+            url: `v1/decks/${deckId}`,
+            method: 'DELETE',
+          }
+        },
+        invalidatesTags: ['Decks'],
+      }),
     }
   },
 })
@@ -37,4 +46,5 @@ export const {
   useLazyGetDecksQuery,
   useCreateDeckMutation,
   useGetDeckByIdQuery,
+  useDeleteDeckMutation,
 } = decksApi

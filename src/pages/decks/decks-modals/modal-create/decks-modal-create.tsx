@@ -6,12 +6,12 @@ import { useController, useForm } from 'react-hook-form'
 import { ToastContainer, toast } from 'react-toastify'
 import { z } from 'zod'
 
-import { Spinner } from '../../../assets'
-import { Button, Modal, ControlledTextField, ControlledCheckbox } from '../../../components'
-import { useCreateDeckMutation } from '../../../services'
-import Mask from '../img/Mask.png'
+import { Spinner } from '../../../../assets'
+import { Button, Modal, ControlledTextField, ControlledCheckbox } from '../../../../components'
+import { useCreateDeckMutation } from '../../../../services'
+import Mask from '../../img/Mask.png'
 
-import s from './decks-modal.module.scss'
+import s from './decks-modal-create.module.scss'
 
 type Props = {
   toggleModal: boolean
@@ -85,7 +85,7 @@ export const DecksModalCreate: FC<Props> = ({ toggleModal, setToggleModal }) => 
     createDeck(formData)
       .unwrap()
       .then(res => {
-        toast(`${res.author.name}, your pack has been added`)
+        toast.success(`${res.author.name}, your pack has been added`)
         onCancel()
       })
       .catch(err => {

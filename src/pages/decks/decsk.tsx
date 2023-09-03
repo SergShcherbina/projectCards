@@ -4,6 +4,7 @@ import { Navigate } from 'react-router-dom'
 import { useDebounce } from 'usehooks-ts'
 
 import { Spinner } from '../../assets'
+import iconDelete from '../../assets/icons/delete.svg'
 import { Button, Slider, TabSwitcher, TextField, Typography } from '../../components'
 import { Page } from '../../components/ui/page'
 import { Pagination } from '../../components/ui/pagination'
@@ -12,10 +13,9 @@ import { useGetDecksQuery, decksSlice, useAppDispatch, useAppSelector } from '..
 import { useMeQuery } from '../../services/auth'
 
 import { tabs } from './data/tabs.ts'
-import { DecksModalCreate } from './decks-modal'
+import { DecksModalCreate } from './decks-modals'
 import { DecksTable } from './decks-table'
 import s from './decks.module.scss'
-import removeImg from './img/remove.svg'
 
 export const Decks = () => {
   const [toggleModal, setToggleModal] = useState(false)
@@ -112,11 +112,15 @@ export const Decks = () => {
         </div>
 
         <Button variant={'secondary'} onClick={onClearFilter}>
-          <img src={removeImg} alt={'remove icon'} /> Clear filter
+          <img src={iconDelete} alt={'remove icon'} /> Clear filter
         </Button>
       </div>
 
-      {isLoading ? <Spinner /> : <DecksTable setSort={setSort} sort={sort} data={data?.items} />}
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <DecksTable setSort={setSort} sort={sort} data={data?.items} myCards={showDecks[1]} />
+      )}
 
       <DecksModalCreate toggleModal={toggleModal} setToggleModal={setToggleModal} />
 
