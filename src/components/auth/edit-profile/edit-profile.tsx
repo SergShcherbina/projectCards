@@ -1,6 +1,6 @@
 import { FC, useState } from 'react'
 
-import { useMeQuery, useUpdateMeMutation } from '../../../services/auth/auth.api.ts'
+import { useMeQuery, useUpdateMeMutation } from '../../../services/auth'
 import { Button, Card, Typography } from '../../ui'
 
 import s from './edit-profile.module.scss'
@@ -12,25 +12,26 @@ type Props = {
   name: string
   email?: string
   logoutHandler?: () => void
-  replaceAvatar?: (data: Blob | MediaSource) => void
+  // replaceAvatar?: (data: Blob | MediaSource) => void
 }
 
-export const EditProfile: FC<Props> = ({
-  name,
-  src,
-  logoutHandler,
-  // replaceNickname,
-  replaceAvatar,
-}) => {
+export const EditProfile: FC<Props> = ({ name, logoutHandler }) => {
   let [switcher, setSwitcher] = useState(false)
   const { data } = useMeQuery()
   const [updateMe] = useUpdateMeMutation()
-  const onReplaceName = (name: string | undefined) => {
+  const onChangeNameHandler = (name: string | undefined) => {
     const form = new FormData()
 
     form.append('name', name ? name : '')
     updateMe(form)
     setSwitcher(!switcher)
+  }
+
+  const onChangeAvatarHandler = (data: string | Blob) => {
+    const form = new FormData()
+
+    form.append('avatar', data ? data : '')
+    updateMe(form)
   }
 
   return (
@@ -39,17 +40,17 @@ export const EditProfile: FC<Props> = ({
         Personal Information
       </Typography>
 
-      <ReplaceAvatar src={src} replaceAvatar={replaceAvatar} />
+      <ReplaceAvatar src={data?.avatar} replaceAvatar={value => onChangeAvatarHandler(value)} />
 
       {switcher ? (
-        <EditName nickname={name} onReplaceName={value => onReplaceName(value)} />
+        <EditName nickname={name} onReplaceName={value => onChangeNameHandler(value)} />
       ) : (
         <>
           <Typography
             variant={'subtitle1'}
             as={'span'}
             className={s.nickname}
-            onDoubleClick={() => setSwitcher(!switcher)}
+            onClick={() => setSwitcher(!switcher)}
           >
             {data?.name}
           </Typography>
