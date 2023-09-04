@@ -1,6 +1,6 @@
 import { FC, useState } from 'react'
 
-import { useMeQuery, useUpdateMeMutation } from '../../../services/auth'
+import { useLogoutMutation, useMeQuery, useUpdateMeMutation } from '../../../services/auth'
 import { Button, Card, Typography } from '../../ui'
 
 import s from './edit-profile.module.scss'
@@ -11,14 +11,13 @@ type Props = {
   src?: string
   name: string
   email?: string
-  logoutHandler?: () => void
-  // replaceAvatar?: (data: Blob | MediaSource) => void
 }
 
-export const EditProfile: FC<Props> = ({ name, logoutHandler }) => {
+export const EditProfile: FC<Props> = ({ name }) => {
   let [switcher, setSwitcher] = useState(false)
   const { data } = useMeQuery()
   const [updateMe] = useUpdateMeMutation()
+  const [onLogout] = useLogoutMutation()
   const onChangeNameHandler = (name: string | undefined) => {
     const form = new FormData()
 
@@ -57,7 +56,7 @@ export const EditProfile: FC<Props> = ({ name, logoutHandler }) => {
           <Typography variant={'body2'} as={'span'} className={s.email}>
             {data?.email}
           </Typography>
-          <Button variant={'secondaryWithIcon'} className={s.offsetBtn} onClick={logoutHandler}>
+          <Button variant={'secondaryWithIcon'} className={s.offsetBtn} onClick={() => onLogout()}>
             {'Logout'}
           </Button>
         </>
