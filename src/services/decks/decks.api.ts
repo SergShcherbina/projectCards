@@ -1,6 +1,6 @@
 import { baseApi } from '../base-api.tsx'
 
-import { CreateDecksArgs, Deck, DecksResponse, GetDecksArgs } from './types'
+import { Deck, DecksResponse, FormDataType, GetDecksArgs } from './types'
 
 const decksApi = baseApi.injectEndpoints({
   endpoints: builder => {
@@ -15,10 +15,12 @@ const decksApi = baseApi.injectEndpoints({
         },
         providesTags: ['Decks'],
       }),
+
       getDeckById: builder.query<Deck, string>({
         query: deckId => `v1/decks/${deckId}`,
       }),
-      createDeck: builder.mutation<Deck, CreateDecksArgs>({
+
+      createDeck: builder.mutation<Deck, FormDataType>({
         query: body => {
           return {
             url: `v1/decks`,
@@ -28,11 +30,23 @@ const decksApi = baseApi.injectEndpoints({
         },
         invalidatesTags: ['Decks'],
       }),
+
       deleteDeck: builder.mutation<Deck, string>({
         query: deckId => {
           return {
             url: `v1/decks/${deckId}`,
             method: 'DELETE',
+          }
+        },
+        invalidatesTags: ['Decks'],
+      }),
+
+      editDeck: builder.mutation<Deck, any>({
+        query: ({ formData, decksId }) => {
+          return {
+            url: `v1/decks/${decksId}`,
+            method: 'PATCH',
+            body: formData,
           }
         },
         invalidatesTags: ['Decks'],
@@ -47,4 +61,5 @@ export const {
   useCreateDeckMutation,
   useGetDeckByIdQuery,
   useDeleteDeckMutation,
+  useEditDeckMutation,
 } = decksApi
