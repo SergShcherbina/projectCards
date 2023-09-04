@@ -6,15 +6,21 @@ import {
   Navigate,
 } from 'react-router-dom'
 
+import { Spinner } from './assets'
 import { Decks } from './pages'
 import { Cards } from './pages/cards'
 import { SignInPage } from './pages/sign-in/sign-in.tsx'
+import { SignUpPage } from './pages/sign-up/sign-up-page.tsx'
 import { useMeQuery } from './services/auth'
 
 const publicRoutes: RouteObject[] = [
   {
     path: '/login',
     element: <SignInPage />,
+  },
+  {
+    path: '/sign-up',
+    element: <SignUpPage />,
   },
 ]
 
@@ -48,7 +54,7 @@ export const Router = () => {
 function PrivateRoutes() {
   const { data, isLoading } = useMeQuery()
 
-  if (isLoading) return <div>Loading...</div>
+  if (isLoading) return <Spinner />
 
   const isAuthenticated = !!data
 

@@ -19,4 +19,9 @@ export const columns = [
     title: 'Created by',
     sortable: true,
   },
+  {
+    key: 'actions',
+    title: 'Actions',
+    sortable: false,
+  },
 ]
