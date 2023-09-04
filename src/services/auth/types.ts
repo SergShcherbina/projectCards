@@ -7,3 +7,11 @@ export type UserType = {
   name: string
   email: string
 }
+
+export type requestSignUp = {
+  name?: string
+  password: string
+  email: string
+  subject?: string
+  sendConfirmationEmail?: false
+}
