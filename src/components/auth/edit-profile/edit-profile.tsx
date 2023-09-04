@@ -1,5 +1,6 @@
 import { FC, useState } from 'react'
 
+import { useMeQuery, useUpdateMeMutation } from '../../../services/auth/auth.api.ts'
 import { Button, Card, Typography } from '../../ui'
 
 import s from './edit-profile.module.scss'
@@ -9,24 +10,26 @@ import { ReplaceAvatar } from './replace-avatar/replace-avatar.tsx'
 type Props = {
   src?: string
   name: string
-  email: string
-  logoutHandler: () => void
-  replaceNickname: (name: string) => void
-  replaceAvatar: (data: Blob | MediaSource) => void
+  email?: string
+  logoutHandler?: () => void
+  replaceAvatar?: (data: Blob | MediaSource) => void
 }
 
 export const EditProfile: FC<Props> = ({
   name,
   src,
-  email,
   logoutHandler,
-  replaceNickname,
+  // replaceNickname,
   replaceAvatar,
 }) => {
   let [switcher, setSwitcher] = useState(false)
+  const { data } = useMeQuery()
+  const [updateMe] = useUpdateMeMutation()
+  const onReplaceName = (name: string | undefined) => {
+    const form = new FormData()
 
-  const onReplaceName = (name: string) => {
-    replaceNickname(name)
+    form.append('name', name ? name : '')
+    updateMe(form)
     setSwitcher(!switcher)
   }
 
@@ -39,7 +42,7 @@ export const EditProfile: FC<Props> = ({
       <ReplaceAvatar src={src} replaceAvatar={replaceAvatar} />
 
       {switcher ? (
-        <EditName onReplaceName={onReplaceName} nickname={name} />
+        <EditName nickname={name} onReplaceName={value => onReplaceName(value)} />
       ) : (
         <>
           <Typography
@@ -48,10 +51,10 @@ export const EditProfile: FC<Props> = ({
             className={s.nickname}
             onDoubleClick={() => setSwitcher(!switcher)}
           >
-            {name}
+            {data?.name}
           </Typography>
           <Typography variant={'body2'} as={'span'} className={s.email}>
-            {email}
+            {data?.email}
           </Typography>
           <Button variant={'secondaryWithIcon'} className={s.offsetBtn} onClick={logoutHandler}>
             {'Logout'}
