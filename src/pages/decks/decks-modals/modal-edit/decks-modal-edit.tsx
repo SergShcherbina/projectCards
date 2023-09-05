@@ -21,13 +21,15 @@ type FormType = z.infer<typeof editSchema>
 
 type Props = {
   decksId: string
+  prevDeckName: string
+  prevCover: string | null
+  isPrevPrivate: boolean
 }
 
-export const DecksModalEdit: FC<Props> = ({ decksId }) => {
+export const DecksModalEdit: FC<Props> = ({ decksId, prevDeckName, prevCover, isPrevPrivate }) => {
   const [toggle, setToggle] = useState(false)
   const fileInput = useRef<HTMLInputElement | null>(null)
-  const [deckCover, setDeckCover] = useState<Blob | null>(null)
-
+  const [deckCover, setDeckCover] = useState<Blob | string>(prevCover ?? Mask)
   const [editDecks, {}] = useEditDeckMutation()
 
   const {
@@ -59,6 +61,7 @@ export const DecksModalEdit: FC<Props> = ({ decksId }) => {
 
   const onCancel = () => {
     reset()
+    setDeckCover(prevCover ?? Mask)
     toggleModal()
   }
   const handleClick = () => {
@@ -105,7 +108,10 @@ export const DecksModalEdit: FC<Props> = ({ decksId }) => {
         onConfirmButtonClick={handleSubmit(onSubmit)}
       >
         <div className={s.decksCover}>
-          <img src={deckCover ? URL.createObjectURL(deckCover) : Mask} alt={'image deck'} />
+          <img
+            src={typeof deckCover === 'string' ? deckCover : URL.createObjectURL(deckCover)}
+            alt={'image deck'}
+          />
 
           <input
             {...register('cover')}
@@ -129,10 +135,15 @@ export const DecksModalEdit: FC<Props> = ({ decksId }) => {
           control={control}
           label={'New deck name'}
           placeholder={'name'}
-          defaultValue={''}
+          defaultValue={prevDeckName}
           errorMessage={errors.deckName?.message}
         />
-        <ControlledCheckbox control={control} name={'private'} label={'Private pack'} />
+        <ControlledCheckbox
+          control={control}
+          name={'private'}
+          label={'Private pack'}
+          defaultValue={isPrevPrivate}
+        />
       </Modal>
     </>
   )
