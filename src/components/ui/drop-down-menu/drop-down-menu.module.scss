@@ -40,9 +40,3 @@
     opacity: 1;
   }
 }
-
-/** only for storybook */
-[aria-haspopup='menu'] {
-  position: relative;
-  left: 200px;
-}
