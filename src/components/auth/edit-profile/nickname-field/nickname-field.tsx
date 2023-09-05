@@ -11,6 +11,7 @@ import { nicknameScheme } from './validation'
 
 type PropsType = {
   onReplaceName: (text: string) => void
+  // nickname?: string | undefined
 } & z.infer<typeof nicknameScheme>
 
 export const EditName: FC<PropsType> = ({ onReplaceName }) => {

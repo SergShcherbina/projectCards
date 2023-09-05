@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom'
 
 import { Spinner } from './assets'
+import { EditProfile } from './components/auth/edit-profile'
 import { Decks } from './pages'
 import { Cards } from './pages/cards'
 import { SignInPage } from './pages/sign-in/sign-in.tsx'
@@ -36,6 +37,10 @@ const privateRoutes: RouteObject[] = [
   {
     path: '/learn/:deckId',
     element: <div>learn </div>,
+  },
+  {
+    path: 'profile',
+    element: <EditProfile />,
   },
 ]
 

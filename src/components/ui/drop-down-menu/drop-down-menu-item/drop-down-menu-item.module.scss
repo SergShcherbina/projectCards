@@ -1,5 +1,6 @@
 .wrapperItems {
   user-select: none;
+  line-height: 1;
   border-top: 1px solid var(--color-dark-300);
   outline: 0;
 
@@ -16,12 +17,9 @@
 
   .item {
     cursor: pointer;
-
     display: flex;
     gap: 8px;
     align-items: center;
-
-    padding: 0.75rem 0;
 
     .icon {
       width: 16px;

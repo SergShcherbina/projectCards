@@ -7,7 +7,7 @@ import s from './replace-avatar.module.scss'
 
 type PropsType = {
   src?: string
-  replaceAvatar: (data: Blob | MediaSource) => void
+  replaceAvatar: (data: string | Blob) => void
 }
 export const ReplaceAvatar: FC<PropsType> = ({ src, replaceAvatar }) => {
   const onChangeFile = (e: ChangeEvent<HTMLInputElement>) => {
