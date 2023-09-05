@@ -1,6 +1,6 @@
 import { baseApi } from '../base-api.tsx'
 
-import { UserType } from './types.ts'
+import { requestSignUp, UserType } from './types.ts'
 
 const authApi = baseApi.injectEndpoints({
   endpoints: builder => {
@@ -49,6 +49,16 @@ const authApi = baseApi.injectEndpoints({
         },
         invalidatesTags: ['Me'],
       }),
+
+      signUp: builder.mutation<UserType, requestSignUp>({
+        query: body => {
+          return {
+            url: `v1/auth/sign-up`,
+            method: 'POST',
+            body,
+          }
+        },
+      }),
       updateMe: builder.mutation({
         query: data => {
           return {
@@ -63,4 +73,10 @@ const authApi = baseApi.injectEndpoints({
   },
 })
 
-export const { useLoginMutation, useMeQuery, useLogoutMutation, useUpdateMeMutation } = authApi
+export const {
+  useLoginMutation,
+  useMeQuery,
+  useLogoutMutation,
+  useSignUpMutation,
+  useUpdateMeMutation,
+} = authApi

@@ -29,6 +29,7 @@ export const Button = <T extends ElementType = 'button'>(
         disabled ? s.disabled : ''
       } ${className} `}
       {...rest}
+      disabled={disabled}
     >
       <span className={s.byCenter}>
         {(variant === 'primaryWithIcon' || variant === 'secondaryWithIcon') && (

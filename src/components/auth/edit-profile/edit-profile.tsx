@@ -9,19 +9,18 @@ import { ReplaceAvatar } from './replace-avatar/replace-avatar.tsx'
 
 type Props = {
   src?: string
-  name: string
   email?: string
 }
 
-export const EditProfile: FC<Props> = ({ name }) => {
+export const EditProfile: FC<Props> = ({}) => {
   let [switcher, setSwitcher] = useState(false)
   const { data } = useMeQuery()
   const [updateMe] = useUpdateMeMutation()
   const [onLogout] = useLogoutMutation()
-  const onChangeNameHandler = (name: string | undefined) => {
+  const onChangeNameHandler = (name: string) => {
     const form = new FormData()
 
-    form.append('name', name ? name : '')
+    form.append('name', name)
     updateMe(form)
     setSwitcher(!switcher)
   }
@@ -42,7 +41,10 @@ export const EditProfile: FC<Props> = ({ name }) => {
       <ReplaceAvatar src={data?.avatar} replaceAvatar={value => onChangeAvatarHandler(value)} />
 
       {switcher ? (
-        <EditName nickname={name} onReplaceName={value => onChangeNameHandler(value)} />
+        <EditName
+          nickname={data?.name ? data?.name : 'Name'}
+          onReplaceName={value => onChangeNameHandler(value)}
+        />
       ) : (
         <>
           <Typography
