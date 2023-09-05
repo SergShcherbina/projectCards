@@ -7,6 +7,7 @@ import { SortTable, Table } from '../../../components/ui/table'
 import { Deck } from '../../../services'
 import { columns } from '../data/columns.ts'
 import { DecksModalDelete } from '../decks-modals'
+import { DecksModalEdit } from '../decks-modals/modal-edit/decks-modal-edit.tsx'
 import Mask from '../img/Mask-small.png'
 
 import s from './decks-table.module.scss'
@@ -27,7 +28,8 @@ export const DecksTable: FC<Props> = ({ setSort, sort, data, myCards }) => {
           return (
             <Table.Row key={deck.id}>
               <Table.Cell>
-                <div className={s.wrapperName}>
+                {/*<div className={s.wrapperName}>*/}
+                <Link className={s.link} to={`/cards/${deck.id}`}>
                   <div className={s.cover}>
                     <img
                       className={s.coverImg}
@@ -35,10 +37,9 @@ export const DecksTable: FC<Props> = ({ setSort, sort, data, myCards }) => {
                       alt={`cover ${deck.name}`}
                     />
                   </div>
-                  <Link className={s.link} to={`/cards/${deck.id}`}>
-                    {deck.name}
-                  </Link>
-                </div>
+                  {deck.name}
+                </Link>
+                {/*</div>*/}
               </Table.Cell>
               <Table.Cell>{deck.cardsCount}</Table.Cell>
               <Table.Cell>{new Date(deck.updated).toLocaleDateString('ru-Ru')}</Table.Cell>
@@ -51,6 +52,7 @@ export const DecksTable: FC<Props> = ({ setSort, sort, data, myCards }) => {
 
                   {myCards && (
                     <>
+                      <DecksModalEdit decksId={deck.id} />
                       <DecksModalDelete decksId={deck.id} />
                     </>
                   )}

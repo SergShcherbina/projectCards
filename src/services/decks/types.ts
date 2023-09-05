@@ -10,7 +10,8 @@ export type GetDecksArgs = {
   itemsPerPage?: Pagination['itemsPerPage']
 }
 
-export type CreateDecksArgs = FormData
+export type FormDataType = FormData
+export type PatchDeckArgs = { decksId: string } & FormDataType
 
 export interface Author {
   id: string
