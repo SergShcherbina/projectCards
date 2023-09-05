@@ -3,7 +3,6 @@ import { useState } from 'react'
 import { Navigate } from 'react-router-dom'
 import { useDebounce } from 'usehooks-ts'
 
-import { Spinner } from '../../assets'
 import iconDelete from '../../assets/icons/delete.svg'
 import { Button, Slider, TabSwitcher, TextField, Typography } from '../../components'
 import { Page } from '../../components/ui/page'
@@ -64,7 +63,7 @@ export const Decks = () => {
     onSetSliderValue([0, 20])
   }
 
-  const { data, isLoading } = useGetDecksQuery({
+  const { data } = useGetDecksQuery({
     itemsPerPage,
     currentPage,
     name: debounceSearchByName,
@@ -116,11 +115,7 @@ export const Decks = () => {
         </Button>
       </div>
 
-      {isLoading ? (
-        <Spinner />
-      ) : (
-        <DecksTable setSort={setSort} sort={sort} data={data?.items} myCards={showDecks[1]} />
-      )}
+      <DecksTable setSort={setSort} sort={sort} data={data?.items} myCards={showDecks[1]} />
 
       <DecksModalCreate toggleModal={toggleModal} setToggleModal={setToggleModal} />
 

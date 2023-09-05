@@ -52,7 +52,12 @@ export const DecksTable: FC<Props> = ({ setSort, sort, data, myCards }) => {
 
                   {myCards && (
                     <>
-                      <DecksModalEdit decksId={deck.id} />
+                      <DecksModalEdit
+                        decksId={deck.id}
+                        prevDeckName={deck.name}
+                        prevCover={deck.cover}
+                        isPrevPrivate={deck.isPrivate}
+                      />
                       <DecksModalDelete decksId={deck.id} />
                     </>
                   )}
