@@ -101,9 +101,21 @@ export const Cards = () => {
           {cards?.items.map(card => {
             return (
               <Table.Row key={card.id}>
-                <Table.Cell>{card.question}</Table.Cell>
+                <Table.Cell>
+                  {card?.questionImg ? (
+                    <img className={s.cardImg} src={card?.questionImg} alt="cover" />
+                  ) : (
+                    card.question
+                  )}
+                </Table.Cell>
 
-                <Table.Cell>{card.answer}</Table.Cell>
+                <Table.Cell>
+                  {card?.answerImg ? (
+                    <img className={s.cardImg} src={card?.answerImg} alt="cover" />
+                  ) : (
+                    card.answer
+                  )}
+                </Table.Cell>
                 <Table.Cell>{new Date(card.updated).toLocaleDateString('ru-Ru')}</Table.Cell>
                 <Table.Cell>
                   <Grade grade={card.rating} />
