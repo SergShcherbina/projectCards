@@ -102,6 +102,7 @@ export const Cards = () => {
             return (
               <Table.Row key={card.id}>
                 <Table.Cell>{card.question}</Table.Cell>
+
                 <Table.Cell>{card.answer}</Table.Cell>
                 <Table.Cell>{new Date(card.updated).toLocaleDateString('ru-Ru')}</Table.Cell>
                 <Table.Cell>

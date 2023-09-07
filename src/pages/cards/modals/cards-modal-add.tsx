@@ -11,7 +11,7 @@ import { useCreateCardsMutation } from '../../../services/cards'
 
 import { cardSchema } from './card-z-schema.ts'
 
-type Card = z.infer<typeof cardSchema>
+type TCard = z.infer<typeof cardSchema>
 
 export const CardModalAdd = ({ deckId }: { deckId: string }) => {
   const [showModal, setShowModal] = useState(false)
@@ -24,7 +24,7 @@ export const CardModalAdd = ({ deckId }: { deckId: string }) => {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<Card>({
+  } = useForm<TCard>({
     resolver: zodResolver(cardSchema),
     defaultValues: {
       question: '',
@@ -32,7 +32,7 @@ export const CardModalAdd = ({ deckId }: { deckId: string }) => {
     },
   })
 
-  const handleCardCreated = handleSubmit((args: Card) => {
+  const handleCardCreated = handleSubmit((args: TCard) => {
     createCard({ ...args, deckId })
       .unwrap()
       .then(() => {

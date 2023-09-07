@@ -7,12 +7,20 @@ import 'react-toastify/dist/ReactToastify.css'
 import { z } from 'zod'
 
 import { ControlledTextField, Modal } from '../../../components'
+import { ControlledImageInput } from '../../../components/ui/controlled/controlled-image-input/ControlledImageInput.tsx'
 import { Card, useUpdateCardsMutation } from '../../../services/cards'
 import EditIcon from '../icons/EditIcon.tsx'
 
 import { cardSchema } from './card-z-schema.ts'
 
-type zCard = z.infer<typeof cardSchema>
+type zCard = {
+  question: string
+  answer: string
+  answerImg: File[]
+  questionImg: File[]
+}
+
+//type zCard = z.infer<typeof cardSchema>
 
 export const CardModalEdit = ({ currentCard }: { currentCard: Card }) => {
   const [showModal, setShowModal] = useState(false)
@@ -22,6 +30,7 @@ export const CardModalEdit = ({ currentCard }: { currentCard: Card }) => {
   const [updateCard] = useUpdateCardsMutation()
 
   const {
+    register,
     control,
     handleSubmit,
     formState: { errors },
@@ -30,13 +39,17 @@ export const CardModalEdit = ({ currentCard }: { currentCard: Card }) => {
     defaultValues: {
       question: currentCard.question,
       answer: currentCard.answer,
-      answerImg: currentCard.answerImg,
-      questionImg: currentCard.questionImg,
     },
   })
 
-  const handleCardUpdated = handleSubmit((args: zCard) => {
-    updateCard({ ...args, id: currentCard.id })
+  const handleCardUpdated = handleSubmit((data: zCard) => {
+    const formData = new FormData()
+
+    formData.append('question', data.question)
+    formData.append('answer', data.answer)
+    formData.append('questionImg', data.questionImg[0])
+
+    updateCard({ id: currentCard.id, data: formData })
       .unwrap()
       .then(() => {
         toast.success('Card updated successfully', {
@@ -73,6 +86,15 @@ export const CardModalEdit = ({ currentCard }: { currentCard: Card }) => {
           placeholder={'Input your question'}
           errorMessage={errors.root?.message}
         />
+
+        <ControlledImageInput name={'questionImg'} control={control} />
+        <input type={'file'} {...register('questionImg')} />
+        {/*<input type={'text'} value={errors.questionImg?.message} />*/}
+        {/*<img*/}
+        {/*  src={typeof answerImg === 'string' ? answerImg : URL.createObjectURL(answerImg)}*/}
+        {/*  alt={'image deck'}*/}
+        {/*/>*/}
+
         <ControlledTextField
           control={control}
           name={'answer'}

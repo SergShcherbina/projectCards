@@ -38,7 +38,7 @@ const cardsApi = baseApi.injectEndpoints({
           return {
             url: `v1/cards/${id}/`,
             method: 'PATCH',
-            body,
+            body: body.data,
           }
         },
 
