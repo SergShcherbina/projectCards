@@ -103,7 +103,10 @@ export const Cards = () => {
               <Table.Row key={card.id}>
                 <Table.Cell>
                   {card?.questionImg ? (
-                    <img className={s.cardImg} src={card?.questionImg} alt="cover" />
+                    <>
+                      <img className={s.cardImg} src={card?.questionImg} alt="cover" />
+                      <div>{card.question}</div>
+                    </>
                   ) : (
                     card.question
                   )}
@@ -111,7 +114,10 @@ export const Cards = () => {
 
                 <Table.Cell>
                   {card?.answerImg ? (
-                    <img className={s.cardImg} src={card?.answerImg} alt="cover" />
+                    <>
+                      <img className={s.cardImg} src={card?.answerImg} alt="cover" />
+                      <div>{card.answer}</div>
+                    </>
                   ) : (
                     card.answer
                   )}

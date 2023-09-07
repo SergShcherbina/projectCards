@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import { color } from 'framer-motion'
 import { useForm } from 'react-hook-form'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -9,25 +10,29 @@ import { z } from 'zod'
 import { Button, ControlledTextField, Modal } from '../../../components'
 import { ControlledImageInput } from '../../../components/ui/controlled/controlled-image-input/ControlledImageInput.tsx'
 import { Card, UpdateCardArgs, useUpdateCardsMutation } from '../../../services/cards'
+import s from '../cards.module.scss'
 import EditIcon from '../icons/EditIcon.tsx'
 
 import { cardSchema } from './card-z-schema.ts'
 
 import { DevTool } from '@hookform/devtools'
 
-type zCard = {
-  question: string
-  answer: string
-  questionImg: File[] | string
-  answerImg: File[] | string
-}
+// type zCard = {
+//   question: string
+//   answer: string
+//   questionNewImg: File[]
+//   answerImg: File[]
+// }
 
-//type zCard = z.infer<typeof cardSchema>
+type zCard = z.infer<typeof cardSchema>
 
 export const CardModalEdit = ({ currentCard }: { currentCard: Card }) => {
   const [showModal, setShowModal] = useState(false)
   const closeModal = () => setShowModal(false)
   const openModal = () => setShowModal(true)
+
+  const [currQuestionImg, setCurrQuestionImg] = useState(currentCard.questionImg)
+  const [currAnswerImg, setCurrAnswerImg] = useState(currentCard.answerImg)
 
   const [updateCard] = useUpdateCardsMutation()
 
@@ -41,8 +46,6 @@ export const CardModalEdit = ({ currentCard }: { currentCard: Card }) => {
     defaultValues: {
       question: currentCard.question,
       answer: currentCard.answer,
-      questionImg: currentCard.questionImg,
-      answerImg: currentCard.answerImg,
     },
   })
 
@@ -51,8 +54,13 @@ export const CardModalEdit = ({ currentCard }: { currentCard: Card }) => {
 
     formData.append('question', data.question)
     formData.append('answer', data.answer)
-    formData.append('questionImg', data.questionImg[0])
-    formData.append('answerImg', data.answerImg[0])
+
+    if (data?.questionImg.length) {
+      formData.append('questionImg', data.questionImg[0])
+    }
+    if (data?.answerImg.length) {
+      formData.append('answerImg', data.answerImg[0])
+    }
 
     updateCard({ id: currentCard.id, data: formData } as unknown as UpdateCardArgs)
       .unwrap()
@@ -90,27 +98,20 @@ export const CardModalEdit = ({ currentCard }: { currentCard: Card }) => {
             name={'question'}
             label={'Question'}
             placeholder={'Input your question'}
-            errorMessage={errors.root?.message}
+            errorMessage={errors.question?.message}
           />
 
           {/*<ControlledImageInput name={'questionImg'} control={control} />*/}
 
-          {/*<img src={...register('questionImg')} alt={'image question'} />*/}
-          {/*<input type={'file'} {...register('questionImg')} />*/}
-          <input type={'file'} {...register('questionImg')} />
-          {/*<Button variant={'secondaryWithIcon'} fullWidth={true}>*/}
-          {/*  {*/}
-          {/*    <label>*/}
-          {/*      <input type={'file'} {...register('questionImg')} />*/}
-          {/*    </label>*/}
-          {/*  }*/}
-          {/*</Button>*/}
+          <img
+            className={s.cardImgL}
+            src={currQuestionImg}
+            alt={'image question'}
+            style={{ margin: '0 auto' }}
+          />
+          <input type={'file'} {...register('questionImg')} style={{ margin: '0 auto' }} />
 
-          {/*<input type={'text'} value={errors.questionImg?.message} />*/}
-          {/*<img*/}
-          {/*  src={typeof answerImg === 'string' ? answerImg : URL.createObjectURL(answerImg)}*/}
-          {/*  alt={'image deck'}*/}
-          {/*/>*/}
+          <div style={{ width: '100%', borderBottom: '1px  solid gray' }} />
 
           <ControlledTextField
             control={control}
@@ -119,6 +120,14 @@ export const CardModalEdit = ({ currentCard }: { currentCard: Card }) => {
             placeholder={'Input your answer'}
             errorMessage={errors.answer?.message}
           />
+
+          <img
+            className={s.cardImgL}
+            src={currAnswerImg}
+            alt={'image answer'}
+            style={{ margin: '0 auto' }}
+          />
+          <input type={'file'} {...register('answerImg')} style={{ margin: '0 auto' }} />
         </Modal>
       </form>
     </>
