@@ -17,9 +17,19 @@ export type RadioGroupProps = {
   value: string
   disabled?: boolean
   name: string
+  defaultValue?: string
+  onValueChange: (value: string) => void
 }
 
-export const RadioGroup: FC<RadioGroupProps> = ({ value, name, options, disabled, ...rest }) => {
+export const RadioGroup: FC<RadioGroupProps> = ({
+  value,
+  name,
+  options,
+  onValueChange,
+  defaultValue,
+  disabled,
+  ...rest
+}) => {
   const classNames = {
     root: clsx(s.root, disabled && s.disabled),
     item: clsx(s.item, disabled && s.disabled),
@@ -30,22 +40,29 @@ export const RadioGroup: FC<RadioGroupProps> = ({ value, name, options, disabled
   return (
     <>
       <Typography variant="subtitle1">{name}</Typography>
-      <RadioGroupUI.Root disabled={disabled} {...rest} className={classNames.root}>
+      <RadioGroupUI.Root
+        onValueChange={onValueChange}
+        disabled={disabled}
+        {...rest}
+        className={classNames.root}
+        aria-label="View density"
+        defaultValue={defaultValue}
+      >
         {options.map(option => (
-          <div style={{ display: 'flex', alignItems: 'center' }} key={option.value}>
-            <div className={classNames.wrapper}>
-              <RadioGroupUI.Item
-                key={option.value}
-                value={option.value}
-                className={classNames.item}
-              >
-                <RadioGroupUI.Indicator className={classNames.indicator} />
-              </RadioGroupUI.Item>
-            </div>
-
-            <Typography as={'span'} variant="body2">
-              {option.label}
-            </Typography>
+          <div className={classNames.wrapper} key={option.value}>
+            <RadioGroupUI.Item
+              id={option.label}
+              key={option.value}
+              value={option.value}
+              className={classNames.item}
+            >
+              <RadioGroupUI.Indicator className={classNames.indicator} />
+            </RadioGroupUI.Item>
+            <label htmlFor={option.label}>
+              <Typography as={'span'} variant="body2">
+                {option.label}
+              </Typography>
+            </label>
           </div>
         ))}
       </RadioGroupUI.Root>
