@@ -10,11 +10,27 @@
 
   background-color: var(--color-dark-500);
 
-  .logo {
-    max-height: 36px;
+  .linkHome {
+    user-select: none;
+    display: flex;
+    align-items: center;
 
-    @media (width <= 575px) {
-      width: 120px;
+    .logo {
+      cursor: pointer;
+      max-height: 36px;
+      transition-duration: 0.1s;
+
+      &:hover {
+        transform: translateY(2px);
+      }
+
+      &:active {
+        transform: scale(0.99);
+      }
+
+      @media (width <= 575px) {
+        width: 120px;
+      }
     }
   }
 

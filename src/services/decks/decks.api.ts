@@ -1,6 +1,15 @@
 import { baseApi } from '../base-api.tsx'
 
-import { Deck, DecksResponse, FormDataType, GetDecksArgs } from './types'
+import {
+  ArgsUpdateType,
+  Deck,
+  DecksResponse,
+  FormDataType,
+  GetDecksArgs,
+  learnDeckType,
+  PatchDeckResponse,
+  ResponseUpdateLearnType,
+} from './types'
 
 const decksApi = baseApi.injectEndpoints({
   endpoints: builder => {
@@ -41,7 +50,7 @@ const decksApi = baseApi.injectEndpoints({
         invalidatesTags: ['Decks'],
       }),
 
-      editDeck: builder.mutation<Deck, any>({
+      editDeck: builder.mutation<PatchDeckResponse, any>({
         query: ({ formData, decksId }) => {
           return {
             url: `v1/decks/${decksId}`,
@@ -51,15 +60,36 @@ const decksApi = baseApi.injectEndpoints({
         },
         invalidatesTags: ['Decks'],
       }),
+
+      getLearn: builder.query<learnDeckType, { id: string; previousCardId?: string }>({
+        query: ({ id, previousCardId }) => {
+          return {
+            url: `v1/decks/${id}/learn`,
+            method: 'GET',
+            params: { previousCardId },
+          }
+        },
+      }),
+      updateLearn: builder.mutation<ResponseUpdateLearnType, ArgsUpdateType>({
+        query: ({ id, cardId, grade }) => {
+          return {
+            url: `v1/decks/${id}/learn`,
+            method: 'POST',
+            body: { cardId, grade },
+          }
+        },
+      }),
     }
   },
 })
 
 export const {
   useGetDecksQuery,
-  useLazyGetDecksQuery,
+  // useLazyGetDecksQuery,
+  useUpdateLearnMutation,
   useCreateDeckMutation,
   useGetDeckByIdQuery,
   useDeleteDeckMutation,
   useEditDeckMutation,
+  useGetLearnQuery,
 } = decksApi

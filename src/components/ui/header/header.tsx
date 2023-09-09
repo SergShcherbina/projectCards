@@ -1,5 +1,7 @@
 import { ComponentPropsWithoutRef, FC } from 'react'
 
+import { Link } from 'react-router-dom'
+
 import { UserType } from '../../../services/auth'
 import { Avatar } from '../avatar'
 import { Button } from '../button'
@@ -22,7 +24,9 @@ type HeaderType = {
 export const Header: FC<HeaderType> = ({ logo = image, userData, onLogout }) => {
   return (
     <div className={`${s.wrapperHeader}`}>
-      <img src={logo} className={s.logo} alt={'logo'} />
+      <Link to={'/'} className={s.linkHome}>
+        <img src={logo} className={s.logo} alt={'logo'} />
+      </Link>
       {userData ? (
         <div className={s.info}>
           <Typography variant={'subtitle1'} className={s.name}>

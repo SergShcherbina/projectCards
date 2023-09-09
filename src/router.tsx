@@ -10,6 +10,7 @@ import { Spinner } from './assets'
 import { EditProfile } from './components/auth/edit-profile'
 import { Decks } from './pages'
 import { Cards } from './pages/cards'
+import { LearnPage } from './pages/learn/learn-page.tsx'
 import { SignInPage } from './pages/sign-in/sign-in.tsx'
 import { SignUpPage } from './pages/sign-up/sign-up-page.tsx'
 import { useMeQuery } from './services/auth'
@@ -36,7 +37,7 @@ const privateRoutes: RouteObject[] = [
   },
   {
     path: '/learn/:deckId',
-    element: <div>learn </div>,
+    element: <LearnPage />,
   },
   {
     path: 'profile',
