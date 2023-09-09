@@ -27,7 +27,7 @@ const cardsApi = baseApi.injectEndpoints({
           return {
             url: `v1/decks/${deckId}/cards`,
             method: 'POST',
-            body,
+            body: body.data,
           }
         },
 

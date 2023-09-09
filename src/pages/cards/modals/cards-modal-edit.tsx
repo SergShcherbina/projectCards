@@ -7,7 +7,13 @@ import 'react-toastify/dist/ReactToastify.css'
 import { z } from 'zod'
 
 import { Button, ControlledTextField, Modal } from '../../../components'
-import { Card, UpdateCardArgs, useUpdateCardsMutation } from '../../../services/cards'
+import {
+  Card,
+  CreateCardArgs,
+  UpdateCardArgs,
+  useCreateCardsMutation,
+  useUpdateCardsMutation,
+} from '../../../services/cards'
 import s from '../cards.module.scss'
 import EditIcon from '../icons/EditIcon.tsx'
 import Mask from '../img/no-image.png'
@@ -18,7 +24,13 @@ import { DevTool } from '@hookform/devtools'
 
 type zCard = z.infer<typeof cardSchema>
 
-export const CardModalEdit = ({ currentCard }: { currentCard: Card }) => {
+type CardModalType = {
+  currentCard?: Card
+  deckId?: Card['id']
+  mode: 'new' | 'edit'
+}
+
+export const CardModalEdit = ({ currentCard, deckId, mode }: CardModalType) => {
   const [showModal, setShowModal] = useState(false)
   const closeModal = () => setShowModal(false)
   const openModal = () => setShowModal(true)
@@ -30,6 +42,7 @@ export const CardModalEdit = ({ currentCard }: { currentCard: Card }) => {
   const answerImgRef = useRef<HTMLInputElement | null>(null)
 
   const [updateCard] = useUpdateCardsMutation()
+  const [createCard] = useCreateCardsMutation()
 
   const {
     register,
@@ -39,8 +52,8 @@ export const CardModalEdit = ({ currentCard }: { currentCard: Card }) => {
   } = useForm<zCard>({
     resolver: zodResolver(cardSchema),
     defaultValues: {
-      question: currentCard.question,
-      answer: currentCard.answer,
+      question: currentCard?.question ? currentCard?.question : 'new question',
+      answer: currentCard?.answer ? currentCard?.answer : 'new answer',
     },
   })
 
@@ -57,20 +70,39 @@ export const CardModalEdit = ({ currentCard }: { currentCard: Card }) => {
       formData.append('answerImg', fileAnswer)
     }
 
-    updateCard({ id: currentCard.id, data: formData } as unknown as UpdateCardArgs)
-      .unwrap()
-      .then(() => {
-        toast.success('Card updated successfully', {
-          position: toast.POSITION.TOP_CENTER,
-          autoClose: 20,
+    if (mode === 'edit' && currentCard) {
+      updateCard({ id: currentCard.id, data: formData } as unknown as UpdateCardArgs)
+        .unwrap()
+        .then(() => {
+          toast.success('Card updated successfully', {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 20,
+          })
         })
-      })
-      .catch(err => {
-        toast.error(err.data.message, {
-          position: toast.POSITION.TOP_CENTER,
+        .catch(err => {
+          toast.error(err.data.message, {
+            position: toast.POSITION.TOP_CENTER,
+          })
         })
-      })
-      .finally(() => closeModal())
+        .finally(() => closeModal())
+    }
+
+    if (mode === 'new' && deckId) {
+      createCard({ data: formData, deckId } as unknown as CreateCardArgs)
+        .unwrap()
+        .then(() => {
+          toast.success('Card created successfully', {
+            position: toast.POSITION.TOP_CENTER,
+            autoClose: 20,
+          })
+        })
+        .catch(err => {
+          toast.error(err.data.message, {
+            position: toast.POSITION.TOP_CENTER,
+          })
+        })
+        .finally(() => closeModal())
+    }
   })
 
   const handleChangeQuestionImg = (e: ChangeEvent<HTMLInputElement>) => {
@@ -96,7 +128,7 @@ export const CardModalEdit = ({ currentCard }: { currentCard: Card }) => {
           isOpen={showModal}
           onClose={closeModal}
           onConfirmButtonClick={handleCardUpdated}
-          title={'Edit Card'}
+          title={mode === 'edit' ? 'Edit Card' : 'New Card'}
           cancelButtonText="Cancel"
           confirmButtonText="Save Changes"
         >
@@ -112,7 +144,9 @@ export const CardModalEdit = ({ currentCard }: { currentCard: Card }) => {
 
           <img
             className={s.cardImgL}
-            src={fileQuestion ? URL.createObjectURL(fileQuestion) : currentCard.questionImg ?? Mask}
+            src={
+              fileQuestion ? URL.createObjectURL(fileQuestion) : currentCard?.questionImg ?? Mask
+            }
             alt={'image question'}
             style={{ margin: '0 auto' }}
           />
@@ -145,7 +179,7 @@ export const CardModalEdit = ({ currentCard }: { currentCard: Card }) => {
 
           <img
             className={s.cardImgL}
-            src={fileAnswer ? URL.createObjectURL(fileAnswer) : currentCard.answerImg ?? Mask}
+            src={fileAnswer ? URL.createObjectURL(fileAnswer) : currentCard?.answerImg ?? Mask}
             alt={'image answer'}
             style={{ margin: '0 auto' }}
           />

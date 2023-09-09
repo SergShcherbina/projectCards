@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import { useNavigate, useParams } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
 
 import { Button, TextField, Typography } from '../../components'
 import { ButtonBack } from '../../components/ui/button-back/button-back.tsx'
@@ -80,7 +81,10 @@ export const Cards = () => {
         <Typography variant={'large'}>{deck?.name}</Typography>
 
         {isOwner ? (
-          <CardModalAdd deckId={deckId} />
+          <Button onClick={() => {}}>
+            Add New Card
+            <CardModalEdit deckId={deckId} mode={'new'} />
+          </Button>
         ) : (
           <Button onClick={() => navigate(`/learn/${deckId}`)}>Learn to Pack </Button>
         )}
@@ -132,7 +136,7 @@ export const Cards = () => {
                     {isOwner ? (
                       <>
                         <CardModalDelete cardId={card.id} />
-                        <CardModalEdit currentCard={card} />
+                        <CardModalEdit currentCard={card} mode={'edit'} />
                       </>
                     ) : (
                       <LearnIcon onClick={() => navigate(`/learn/${deckId}`)} />
