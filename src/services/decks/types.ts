@@ -33,7 +33,33 @@ export interface Deck {
   cardsCount: number
   author: Author
 }
+export type PatchDeckResponse = Omit<Deck, 'isDeleted' | 'isBlocked'>
 
 export type DecksResponse = PaginatedEntity<Deck> & {
   maxCardsCount: number
+}
+
+export type learnDeckType = {
+  id: string
+  deckId: string
+  userId: string
+  question: string
+  answer: string
+  shots: number
+  answerImg: string
+  questionImg: string
+  questionVideo: string
+  answerVideo: string
+  rating: number
+  created: string
+  updated: string
+}
+export type ResponseUpdateLearnType = Omit<learnDeckType, 'userId' | 'rating'>
+
+export type RequestLearnType = { formData: FormData; id: string }
+
+export type ArgsUpdateType = {
+  id: string
+  cardId: string
+  grade: number
 }

@@ -8,7 +8,7 @@ import { Deck } from '../../../services'
 import { columns } from '../data/columns.ts'
 import { DecksModalDelete } from '../decks-modals'
 import { DecksModalEdit } from '../decks-modals/modal-edit/decks-modal-edit.tsx'
-import Mask from '../img/Mask-small.png'
+import Mask from '../img/no-image-360x250.png'
 
 import s from './decks-table.module.scss'
 
@@ -28,7 +28,6 @@ export const DecksTable: FC<Props> = ({ setSort, sort, data, myCards }) => {
           return (
             <Table.Row key={deck.id}>
               <Table.Cell>
-                {/*<div className={s.wrapperName}>*/}
                 <Link className={s.link} to={`/cards/${deck.id}`}>
                   <div className={s.cover}>
                     <img
@@ -39,7 +38,6 @@ export const DecksTable: FC<Props> = ({ setSort, sort, data, myCards }) => {
                   </div>
                   {deck.name}
                 </Link>
-                {/*</div>*/}
               </Table.Cell>
               <Table.Cell>{deck.cardsCount}</Table.Cell>
               <Table.Cell>{new Date(deck.updated).toLocaleDateString('ru-Ru')}</Table.Cell>
