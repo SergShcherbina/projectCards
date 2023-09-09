@@ -1,14 +1,12 @@
-import { useRef, useState } from 'react'
+import { ChangeEvent, useRef, useState } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { color } from 'framer-motion'
 import { useForm } from 'react-hook-form'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { z } from 'zod'
 
 import { Button, ControlledTextField, Modal } from '../../../components'
-import { ControlledImageInput } from '../../../components/ui/controlled/controlled-image-input/ControlledImageInput.tsx'
 import { Card, UpdateCardArgs, useUpdateCardsMutation } from '../../../services/cards'
 import s from '../cards.module.scss'
 import EditIcon from '../icons/EditIcon.tsx'
@@ -25,15 +23,11 @@ export const CardModalEdit = ({ currentCard }: { currentCard: Card }) => {
   const closeModal = () => setShowModal(false)
   const openModal = () => setShowModal(true)
 
+  const [fileQuestion, setFileQuestion] = useState<Blob | null>(null)
+  const [fileAnswer, setFileAnswer] = useState<Blob | null>(null)
+
   const questionImgRef = useRef<HTMLInputElement | null>(null)
   const answerImgRef = useRef<HTMLInputElement | null>(null)
-
-  const [currQuestionImg, setCurrQuestionImg] = useState(
-    currentCard.questionImg ? currentCard.questionImg : Mask
-  )
-  const [currAnswerImg, setCurrAnswerImg] = useState(
-    currentCard.answerImg ? currentCard.answerImg : Mask
-  )
 
   const [updateCard] = useUpdateCardsMutation()
 
@@ -55,12 +49,12 @@ export const CardModalEdit = ({ currentCard }: { currentCard: Card }) => {
 
     formData.append('question', data.question)
     formData.append('answer', data.answer)
-    debugger
-    if (data?.questionImg?.length) {
-      formData.append('questionImg', data.questionImg[0])
+
+    if (fileQuestion) {
+      formData.append('questionImg', fileQuestion)
     }
-    if (data?.answerImg?.length) {
-      formData.append('answerImg', data.answerImg[0])
+    if (fileAnswer) {
+      formData.append('answerImg', fileAnswer)
     }
 
     updateCard({ id: currentCard.id, data: formData } as unknown as UpdateCardArgs)
@@ -79,15 +73,15 @@ export const CardModalEdit = ({ currentCard }: { currentCard: Card }) => {
       .finally(() => closeModal())
   })
 
-  const handleChangeQuestionImg = () => {
-    if (questionImgRef.current?.files) {
-      setCurrQuestionImg(URL.createObjectURL(questionImgRef.current?.files[0]))
+  const handleChangeQuestionImg = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.currentTarget.files) {
+      setFileQuestion(e.currentTarget.files[0])
     }
   }
 
-  const handleClick = () => {
-    if (questionImgRef) {
-      questionImgRef.current?.click()
+  const handleChangeAnswerImg = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.currentTarget.files) {
+      setFileAnswer(e.currentTarget.files[0])
     }
   }
 
@@ -118,22 +112,23 @@ export const CardModalEdit = ({ currentCard }: { currentCard: Card }) => {
 
           <img
             className={s.cardImgL}
-            src={currQuestionImg}
+            src={fileQuestion ? URL.createObjectURL(fileQuestion) : currentCard.questionImg ?? Mask}
             alt={'image question'}
             style={{ margin: '0 auto' }}
           />
           <input
             type={'file'}
             {...register('questionImg')}
-            ref={questionImgRef}
             onChange={handleChangeQuestionImg}
+            style={{ display: 'none' }}
+            ref={e => (questionImgRef.current = e)}
           />
 
           <Button
             type={'button'}
             variant={'secondaryWithIcon'}
             fullWidth={true}
-            onClick={handleClick}
+            onClick={() => questionImgRef.current?.click()}
           >
             Change Cover
           </Button>
@@ -150,22 +145,23 @@ export const CardModalEdit = ({ currentCard }: { currentCard: Card }) => {
 
           <img
             className={s.cardImgL}
-            src={currAnswerImg}
+            src={fileAnswer ? URL.createObjectURL(fileAnswer) : currentCard.answerImg ?? Mask}
             alt={'image answer'}
             style={{ margin: '0 auto' }}
           />
           <input
             type={'file'}
             {...register('answerImg')}
-            style={{ margin: '0 auto' }}
-            ref={answerImgRef}
+            style={{ display: 'none' }}
+            onChange={handleChangeAnswerImg}
+            ref={e => (answerImgRef.current = e)}
           />
 
           <Button
             type={'button'}
             variant={'secondaryWithIcon'}
             fullWidth={true}
-            onClick={handleClick}
+            onClick={() => answerImgRef.current?.click()}
           >
             Change Cover
           </Button>
