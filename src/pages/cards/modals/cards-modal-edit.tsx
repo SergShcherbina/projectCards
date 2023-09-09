@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { color } from 'framer-motion'
@@ -18,19 +18,15 @@ import { cardSchema } from './card-z-schema.ts'
 
 import { DevTool } from '@hookform/devtools'
 
-// type zCard = {
-//   question: string
-//   answer: string
-//   questionNewImg: File[]
-//   answerImg: File[]
-// }
-
 type zCard = z.infer<typeof cardSchema>
 
 export const CardModalEdit = ({ currentCard }: { currentCard: Card }) => {
   const [showModal, setShowModal] = useState(false)
   const closeModal = () => setShowModal(false)
   const openModal = () => setShowModal(true)
+
+  const questionImgRef = useRef<HTMLInputElement | null>(null)
+  const answerImgRef = useRef<HTMLInputElement | null>(null)
 
   const [currQuestionImg, setCurrQuestionImg] = useState(
     currentCard.questionImg ? currentCard.questionImg : Mask
@@ -59,11 +55,11 @@ export const CardModalEdit = ({ currentCard }: { currentCard: Card }) => {
 
     formData.append('question', data.question)
     formData.append('answer', data.answer)
-
-    if (data?.questionImg.length) {
+    debugger
+    if (data?.questionImg?.length) {
       formData.append('questionImg', data.questionImg[0])
     }
-    if (data?.answerImg.length) {
+    if (data?.answerImg?.length) {
       formData.append('answerImg', data.answerImg[0])
     }
 
@@ -82,6 +78,18 @@ export const CardModalEdit = ({ currentCard }: { currentCard: Card }) => {
       })
       .finally(() => closeModal())
   })
+
+  const handleChangeQuestionImg = () => {
+    if (questionImgRef.current?.files) {
+      setCurrQuestionImg(URL.createObjectURL(questionImgRef.current?.files[0]))
+    }
+  }
+
+  const handleClick = () => {
+    if (questionImgRef) {
+      questionImgRef.current?.click()
+    }
+  }
 
   return (
     <>
@@ -114,7 +122,21 @@ export const CardModalEdit = ({ currentCard }: { currentCard: Card }) => {
             alt={'image question'}
             style={{ margin: '0 auto' }}
           />
-          <input type={'file'} {...register('questionImg')} style={{ margin: '0 auto' }} />
+          <input
+            type={'file'}
+            {...register('questionImg')}
+            ref={questionImgRef}
+            onChange={handleChangeQuestionImg}
+          />
+
+          <Button
+            type={'button'}
+            variant={'secondaryWithIcon'}
+            fullWidth={true}
+            onClick={handleClick}
+          >
+            Change Cover
+          </Button>
 
           <div style={{ width: '100%', borderBottom: '1px  solid gray' }} />
 
@@ -132,7 +154,21 @@ export const CardModalEdit = ({ currentCard }: { currentCard: Card }) => {
             alt={'image answer'}
             style={{ margin: '0 auto' }}
           />
-          <input type={'file'} {...register('answerImg')} style={{ margin: '0 auto' }} />
+          <input
+            type={'file'}
+            {...register('answerImg')}
+            style={{ margin: '0 auto' }}
+            ref={answerImgRef}
+          />
+
+          <Button
+            type={'button'}
+            variant={'secondaryWithIcon'}
+            fullWidth={true}
+            onClick={handleClick}
+          >
+            Change Cover
+          </Button>
         </Modal>
       </form>
     </>
