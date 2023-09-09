@@ -12,6 +12,7 @@ import { ControlledImageInput } from '../../../components/ui/controlled/controll
 import { Card, UpdateCardArgs, useUpdateCardsMutation } from '../../../services/cards'
 import s from '../cards.module.scss'
 import EditIcon from '../icons/EditIcon.tsx'
+import Mask from '../img/no-image.png'
 
 import { cardSchema } from './card-z-schema.ts'
 
@@ -31,8 +32,12 @@ export const CardModalEdit = ({ currentCard }: { currentCard: Card }) => {
   const closeModal = () => setShowModal(false)
   const openModal = () => setShowModal(true)
 
-  const [currQuestionImg, setCurrQuestionImg] = useState(currentCard.questionImg)
-  const [currAnswerImg, setCurrAnswerImg] = useState(currentCard.answerImg)
+  const [currQuestionImg, setCurrQuestionImg] = useState(
+    currentCard.questionImg ? currentCard.questionImg : Mask
+  )
+  const [currAnswerImg, setCurrAnswerImg] = useState(
+    currentCard.answerImg ? currentCard.answerImg : Mask
+  )
 
   const [updateCard] = useUpdateCardsMutation()
 
