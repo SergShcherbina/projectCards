@@ -23,7 +23,7 @@ import { CardModalEdit } from './modals/cards-modal-edit.tsx'
 export const Cards = () => {
   const { deckId } = useParams<{ deckId: string }>()
 
-  const [sortTable, setSortTable] = useState<SortTable>({ key: 'updated', direction: 'asc' })
+  const [sortTable, setSortTable] = useState<SortTable>({ key: 'updated', direction: 'desc' })
   const orderBy = sortTable ? `${sortTable.key}-${sortTable.direction}` : null
 
   const dispatch = useAppDispatch()

@@ -119,9 +119,8 @@ export const CardModalEdit = ({ currentCard, deckId, mode }: CardModalType) => {
 
   return (
     <>
-      <EditIcon onClick={openModal}>
-        <ToastContainer />
-      </EditIcon>
+      <EditIcon onClick={openModal}></EditIcon>
+      <ToastContainer />
       <form onSubmit={handleCardUpdated}>
         <DevTool control={control} />
         <Modal
