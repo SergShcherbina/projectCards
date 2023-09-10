@@ -11,7 +11,7 @@ export type Card = {
   answerImg?: string
   questionVideo?: string
   answerVideo?: string
-  rating: number
+  grade: number
   created: string
   updated: string
 }
