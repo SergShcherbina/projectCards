@@ -79,54 +79,57 @@ export const Decks = () => {
 
   return (
     <Page>
-      <div className={s.wrapperTitle}>
-        <Typography variant={'large'}>Packs list</Typography>
-        <Button onClick={() => setToggleModal(true)}>
-          <Typography variant={'subtitle1'} as={'span'}>
-            Add New Pack
-          </Typography>
-        </Button>
-      </div>
-
-      <div className={s.gridContainer}>
-        <TextField
-          type={'search'}
-          onChangeValue={setSearch}
-          placeholder={'Input search'}
-          value={searchByName}
-        />
-
-        <TabSwitcher
-          title={'Show packs cards'}
-          value={showDecks[0]}
-          onValueChange={setShowCards}
-          tabs={tabs}
-        />
-
-        <div className={s.sliderFlex}>
-          <Typography as={'span'} variant="body2">
-            Number of cards
-          </Typography>
-          <Slider value={sliderValue} max={20} onValueChange={onSetSliderValue} />
+      <div className={s.wrapperDecks}>
+        <div className={s.wrapperTitle}>
+          <Typography variant={'large'}>Packs list</Typography>
+          <Button onClick={() => setToggleModal(true)}>
+            <Typography variant={'subtitle1'} as={'span'}>
+              Add New Pack
+            </Typography>
+          </Button>
         </div>
 
-        <Button variant={'secondary'} onClick={onClearFilter}>
-          <img src={iconDelete} alt={'remove icon'} /> Clear filter
-        </Button>
+        <div className={s.gridContainer}>
+          <TextField
+            type={'search'}
+            onChangeValue={setSearch}
+            placeholder={'Input search'}
+            value={searchByName}
+          />
+
+          <TabSwitcher
+            className={s.tabSwitcher}
+            title={'Show packs cards'}
+            value={showDecks[0]}
+            onValueChange={setShowCards}
+            tabs={tabs}
+          />
+
+          <div className={s.sliderFlex}>
+            <Typography as={'span'} variant="body2">
+              Number of cards
+            </Typography>
+            <Slider value={sliderValue} max={20} onValueChange={onSetSliderValue} />
+          </div>
+
+          <Button variant={'secondary'} onClick={onClearFilter}>
+            <img src={iconDelete} alt={'remove icon'} /> Clear filter
+          </Button>
+        </div>
+
+        <DecksTable setSort={setSort} sort={sort} data={data?.items} myCards={showDecks[1]} />
+
+        <DecksModalCreate toggleModal={toggleModal} setToggleModal={setToggleModal} />
+
+        <Pagination
+          count={totalPages}
+          page={currentPage}
+          onChange={setCurrentPage}
+          perPageOptions={[8, 16, 24]}
+          perPage={itemsPerPage}
+          onPerPageChange={setItemsPerPage}
+        />
       </div>
-
-      <DecksTable setSort={setSort} sort={sort} data={data?.items} myCards={showDecks[1]} />
-
-      <DecksModalCreate toggleModal={toggleModal} setToggleModal={setToggleModal} />
-
-      <Pagination
-        count={totalPages}
-        page={currentPage}
-        onChange={setCurrentPage}
-        perPageOptions={[8, 16, 24]}
-        perPage={itemsPerPage}
-        onPerPageChange={setItemsPerPage}
-      />
     </Page>
   )
 }
