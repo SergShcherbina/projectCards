@@ -1,27 +1,27 @@
 import { useState } from 'react'
 
 import { useNavigate, useParams } from 'react-router-dom'
-import { ToastContainer } from 'react-toastify'
 
-import { Button, TextField, Typography } from '../../components'
-import { ButtonBack } from '../../components/ui/button-back/button-back.tsx'
+import { Button, TextField, Typography, ButtonBack } from '../../components'
 import { Grade } from '../../components/ui/grade'
 import { Page } from '../../components/ui/page'
 import { Pagination } from '../../components/ui/pagination'
 import { Column, SortTable, Table } from '../../components/ui/table'
-import { useGetDeckByIdQuery } from '../../services'
+import { useGetDeckByIdQuery, useAppDispatch, useAppSelector } from '../../services'
 import { useMeQuery } from '../../services/auth'
 import { Card, useGetCardsQuery } from '../../services/cards'
 import { cardsSlice } from '../../services/cards/cards.slice.ts'
-import { useAppDispatch, useAppSelector } from '../../services/store.ts'
 
 import s from './cards.module.scss'
+import EditIcon from './icons/EditIcon.tsx'
 import LearnIcon from './icons/LearnIcon.tsx'
-import { CardModalAdd, CardModalDelete } from './modals'
-import { CardModalEdit } from './modals/cards-modal-edit.tsx'
+import { CardModalDelete, CardModal } from './modals'
 
 export const Cards = () => {
   const { deckId } = useParams<{ deckId: string }>()
+  const [showModalEdit, setShowModalEdit] = useState(false)
+
+  const [currentCard, setCurrentCard] = useState<Card | undefined>(undefined)
 
   const [sortTable, setSortTable] = useState<SortTable>({ key: 'updated', direction: 'desc' })
   const orderBy = sortTable ? `${sortTable.key}-${sortTable.direction}` : null
@@ -53,7 +53,6 @@ export const Cards = () => {
   const isOwner = me?.id === deck?.userId
 
   if (!deckId) return <div>Deck not found</div>
-  //const isOwner = deck?.userId == 'f2be95b9-4d07-4751-a775-bd612fc9553a' // test acc
 
   if (searchByName) {
     cards?.items?.forEach((item: Card, index: number, object: any) => {
@@ -72,19 +71,33 @@ export const Cards = () => {
     { key: 'actions', sortable: false, title: 'Actions' },
   ]
 
+  const handleClickShowEditModal = (card: Card) => {
+    setCurrentCard(card)
+    setShowModalEdit(true)
+  }
+
+  const handleClickShowAddModal = () => {
+    setShowModalEdit(true)
+  }
+
   if (isLoading) return <div>isLoading: {isLoading.toString()}</div>
 
+  //<CardModalEdit deckId={deckId} mode={'new'} />
   return (
     <Page>
+      <CardModal
+        currentCard={currentCard}
+        deckId={deckId}
+        show={showModalEdit}
+        setShow={setShowModalEdit}
+      />
+
       <ButtonBack />
       <div className={s.rowFlex}>
         <Typography variant={'large'}>{deck?.name}</Typography>
 
         {isOwner ? (
-          <Button onClick={() => {}}>
-            Add New Card
-            <CardModalEdit deckId={deckId} mode={'new'} />
-          </Button>
+          <Button onClick={handleClickShowAddModal}>Add New Card</Button>
         ) : (
           <Button onClick={() => navigate(`/learn/${deckId}`)}>Learn to Pack </Button>
         )}
@@ -136,7 +149,12 @@ export const Cards = () => {
                     {isOwner ? (
                       <>
                         <CardModalDelete cardId={card.id} />
-                        <CardModalEdit currentCard={card} mode={'edit'} />
+
+                        <EditIcon
+                          onClick={() => {
+                            handleClickShowEditModal(card)
+                          }}
+                        ></EditIcon>
                       </>
                     ) : (
                       <LearnIcon onClick={() => navigate(`/learn/${deckId}`)} />
