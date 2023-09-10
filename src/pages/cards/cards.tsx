@@ -67,7 +67,7 @@ export const Cards = () => {
     { key: 'question', sortable: true, title: 'Question' },
     { key: 'answer', sortable: true, title: 'Answer' },
     { key: 'updated', sortable: true, title: 'Updated' },
-    { key: 'rating', sortable: true, title: 'Grade' },
+    { key: 'grade', sortable: true, title: 'Grade' },
     { key: 'actions', sortable: false, title: 'Actions' },
   ]
 
@@ -141,7 +141,7 @@ export const Cards = () => {
                 </Table.Cell>
                 <Table.Cell>{new Date(card.updated).toLocaleDateString('ru-Ru')}</Table.Cell>
                 <Table.Cell>
-                  <Grade grade={card.rating} />
+                  <Grade grade={card.grade} />
                 </Table.Cell>
 
                 <Table.Cell>
