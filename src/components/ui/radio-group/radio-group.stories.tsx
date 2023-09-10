@@ -25,5 +25,6 @@ export const Disabled: Story = {
   args: {
     disabled: true,
     name: 'Title disabled group',
+    onValueChange: () => {},
   },
 }

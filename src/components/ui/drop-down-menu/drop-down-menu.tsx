@@ -5,8 +5,8 @@ import * as DropdownMenuRadix from '@radix-ui/react-dropdown-menu'
 import s from './drop-down-menu.module.scss'
 
 type DropDownMenuType = {
-  trigger: ReactNode
-  children: ReactNode
+  trigger?: ReactNode
+  children?: ReactNode
 }
 export const DropDownMenu: FC<DropDownMenuType> = ({ trigger, children }) => {
   return (

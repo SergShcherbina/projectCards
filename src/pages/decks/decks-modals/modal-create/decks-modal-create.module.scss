@@ -11,9 +11,13 @@
   }
 
   .hidden {
+    position: absolute;
+
     overflow: hidden;
+
     width: 0;
     height: 0;
+
     opacity: 0;
   }
 }

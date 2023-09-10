@@ -81,7 +81,7 @@ export const Body: FC<BodyProps> = props => {
 export type RowProps = ComponentProps<'tr'>
 
 export const Row: FC<RowProps> = props => {
-  return <tr {...props} />
+  return <tr className={s.row} {...props} />
 }
 
 export type HeadCellProps = ComponentProps<'th'> & {

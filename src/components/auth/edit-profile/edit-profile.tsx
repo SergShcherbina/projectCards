@@ -1,5 +1,6 @@
 import { FC, useState } from 'react'
 
+import { useLogoutMutation, useMeQuery, useUpdateMeMutation } from '../../../services/auth'
 import { Button, Card, Typography } from '../../ui'
 
 import s from './edit-profile.module.scss'
@@ -8,26 +9,27 @@ import { ReplaceAvatar } from './replace-avatar/replace-avatar.tsx'
 
 type Props = {
   src?: string
-  name: string
-  email: string
-  logoutHandler: () => void
-  replaceNickname: (name: string) => void
-  replaceAvatar: (data: Blob | MediaSource) => void
+  email?: string
 }
 
-export const EditProfile: FC<Props> = ({
-  name,
-  src,
-  email,
-  logoutHandler,
-  replaceNickname,
-  replaceAvatar,
-}) => {
+export const EditProfile: FC<Props> = ({}) => {
   let [switcher, setSwitcher] = useState(false)
+  const { data } = useMeQuery()
+  const [updateMe] = useUpdateMeMutation()
+  const [onLogout] = useLogoutMutation()
+  const onChangeNameHandler = (name: string) => {
+    const form = new FormData()
 
-  const onReplaceName = (name: string) => {
-    replaceNickname(name)
+    form.append('name', name)
+    updateMe(form)
     setSwitcher(!switcher)
+  }
+
+  const onChangeAvatarHandler = (data: string | Blob) => {
+    const form = new FormData()
+
+    form.append('avatar', data ? data : '')
+    updateMe(form)
   }
 
   return (
@@ -36,24 +38,27 @@ export const EditProfile: FC<Props> = ({
         Personal Information
       </Typography>
 
-      <ReplaceAvatar src={src} replaceAvatar={replaceAvatar} />
+      <ReplaceAvatar src={data?.avatar} replaceAvatar={value => onChangeAvatarHandler(value)} />
 
       {switcher ? (
-        <EditName onReplaceName={onReplaceName} nickname={name} />
+        <EditName
+          nickname={data?.name ? data?.name : 'Name'}
+          onReplaceName={value => onChangeNameHandler(value)}
+        />
       ) : (
         <>
           <Typography
             variant={'subtitle1'}
             as={'span'}
             className={s.nickname}
-            onDoubleClick={() => setSwitcher(!switcher)}
+            onClick={() => setSwitcher(!switcher)}
           >
-            {name}
+            {data?.name}
           </Typography>
           <Typography variant={'body2'} as={'span'} className={s.email}>
-            {email}
+            {data?.email}
           </Typography>
-          <Button variant={'secondaryWithIcon'} className={s.offsetBtn} onClick={logoutHandler}>
+          <Button variant={'secondaryWithIcon'} className={s.offsetBtn} onClick={() => onLogout()}>
             {'Logout'}
           </Button>
         </>

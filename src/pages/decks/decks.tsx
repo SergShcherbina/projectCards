@@ -1,18 +1,20 @@
 import { useState } from 'react'
 
+import { Navigate } from 'react-router-dom'
 import { useDebounce } from 'usehooks-ts'
 
+import iconDelete from '../../assets/icons/delete.svg'
 import { Button, Slider, TabSwitcher, TextField, Typography } from '../../components'
 import { Page } from '../../components/ui/page'
 import { Pagination } from '../../components/ui/pagination'
 import { SortTable } from '../../components/ui/table'
 import { useGetDecksQuery, decksSlice, useAppDispatch, useAppSelector } from '../../services'
+import { useMeQuery } from '../../services/auth'
 
 import { tabs } from './data/tabs.ts'
-import { DecksModal } from './decks-modal'
+import { DecksModalCreate } from './decks-modals'
 import { DecksTable } from './decks-table'
 import s from './decks.module.scss'
-import removeImg from './img/remove.svg'
 
 export const Decks = () => {
   const [toggleModal, setToggleModal] = useState(false)
@@ -20,7 +22,8 @@ export const Decks = () => {
   const sortString = sort ? `${sort?.key}-${sort?.direction}` : null
 
   const dispatch = useAppDispatch()
-  // const { data: userData } = useMeQuery()
+
+  const { data: userData } = useMeQuery()
 
   const itemsPerPage = useAppSelector(state => state.decksSlice.itemsPerPage)
   const currentPage = useAppSelector(state => state.decksSlice.currentPage)
@@ -46,9 +49,8 @@ export const Decks = () => {
   }
 
   const setShowCards = (whoseCards: string) => {
-    if (whoseCards === 'My cards') {
-      // dispatch(decksSlice.actions.setShowDecks([whoseCards, userData.id]))
-      dispatch(decksSlice.actions.setShowDecks([whoseCards, 'userData.id']))
+    if (whoseCards === 'My cards' && userData) {
+      dispatch(decksSlice.actions.setShowDecks([whoseCards, userData.id]))
     } else {
       dispatch(decksSlice.actions.setShowDecks([whoseCards, '']))
     }
@@ -61,7 +63,7 @@ export const Decks = () => {
     onSetSliderValue([0, 20])
   }
 
-  const { data, isLoading } = useGetDecksQuery({
+  const { data } = useGetDecksQuery({
     itemsPerPage,
     currentPage,
     name: debounceSearchByName,
@@ -73,7 +75,7 @@ export const Decks = () => {
 
   const totalPages = data ? data.pagination.totalPages : 1
 
-  if (isLoading) return <div>isLoading: {isLoading.toString()}</div>
+  if (!userData) return <Navigate to={'/login'} />
 
   return (
     <Page>
@@ -109,13 +111,13 @@ export const Decks = () => {
         </div>
 
         <Button variant={'secondary'} onClick={onClearFilter}>
-          <img src={removeImg} alt={'remove icon'} /> Clear filter
+          <img src={iconDelete} alt={'remove icon'} /> Clear filter
         </Button>
       </div>
 
-      <DecksTable setSort={setSort} sort={sort} data={data?.items} />
+      <DecksTable setSort={setSort} sort={sort} data={data?.items} myCards={showDecks[1]} />
 
-      <DecksModal toggleModal={toggleModal} setToggleModal={setToggleModal} />
+      <DecksModalCreate toggleModal={toggleModal} setToggleModal={setToggleModal} />
 
       <Pagination
         count={totalPages}
