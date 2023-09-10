@@ -77,6 +77,7 @@ export const Cards = () => {
   }
 
   const handleClickShowAddModal = () => {
+    setCurrentCard(undefined)
     setShowModalEdit(true)
   }
 
