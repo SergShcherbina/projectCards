@@ -34,6 +34,7 @@ type CommonProps = {
 
 type ConditionalProps = {
   fullWidth?: boolean
+  className?: string
 }
 
 export type TabSwitherProps = CommonProps & ConditionalProps
@@ -46,9 +47,10 @@ export const TabSwitcher: FC<TabSwitherProps> = ({
   children,
   fullWidth,
   onValueChange,
+  className,
 }) => {
   const classNames = {
-    root: s.root,
+    root: clsx(s.root, className),
     list: s.list,
     trigger: clsx(s.trigger, fullWidth && s.fullWidth),
   }
