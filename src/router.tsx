@@ -11,6 +11,7 @@ import { EditProfile } from './components/auth/edit-profile'
 import { Decks } from './pages'
 import { Cards } from './pages/cards'
 import { LearnPage } from './pages/learn/learn-page.tsx'
+import { Page404 } from './pages/page-404/page-404.tsx'
 import { SignInPage } from './pages/sign-in/sign-in.tsx'
 import { SignUpPage } from './pages/sign-up/sign-up-page.tsx'
 import { useMeQuery } from './services/auth'
@@ -42,6 +43,14 @@ const privateRoutes: RouteObject[] = [
   {
     path: 'profile',
     element: <EditProfile />,
+  },
+  {
+    path: '/404',
+    element: <Page404 />,
+  },
+  {
+    path: '*',
+    element: <Navigate to="/404" replace />,
   },
 ]
 
