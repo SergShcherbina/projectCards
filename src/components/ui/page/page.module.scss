@@ -12,3 +12,9 @@
   display: flex;
   justify-content: center;
 }
+
+@media (width <= 1010px) {
+  .content {
+    padding: 0 2%;
+  }
+}

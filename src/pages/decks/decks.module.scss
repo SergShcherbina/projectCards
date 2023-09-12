@@ -20,18 +20,7 @@
   }
 }
 
-@media (width <= 1050px) {
-  .wrapperDecks {
-    padding: 0 2%;
-  }
-}
-
 @media (width <= 992px) {
-  .wrapperDecks {
-    overflow: scroll;
-    padding: 0 2%;
-  }
-
   td {
     padding: 3px 10px !important;
     word-break: inherit !important;
@@ -39,11 +28,6 @@
 }
 
 @media (width <= 768px) {
-  .wrapperDecks {
-    overflow: scroll;
-    padding: 0 2%;
-  }
-
   .gridContainer {
     grid-template: auto / 1fr auto;
   }
