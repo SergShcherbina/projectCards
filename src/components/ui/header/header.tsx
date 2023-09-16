@@ -38,7 +38,13 @@ export const Header: FC<HeaderType> = ({ logo = image, userData, onLogout }) => 
               userName={userData.name}
               userEmail={userData.email}
             />
-            <DropDownMenuItem as={'a'} href={'/profile'} icon={personIcon} text={'My Profile'} />
+            <DropDownMenuItem
+              className={s.myProfile}
+              as={'a'}
+              href={'/profile'}
+              icon={personIcon}
+              text={'My Profile'}
+            />
             <DropDownMenuItem icon={logOutIcon} text={'Sign Out'} onSelect={onLogout} />
           </DropDownMenu>
         </div>

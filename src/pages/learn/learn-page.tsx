@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom'
 
 import { Spinner } from '../../assets'
 import { Button, Card, Typography } from '../../components'
-import { Page } from '../../components/ui/page'
 import { useGetDeckByIdQuery, useGetLearnQuery, useUpdateLearnMutation } from '../../services'
 
 import { Answer } from './answer/answer.tsx'
@@ -46,7 +45,7 @@ export const LearnPage = () => {
   }
 
   return (
-    <Page>
+    <>
       {deck?.cardsCount === 0 ? (
         <ZeroQuestion />
       ) : (
@@ -75,6 +74,6 @@ export const LearnPage = () => {
           <Answer show={show} item={learnCard} setShow={setShow} updateQuestion={updateQuestion} />
         </div>
       )}
-    </Page>
+    </>
   )
 }
