@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import { useNavigate, useParams } from 'react-router-dom'
 
+import { Spinner } from '../../assets'
 import { Button, TextField, Typography, ButtonBack } from '../../components'
 import { Grade } from '../../components/ui/grade'
 import { Page } from '../../components/ui/page'
@@ -81,7 +82,7 @@ export const Cards = () => {
     setShowModalEdit(true)
   }
 
-  if (isLoading) return <div>isLoading: {isLoading.toString()}</div>
+  if (isLoading) return <Spinner />
 
   //<CardModalEdit deckId={deckId} mode={'new'} />
   return (
