@@ -15,21 +15,28 @@
     display: flex;
     align-items: center;
 
-    .logo {
-      cursor: pointer;
-      max-height: 36px;
-      transition-duration: 0.1s;
+    .logoContainer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-      &:hover {
-        transform: translateY(2px);
-      }
+      .logo {
+        cursor: pointer;
+        height: 100%;
+        background-color: var(--color-light-100);
+        transition-duration: 0.1s;
 
-      &:active {
-        transform: scale(0.99);
-      }
+        &:hover {
+          transform: translateY(2px);
+        }
 
-      @media (width <= 575px) {
-        width: 120px;
+        &:active {
+          transform: scale(0.99);
+        }
+
+        @media (width <= 575px) {
+          width: 120px;
+        }
       }
     }
   }

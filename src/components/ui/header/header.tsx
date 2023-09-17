@@ -13,19 +13,20 @@ import personIcon from '../drop-down-menu/img/personOutline.svg'
 import { Typography } from '../typography'
 
 import s from './header.module.scss'
-import image from './img/logo.png'
+import { Logo } from './img/logo.tsx'
 
 type HeaderType = {
   userData?: UserType | null
   onLogout: () => void
-  logo?: string
 } & ComponentPropsWithoutRef<'header'>
 
-export const Header: FC<HeaderType> = ({ logo = image, userData, onLogout }) => {
+export const Header: FC<HeaderType> = ({ userData, onLogout }) => {
   return (
     <div className={`${s.wrapperHeader}`}>
       <Link to={'/'} className={s.linkHome}>
-        <img src={logo} className={s.logo} alt={'logo'} />
+        <div className={s.logoContainer}>
+          <Logo className={s.logo} />
+        </div>
       </Link>
       {userData ? (
         <div className={s.info}>
