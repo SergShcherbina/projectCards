@@ -4,7 +4,6 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 import { Button, TextField, Typography, ButtonBack } from '../../components'
 import { Grade } from '../../components/ui/grade'
-import { Page } from '../../components/ui/page'
 import { Pagination } from '../../components/ui/pagination'
 import { Column, SortTable, Table } from '../../components/ui/table'
 import { useGetDeckByIdQuery, useAppDispatch, useAppSelector } from '../../services'
@@ -85,7 +84,7 @@ export const Cards = () => {
 
   //<CardModalEdit deckId={deckId} mode={'new'} />
   return (
-    <Page>
+    <>
       <CardModal
         currentCard={currentCard}
         deckId={deckId}
@@ -176,6 +175,6 @@ export const Cards = () => {
         perPage={itemsPerPage}
         perPageOptions={[5, 10, 15, 20, 100]}
       />
-    </Page>
+    </>
   )
 }

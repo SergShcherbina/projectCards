@@ -5,7 +5,6 @@ import { useDebounce } from 'usehooks-ts'
 
 import iconDelete from '../../assets/icons/delete.svg'
 import { Button, Slider, TabSwitcher, TextField, Typography } from '../../components'
-import { Page } from '../../components/ui/page'
 import { Pagination } from '../../components/ui/pagination'
 import { SortTable } from '../../components/ui/table'
 import { useGetDecksQuery, decksSlice, useAppDispatch, useAppSelector } from '../../services'
@@ -78,58 +77,58 @@ export const Decks = () => {
   if (!userData) return <Navigate to={'/login'} />
 
   return (
-    <Page>
-      <div className={s.wrapperDecks}>
-        <div className={s.wrapperTitle}>
-          <Typography variant={'large'}>Packs list</Typography>
-          <Button onClick={() => setToggleModal(true)}>
-            <Typography variant={'subtitle1'} as={'span'}>
-              Add New Pack
-            </Typography>
-          </Button>
-        </div>
-
-        <div className={s.gridContainer}>
-          <TextField
-            type={'search'}
-            onChangeValue={setSearch}
-            placeholder={'Input search'}
-            value={searchByName}
-          />
-
-          <TabSwitcher
-            className={s.tabSwitcher}
-            title={'Show packs cards'}
-            value={showDecks[0]}
-            onValueChange={setShowCards}
-            tabs={tabs}
-          />
-
-          <div className={s.sliderFlex}>
-            <Typography as={'span'} variant="body2">
-              Number of cards
-            </Typography>
-            <Slider value={sliderValue} max={20} onValueChange={onSetSliderValue} />
-          </div>
-
-          <Button variant={'secondary'} onClick={onClearFilter}>
-            <img src={iconDelete} alt={'remove icon'} /> Clear filter
-          </Button>
-        </div>
-
-        <DecksTable setSort={setSort} sort={sort} data={data?.items} myCards={showDecks[1]} />
-
-        <DecksModalCreate toggleModal={toggleModal} setToggleModal={setToggleModal} />
-
-        <Pagination
-          count={totalPages}
-          page={currentPage}
-          onChange={setCurrentPage}
-          perPageOptions={[8, 16, 24]}
-          perPage={itemsPerPage}
-          onPerPageChange={setItemsPerPage}
-        />
+    // <Page>
+    <div className={s.wrapperDecks}>
+      <div className={s.wrapperTitle}>
+        <Typography variant={'large'}>Packs list</Typography>
+        <Button onClick={() => setToggleModal(true)}>
+          <Typography variant={'subtitle1'} as={'span'}>
+            Add New Pack
+          </Typography>
+        </Button>
       </div>
-    </Page>
+
+      <div className={s.gridContainer}>
+        <TextField
+          type={'search'}
+          onChangeValue={setSearch}
+          placeholder={'Input search'}
+          value={searchByName}
+        />
+
+        <TabSwitcher
+          className={s.tabSwitcher}
+          title={'Show packs cards'}
+          value={showDecks[0]}
+          onValueChange={setShowCards}
+          tabs={tabs}
+        />
+
+        <div className={s.sliderFlex}>
+          <Typography as={'span'} variant="body2">
+            Number of cards
+          </Typography>
+          <Slider value={sliderValue} max={20} onValueChange={onSetSliderValue} />
+        </div>
+
+        <Button variant={'secondary'} onClick={onClearFilter}>
+          <img src={iconDelete} alt={'remove icon'} /> Clear filter
+        </Button>
+      </div>
+
+      <DecksTable setSort={setSort} sort={sort} data={data?.items} myCards={showDecks[1]} />
+
+      <DecksModalCreate toggleModal={toggleModal} setToggleModal={setToggleModal} />
+
+      <Pagination
+        count={totalPages}
+        page={currentPage}
+        onChange={setCurrentPage}
+        perPageOptions={[8, 16, 24]}
+        perPage={itemsPerPage}
+        onPerPageChange={setItemsPerPage}
+      />
+    </div>
+    // </Page>
   )
 }

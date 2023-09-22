@@ -18,6 +18,7 @@ export const DropDownMenuItem = <T extends ElementType = 'div'>({
   icon,
   onSelect,
   as,
+  className,
   ...rest
 }: DropDownMenuItemType<T>) => {
   const onSelectHandler = (e: Event) => {
@@ -27,7 +28,7 @@ export const DropDownMenuItem = <T extends ElementType = 'div'>({
   const TagName = as || 'div'
 
   return (
-    <DropdownMenuRadix.Item className={s.wrapperItems} onSelect={onSelectHandler}>
+    <DropdownMenuRadix.Item className={`${className} ${s.wrapperItems}`} onSelect={onSelectHandler}>
       <div className={s.item}>
         <img className={s.icon} src={icon} alt={'icon'} />
         <TagName {...rest}>

@@ -1,5 +1,6 @@
 import { Navigate, useNavigate } from 'react-router-dom'
 
+import { Spinner } from '../../assets'
 import { SignIn } from '../../components'
 import { useLoginMutation, useMeQuery } from '../../services/auth'
 
@@ -8,7 +9,7 @@ export const SignInPage = () => {
   const [signIn, { isLoading: isSignIn }] = useLoginMutation()
   const navigate = useNavigate()
 
-  if (isLoading) return <div>Loading...</div>
+  if (isLoading) return <Spinner />
   if (data) return <Navigate to="/" />
 
   const handleSignIn = (data: any) => {

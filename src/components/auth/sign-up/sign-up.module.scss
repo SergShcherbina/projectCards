@@ -18,3 +18,9 @@
 .underlineBtn > * {
   text-decoration: underline;
 }
+
+.underlineBtn {
+  &:focus {
+    outline: none;
+  }
+}
