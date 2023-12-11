@@ -31,8 +31,10 @@ export const Cards = () => {
   const currentPage = useAppSelector(state => state.cardsSlice.currentPage)
   const searchByName = useAppSelector(state => state.cardsSlice.searchByName)
 
-  const setItemsPerPage = (itemsPerPage: number) =>
+  const setItemsPerPage = (itemsPerPage: number) => {
     dispatch(cardsSlice.actions.setItemsPerPage(itemsPerPage))
+    setCurrentPage(1)
+  }
 
   const setCurrentPage = (currentPage: number) =>
     dispatch(cardsSlice.actions.setCurrentPage(currentPage))
