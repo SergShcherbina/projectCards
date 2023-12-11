@@ -30,21 +30,25 @@ export const Decks = () => {
   const showDecks = useAppSelector(state => state.decksSlice.showDecks)
   const sliderValue = useAppSelector(state => state.decksSlice.sliderValue)
 
-  const debounceSliderValue = useDebounce<number[]>(sliderValue, 1000)
-  const debounceSearchByName = useDebounce<string>(searchByName, 1000)
-
-  const setItemsPerPage = (itemsPerPage: number) =>
-    dispatch(decksSlice.actions.setItemsPerPage(itemsPerPage))
+  const debounceSliderValue = useDebounce<number[]>(sliderValue, 700)
+  const debounceSearchByName = useDebounce<string>(searchByName, 700)
 
   const setCurrentPage = (currentPage: number) =>
     dispatch(decksSlice.actions.setCurrentPage(currentPage))
 
+  const setItemsPerPage = (itemsPerPage: number) => {
+    dispatch(decksSlice.actions.setItemsPerPage(itemsPerPage))
+    setCurrentPage(1)
+  }
+
   const setSearch = (search: string) => {
     dispatch(decksSlice.actions.setSearchByName(search))
+    setCurrentPage(1)
   }
 
   const onSetSliderValue = (value: number[]) => {
     dispatch(decksSlice.actions.setSliderValue(value))
+    setCurrentPage(1)
   }
 
   const setShowCards = (whoseCards: string) => {
@@ -53,6 +57,7 @@ export const Decks = () => {
     } else {
       dispatch(decksSlice.actions.setShowDecks([whoseCards, '']))
     }
+    setCurrentPage(1)
   }
 
   const onClearFilter = () => {
