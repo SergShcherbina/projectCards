@@ -17,7 +17,7 @@ export const ControlledImageInput = <T extends FieldValues>({
   ...fieldProps
 }: Props<T>) => {
   const {
-    field: { value, onChange },
+    field: { onChange },
   } = useController({ control, name, defaultValue, rules, shouldUnregister })
   const uploadInputRef = useRef(null)
 
@@ -29,6 +29,7 @@ export const ControlledImageInput = <T extends FieldValues>({
         accept="image/*"
         style={{ display: 'none' }}
         onChange={onChange}
+        {...fieldProps}
       />
       <Button onClick={() => {}} variant="secondaryWithIcon" fullWidth={true}>
         Upload

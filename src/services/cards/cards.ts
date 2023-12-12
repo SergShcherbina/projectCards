@@ -1,13 +1,6 @@
 import { baseApi } from '../base-api.tsx'
 
-import {
-  Card,
-  CardsResponse,
-  CreateCardArgs,
-  DeleteCardArgs,
-  GetCardsArgs,
-  UpdateCardArgs,
-} from './types.ts'
+import { Card, CardsResponse, DeleteCardArgs, GetCardsArgs } from './types.ts'
 
 const cardsApi = baseApi.injectEndpoints({
   endpoints: builder => {
@@ -22,23 +15,23 @@ const cardsApi = baseApi.injectEndpoints({
         },
         providesTags: ['Cards'],
       }),
-      createCards: builder.mutation<Card, CreateCardArgs>({
-        query: ({ deckId, ...body }) => {
+      createCards: builder.mutation<Card, { deckId: string; data: FormData }>({
+        query: ({ deckId, data }) => {
           return {
             url: `v1/decks/${deckId}/cards`,
             method: 'POST',
-            body: body.data,
+            body: data,
           }
         },
 
         invalidatesTags: ['Cards'],
       }),
-      updateCards: builder.mutation<Card, UpdateCardArgs>({
-        query: ({ id, ...body }) => {
+      updateCards: builder.mutation<Card, { id: string; data: FormData }>({
+        query: ({ id, data }) => {
           return {
             url: `v1/cards/${id}/`,
             method: 'PATCH',
-            body: body.data,
+            body: data,
           }
         },
 
