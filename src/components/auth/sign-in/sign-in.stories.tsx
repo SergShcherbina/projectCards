@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { SignIn } from './sign-in.tsx'
+import { SignIn, SignInType } from './sign-in.tsx'
 
 const meta = {
   title: 'Auth/Sign in',
@@ -11,4 +11,9 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  args: {
+    isSubmitting: false,
+    onSubmit: (data: SignInType) => alert(JSON.stringify(data)),
+  },
+}
