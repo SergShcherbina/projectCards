@@ -7,13 +7,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import { z } from 'zod'
 
 import { Button, ControlledTextField, Modal } from '../../../components'
-import {
-  Card,
-  CreateCardArgs,
-  UpdateCardArgs,
-  useCreateCardsMutation,
-  useUpdateCardsMutation,
-} from '../../../services/cards'
+import { Card, useCreateCardsMutation, useUpdateCardsMutation } from '../../../services/cards'
 import s from '../cards.module.scss'
 import Mask from '../img/no-image.png'
 
@@ -69,7 +63,7 @@ export const CardModal = ({ currentCard, deckId, show = false, setShow }: CardMo
     }
 
     if (mode === 'edit' && currentCard) {
-      updateCard({ id: currentCard.id, data: formData } as unknown as UpdateCardArgs)
+      updateCard({ id: currentCard.id, data: formData })
         .unwrap()
         .then(() => {
           toast.success('Card updated successfully')
@@ -81,7 +75,7 @@ export const CardModal = ({ currentCard, deckId, show = false, setShow }: CardMo
     }
 
     if (mode === 'new' && deckId) {
-      createCard({ data: formData, deckId } as unknown as CreateCardArgs)
+      createCard({ data: formData, deckId })
         .unwrap()
         .then(() => {
           toast.success('Card created successfully')

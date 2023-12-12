@@ -10,7 +10,7 @@ import { signInScheme } from '../validation/sing-in-scheme.ts'
 
 import s from './sign-in.module.scss'
 
-type SignInType = z.infer<typeof signInScheme>
+export type SignInType = z.infer<typeof signInScheme>
 type SignInPropsType = {
   onSubmit: (data: SignInType) => void
   isSubmitting: boolean
