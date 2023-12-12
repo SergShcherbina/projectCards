@@ -1,7 +1,6 @@
 import { createBrowserRouter, RouterProvider, Outlet, Navigate } from 'react-router-dom'
 
 import { Spinner } from './assets'
-import { EditProfile } from './components/auth/edit-profile'
 import { Page } from './components/ui/page'
 import { Decks } from './pages'
 import { Cards } from './pages/cards'
@@ -33,7 +32,7 @@ const router = createBrowserRouter([
           },
           {
             path: 'profile',
-            element: <EditProfile />,
+            // element: <EditProfilePage />,
           },
           {
             path: '/404',
