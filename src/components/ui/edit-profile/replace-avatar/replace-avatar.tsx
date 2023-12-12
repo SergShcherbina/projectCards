@@ -1,7 +1,7 @@
 import { ChangeEvent, FC } from 'react'
 
-import { Avatar } from '../../../ui'
-import darkPencil from '../img/dark.svg'
+import { Avatar } from '../../index.ts'
+import darkPencil from '../img/pencel-dark.svg'
 
 import s from './replace-avatar.module.scss'
 
@@ -14,20 +14,22 @@ export const ReplaceAvatar: FC<PropsType> = ({ src, replaceAvatar }) => {
     if (e.currentTarget.files) {
       const imgFile = e.currentTarget.files[0]
 
-      if (imgFile.type === 'image/jpeg' || imgFile.type === 'image/png') {
-        replaceAvatar(imgFile)
-      } else {
-        alert('This file is not not .jpg & .png')
-      }
+      replaceAvatar(imgFile)
     }
   }
 
   return (
     <div className={s.wrapperAvatar}>
-      <Avatar src={src} size={96} />
-      <img src={darkPencil} alt={'icon pencil'} className={s.avatarEdit} />
       <label className={s.avatarEdit}>
-        <input type="file" className={s.input} onChange={onChangeFile} />
+        <Avatar src={src} size={96} />
+        <img src={darkPencil} alt={'icon pencil'} className={s.avatarEditIcon} />
+
+        <input
+          type="file"
+          className={s.input}
+          onChange={onChangeFile}
+          accept={'image/*, .png, .jpeg, .svg, .gif'}
+        />
       </label>
     </div>
   )

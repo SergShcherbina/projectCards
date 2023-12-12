@@ -1,16 +1,15 @@
 .wrapperAvatar {
-  position: relative;
-
   .avatarEdit {
     cursor: pointer;
     user-select: none;
+    position: relative;
 
-    position: absolute;
-    top: 60px;
-    left: 60px;
-
-    width: 44px;
-    height: 44px;
+    .avatarEditIcon {
+      cursor: pointer;
+      position: absolute;
+      right: -12px;
+      bottom: 0;
+    }
   }
 
   .input {

@@ -6,15 +6,14 @@ import { z } from 'zod'
 
 import { Button, ControlledTextField } from '../../../ui'
 
-import s from './nickname-field.module.scss'
+import s from './edit-nikname.module.scss'
 import { nicknameScheme } from './validation'
 
 type PropsType = {
-  onReplaceName: (text: string) => void
-  // nickname?: string | undefined
+  onEditName: (userName: string) => void
 } & z.infer<typeof nicknameScheme>
 
-export const EditName: FC<PropsType> = ({ onReplaceName }) => {
+export const EditNikname: FC<PropsType> = ({ onEditName }) => {
   const {
     handleSubmit,
     control,
@@ -23,8 +22,8 @@ export const EditName: FC<PropsType> = ({ onReplaceName }) => {
     resolver: zodResolver(nicknameScheme),
   })
 
-  const onSubmit = (data: PropsType) => {
-    onReplaceName(data.nickname)
+  const onSubmit = (value: PropsType) => {
+    onEditName(value.nickname)
   }
 
   return (
