@@ -4,8 +4,8 @@ const Logo = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
   <svg
     version="1.0"
     xmlns="http://www.w3.org/2000/svg"
-    width="156.482pxpt"
-    height="36pt"
+    width="156.482px"
+    height="36px"
     viewBox="0 0 630.000000 171.000000"
     preserveAspectRatio="xMidYMid meet"
     ref={ref}
