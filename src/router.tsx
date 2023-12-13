@@ -4,6 +4,7 @@ import { Spinner } from './assets'
 import { Page } from './components/ui/page'
 import { Decks } from './pages'
 import { Cards } from './pages/cards'
+import { EditProfilePage } from './pages/edit-profile/edit-profile-page.tsx'
 import { LearnPage } from './pages/learn/learn-page.tsx'
 import { Page404 } from './pages/page-404/page-404.tsx'
 import { SignInPage } from './pages/sign-in/sign-in.tsx'
@@ -32,7 +33,7 @@ const router = createBrowserRouter([
           },
           {
             path: 'profile',
-            // element: <EditProfilePage />,
+            element: <EditProfilePage />,
           },
           {
             path: '/404',

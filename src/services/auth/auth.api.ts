@@ -59,7 +59,7 @@ const authApi = baseApi.injectEndpoints({
           }
         },
       }),
-      updateMe: builder.mutation({
+      updateMe: builder.mutation<UserType, FormData>({
         query: data => {
           return {
             url: `v1/auth/me`,
