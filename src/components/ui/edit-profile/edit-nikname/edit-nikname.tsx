@@ -13,7 +13,7 @@ type PropsType = {
   onEditName: (userName: string) => void
 } & z.infer<typeof nicknameScheme>
 
-export const EditNikname: FC<PropsType> = ({ onEditName }) => {
+export const EditNikname: FC<PropsType> = ({ onEditName, nickname }) => {
   const {
     handleSubmit,
     control,
@@ -35,6 +35,7 @@ export const EditNikname: FC<PropsType> = ({ onEditName }) => {
         type={'text'}
         className={s.inputMargin}
         errorMessage={errors.nickname?.message}
+        defaultValue={nickname}
       />
 
       <Button variant={'primary'} type="submit">
