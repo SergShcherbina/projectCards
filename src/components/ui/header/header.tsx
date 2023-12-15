@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef, FC } from 'react'
 
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import { UserType } from '../../../services/auth'
 import { Avatar } from '../avatar'
@@ -21,6 +21,11 @@ type HeaderType = {
 } & ComponentPropsWithoutRef<'header'>
 
 export const Header: FC<HeaderType> = ({ userData, onLogout }) => {
+  const navigate = useNavigate()
+  const profileHandler = () => {
+    navigate('profile')
+  }
+
   return (
     <div className={`${s.wrapperHeader}`}>
       <Link to={'/'} className={s.linkHome}>
@@ -41,8 +46,7 @@ export const Header: FC<HeaderType> = ({ userData, onLogout }) => {
             />
             <DropDownMenuItem
               className={s.myProfile}
-              as={'a'}
-              href={'/profile'}
+              onSelect={profileHandler}
               icon={personIcon}
               text={'My Profile'}
             />
