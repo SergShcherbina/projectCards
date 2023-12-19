@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import { useNavigate, useParams } from 'react-router-dom'
+import { useDebounce } from 'usehooks-ts'
 
 import { Button, TextField, Typography, ButtonBack } from '../../components'
 import { Grade } from '../../components/ui/grade'
@@ -31,6 +32,8 @@ export const Cards = () => {
   const currentPage = useAppSelector(state => state.cardsSlice.currentPage)
   const searchByName = useAppSelector(state => state.cardsSlice.searchByName)
 
+  const debounceCardsSearch = useDebounce<string>(searchByName, 500)
+
   const setItemsPerPage = (itemsPerPage: number) => {
     dispatch(cardsSlice.actions.setItemsPerPage(itemsPerPage))
     setCurrentPage(1)
@@ -48,6 +51,8 @@ export const Cards = () => {
     itemsPerPage,
     currentPage,
     orderBy,
+    question: debounceCardsSearch,
+    // answer: searchByName,
   })
 
   const { data: me } = useMeQuery()
@@ -55,14 +60,14 @@ export const Cards = () => {
 
   if (!deckId) return <div>Deck not found</div>
 
-  if (searchByName) {
-    cards?.items?.forEach((item: Card, index: number, object: any) => {
-      debugger
-      if (!item.question.search(searchByName)) {
-        object.splice(index, 1)
-      }
-    })
-  }
+  // if (searchByName) {
+  //   cards?.items?.forEach((item: Card, index: number, object: any) => {
+  //     debugger
+  //     if (!item.question.search(searchByName)) {
+  //       object.splice(index, 1)
+  //     }
+  //   })
+  // }
 
   const columns: Column[] = [
     { key: 'question', sortable: true, title: 'Question' },
@@ -110,7 +115,7 @@ export const Cards = () => {
         label="Search"
         onChangeValue={setSearch}
         value={searchByName}
-        placeholder="input search"
+        placeholder="enter a question"
         type="search"
       />
 

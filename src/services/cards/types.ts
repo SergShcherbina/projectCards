@@ -25,6 +25,8 @@ export type GetCardsArgs = {
   currentPage?: Pagination['currentPage']
   itemsPerPage?: Pagination['itemsPerPage']
   orderBy?: string | null
+  answer?: string
+  question?: string
 }
 
 export type CreateCardArgs = Pick<
