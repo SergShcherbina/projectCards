@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import type { Meta, StoryObj } from '@storybook/react'
 
 import { TextField } from './text-field.tsx'
@@ -17,6 +19,7 @@ export const Text: Story = {
     type: 'text',
     placeholder: 'text',
     disabled: false,
+    value: '',
   },
 }
 
@@ -26,6 +29,7 @@ export const Password: Story = {
     type: 'password',
     placeholder: 'password',
     disabled: false,
+    value: '',
   },
 }
 
@@ -36,6 +40,7 @@ export const Error: Story = {
     placeholder: 'error',
     errorMessage: 'Error!',
     disabled: false,
+    value: '',
   },
 }
 
@@ -45,6 +50,7 @@ export const Disabled: Story = {
     type: 'text',
     placeholder: 'text',
     disabled: true,
+    value: '',
   },
 }
 
@@ -54,5 +60,12 @@ export const Search: Story = {
     type: 'search',
     placeholder: 'text',
     disabled: false,
+    value: '',
+  },
+
+  render: args => {
+    const [value, setValue] = useState('')
+
+    return <TextField {...args} value={value} onChangeValue={setValue} />
   },
 }
