@@ -38,3 +38,13 @@
 
   color: var(--color-light-100);
 }
+
+@media (width <= 768px) {
+  .wrapperTable {
+    overflow: scroll;
+  }
+
+  .rowFlex > * {
+    margin: 0;
+  }
+}
