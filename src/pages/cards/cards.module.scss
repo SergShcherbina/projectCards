@@ -24,17 +24,46 @@
 }
 
 .cardImgL {
-  width: 50%;
+  max-height: 140px;
   object-fit: cover;
   object-position: 0 0;
   border-radius: 2px;
 }
 
+.modal {
+  overflow-y: auto;
+  max-height: 100vh;
+}
+
 .actions {
   display: flex;
-  flex-direction: row;
-  gap: 8px;
+  gap: 5px;
   align-items: center;
-
   color: var(--color-light-100);
+
+  & > svg {
+    cursor: pointer;
+
+    width: 24px;
+    height: 24px;
+    padding: 4px;
+
+    border-radius: 50%;
+
+    transition: all 0.1s;
+
+    &:hover {
+      background-color: var(--color-accent-500);
+    }
+  }
+}
+
+@media (width <= 768px) {
+  .wrapperTable {
+    overflow: scroll;
+  }
+
+  .rowFlex > * {
+    margin: 0;
+  }
 }
