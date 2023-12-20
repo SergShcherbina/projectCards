@@ -119,60 +119,62 @@ export const Cards = () => {
         type="search"
       />
 
-      <Table.Root>
-        <Table.Header columns={columns} sort={sortTable} onSort={setSortTable} />
-        <Table.Body>
-          {cards?.items.map(card => {
-            return (
-              <Table.Row key={card.id}>
-                <Table.Cell>
-                  {card?.questionImg ? (
-                    <>
-                      <img className={s.cardImg} src={card?.questionImg} alt="cover" />
-                      <div>{card.question}</div>
-                    </>
-                  ) : (
-                    card.question
-                  )}
-                </Table.Cell>
-
-                <Table.Cell>
-                  {card?.answerImg ? (
-                    <>
-                      <img className={s.cardImg} src={card?.answerImg} alt="cover" />
-                      <div>{card.answer}</div>
-                    </>
-                  ) : (
-                    card.answer
-                  )}
-                </Table.Cell>
-                <Table.Cell>{new Date(card.updated).toLocaleDateString('ru-Ru')}</Table.Cell>
-                <Table.Cell>
-                  <Grade grade={card.grade} />
-                </Table.Cell>
-
-                <Table.Cell>
-                  <div className={s.actions}>
-                    {isOwner ? (
+      <div className={s.wrapperTable}>
+        <Table.Root>
+          <Table.Header columns={columns} sort={sortTable} onSort={setSortTable} />
+          <Table.Body>
+            {cards?.items.map(card => {
+              return (
+                <Table.Row key={card.id}>
+                  <Table.Cell>
+                    {card?.questionImg ? (
                       <>
-                        <CardModalDelete cardId={card.id} />
-
-                        <EditIcon
-                          onClick={() => {
-                            handleClickShowEditModal(card)
-                          }}
-                        ></EditIcon>
+                        <img className={s.cardImg} src={card?.questionImg} alt="cover" />
+                        <div>{card.question}</div>
                       </>
                     ) : (
-                      <LearnIcon onClick={() => navigate(`/learn/${deckId}`)} />
+                      card.question
                     )}
-                  </div>
-                </Table.Cell>
-              </Table.Row>
-            )
-          })}
-        </Table.Body>
-      </Table.Root>
+                  </Table.Cell>
+
+                  <Table.Cell>
+                    {card?.answerImg ? (
+                      <>
+                        <img className={s.cardImg} src={card?.answerImg} alt="cover" />
+                        <div>{card.answer}</div>
+                      </>
+                    ) : (
+                      card.answer
+                    )}
+                  </Table.Cell>
+                  <Table.Cell>{new Date(card.updated).toLocaleDateString('ru-Ru')}</Table.Cell>
+                  <Table.Cell>
+                    <Grade grade={card.grade} />
+                  </Table.Cell>
+
+                  <Table.Cell>
+                    <div className={s.actions}>
+                      {isOwner ? (
+                        <>
+                          <CardModalDelete cardId={card.id} />
+
+                          <EditIcon
+                            onClick={() => {
+                              handleClickShowEditModal(card)
+                            }}
+                          ></EditIcon>
+                        </>
+                      ) : (
+                        <LearnIcon onClick={() => navigate(`/learn/${deckId}`)} />
+                      )}
+                    </div>
+                  </Table.Cell>
+                </Table.Row>
+              )
+            })}
+          </Table.Body>
+        </Table.Root>
+      </div>
 
       <Pagination
         page={currentPage}
