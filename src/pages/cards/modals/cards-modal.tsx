@@ -113,6 +113,7 @@ export const CardModal = ({ currentCard, deckId, show = false, setShow }: CardMo
         title={mode === 'edit' ? 'Edit Card' : 'New Card'}
         cancelButtonText="Cancel"
         confirmButtonText="Save Changes"
+        className={s.modal}
       >
         <ControlledTextField
           control={control}

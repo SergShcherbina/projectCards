@@ -24,10 +24,15 @@
 }
 
 .cardImgL {
-  width: 50%;
+  max-height: 140px;
   object-fit: cover;
   object-position: 0 0;
   border-radius: 2px;
+}
+
+.modal {
+  overflow-y: auto;
+  max-height: 100vh;
 }
 
 .actions {
