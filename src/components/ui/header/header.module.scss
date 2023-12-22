@@ -3,39 +3,54 @@
   align-items: center;
   justify-content: space-between;
 
-  max-width: 1280px;
+  max-width: 100%;
   height: 60px;
   margin: 0 auto;
-  padding: 0 136px;
 
   background-color: var(--color-dark-500);
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+    width: 1006px;
+    margin: 0 auto;
+
+    @media (width <= 1010px) {
+      padding: 0 2%;
+    }
+  }
 
   .linkHome {
     user-select: none;
     display: flex;
     align-items: center;
+    text-decoration: none;
 
     .logoContainer {
       display: flex;
       align-items: center;
       justify-content: center;
 
+      color: var(--color-accent-500);
+      text-shadow: 1px 1px 0 var(--color-light-900);
+
       .logo {
         cursor: pointer;
-        height: 100%;
-        background-color: var(--color-light-100);
-        transition-duration: 0.1s;
+        transition: all 0.2s;
 
         &:hover {
-          transform: translateY(2px);
+          transform: translateX(-2px);
         }
 
         &:active {
-          transform: scale(0.99);
+          transform: scale(0.97);
         }
 
-        @media (width <= 575px) {
-          width: 120px;
+        .bracket {
+          color: var(--color-light-100);
+          text-shadow: none;
+          transition: all 0.1s;
+          animation: 3s blink infinite ease-out;
         }
       }
     }
@@ -50,12 +65,22 @@
       border-bottom: 2px dashed;
     }
   }
-
-  @media (width <= 991px) {
-    padding: 0 10%;
-  }
 }
 
 .myProfile {
   text-decoration: none;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
 }
