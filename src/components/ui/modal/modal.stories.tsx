@@ -106,8 +106,8 @@ export const ModalWithInputs: Story = {
         </span>
 
         <Modal {...args} isOpen={isOpen} onClose={handleModalClosed}>
-          <TextField type={'text'} placeholder={'Input'} />
-          <TextField type={'text'} placeholder={'Input'} />
+          <TextField type={'text'} placeholder={'Input'} value={''} onChangeValue={() => {}} />
+          <TextField type={'text'} placeholder={'Input'} value={''} onChangeValue={() => {}} />
           <Checkbox
             label={'Check-box'}
             id={'id'}

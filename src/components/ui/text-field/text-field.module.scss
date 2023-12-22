@@ -9,7 +9,7 @@
 
 .input {
   width: 100%;
-  padding: 6px 12px;
+  padding: 6px 36px 6px 12px;
 
   font-family: var(--font-family-primary);
   font-size: var(--font-size-m);
@@ -89,7 +89,6 @@ div {
   position: absolute;
   top: 50%;
   right: 0;
-  bottom: 50%;
   transform: translateY(-50%);
 
   width: 24px;

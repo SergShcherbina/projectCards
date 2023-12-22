@@ -47,7 +47,8 @@
         }
 
         .bracket {
-          color: var(--color-accent-500);
+          color: var(--color-light-100);
+          text-shadow: none;
           transition: all 0.1s;
           animation: 3s blink infinite ease-out;
         }

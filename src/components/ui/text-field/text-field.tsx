@@ -14,8 +14,8 @@ export type TextFieldProps = {
   errorMessage?: string
   label?: string
   isSearch?: boolean
-  onChangeValue?: (value: string) => void
-  value?: string
+  onChangeValue: (value: string) => void
+  value: string
 } & ComponentPropsWithoutRef<'input'>
 
 export const TextField = ({
