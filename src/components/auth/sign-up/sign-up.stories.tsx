@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react'
+import { BrowserRouter } from 'react-router-dom'
 
 import { SignUp, SignUpType } from './sign-up.tsx'
 
@@ -16,5 +17,12 @@ export const Default: Story = {
     isSubmitting: false,
     className: 'your-class-name',
     onSubmit: (data: SignUpType) => alert(JSON.stringify(data)),
+  },
+  render: args => {
+    return (
+      <BrowserRouter>
+        <SignUp {...args} />
+      </BrowserRouter>
+    )
   },
 }
