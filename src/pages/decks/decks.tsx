@@ -17,8 +17,8 @@ import s from './decks.module.scss'
 
 export const Decks = () => {
   const [toggleModal, setToggleModal] = useState(false)
-  const [sort, setSort] = useState<SortTable>(null)
-  const sortString = sort ? `${sort?.key}-${sort?.direction}` : null
+  const [sort, setSort] = useState<SortTable>({ key: 'cardsCount', direction: 'desc' })
+  const sortString = sort ? `${sort?.key}-${sort?.direction}` : 'name-asc'
 
   const dispatch = useAppDispatch()
 
@@ -72,7 +72,7 @@ export const Decks = () => {
     currentPage,
     name: debounceSearchByName,
     authorId: showDecks[1],
-    orderBy: sortString ?? '',
+    orderBy: sortString,
     minCardsCount: debounceSliderValue[0],
     maxCardsCount: debounceSliderValue[1],
   })
